@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:kindergarten/core/uikit/SubmitButton.dart';
 import 'package:kindergarten/net/RequestHelper.dart';
+import 'package:kindergarten/repository/UserModel.dart';
 import 'package:kindergarten/style/TextStyle.dart';
+import 'dart:async';
 
 class LoginPage extends StatefulWidget {
   static const String routeName = '/LoginPage';
@@ -11,10 +13,16 @@ class LoginPage extends StatefulWidget {
 }
 
 class LoginPageState extends State<LoginPage> {
-  void _login() {
-    RequestHelper.login('15201231805', '123123123').then((value) {
-      print(value);
+  void _login() async {
+//    await new UserProvide().open();
+//    await UserProvide.insert(new UserModel(tel: '15201231806', name: 'aaaaa'));
+    await UserProvide.getOnlineUser().then((onValue) {
+      print(onValue.tel);
     });
+    /* RequestHelper.login('15201231805', '123123123').then((value) {
+
+      print(value);
+    });*/
   }
 
   @override
