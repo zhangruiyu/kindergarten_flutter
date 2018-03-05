@@ -1,33 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:kindergarten/core/modules/auth/InputPasswordPage.dart';
 import 'package:kindergarten/core/uikit/SubmitButton.dart';
 import 'package:kindergarten/net/RequestHelper.dart';
 import 'package:kindergarten/repository/UserModel.dart';
 import 'package:kindergarten/style/TextStyle.dart';
 
-class LoginPage extends StatefulWidget {
-  static const String routeName = '/LoginPage';
+class InputPasswordPage extends StatefulWidget {
+  static const String routeName = '/InputPasswordPage';
 
   @override
-  State<StatefulWidget> createState() => new LoginPageState();
+  State<StatefulWidget> createState() => new InputPasswordPageState();
 }
 
-class LoginPageState extends State<LoginPage> {
-  String tel = '';
-
+class InputPasswordPageState extends State<InputPasswordPage> {
   void _login() async {
 //    await new UserProvide().open();
 //    await UserProvide.insert(new UserModel(tel: '15201231806', name: 'aaaaa'));
     /*await UserProvide.getOnlineUser().then((onValue) {
       print(onValue.tel);
     });*/
-    if (tel.length < 11) {
-
-    }
-    RequestHelper.verifyIsRegister(tel).then((value) {
-      if (value['data'] == '1') {
-        Navigator.of(context).pushNamed(InputPasswordPage.routeName);
-      } else {}
+    RequestHelper.verifyIsRegister('15201231805').then((value) {
+      if (value['data'] == '1') {}
+      print(value);
 //      new UserModel(tel: '15201231806', name: 'aaaaa')
     });
   }
@@ -52,9 +45,6 @@ class LoginPageState extends State<LoginPage> {
                 // obscureText：是否隐藏正在编辑的文本
                 decoration: const InputDecoration(labelText: "手机号"),
                 style: autoTitleStyle,
-                onChanged: (String str) {
-                  tel = str;
-                },
               ),
               margin:
                   const EdgeInsets.symmetric(vertical: 20.0, horizontal: 00.0),

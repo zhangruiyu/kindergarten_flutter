@@ -18,7 +18,7 @@ class RequestClient {
       var data = JSON.decode(json);
       print(requestUrl);
       print(json);
-      return new Future.value(data["code"]);
+      return new Future.value(data["data"]);
     } else {
       throw 'Error getting IP address:\nHttp status ${response.statusCode}';
     }

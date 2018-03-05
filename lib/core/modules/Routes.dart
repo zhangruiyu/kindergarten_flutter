@@ -6,8 +6,8 @@ import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:kindergarten/core/modules/auth/InputPasswordPage.dart';
 import 'package:kindergarten/core/modules/auth/LoginPage.dart';
-
 
 typedef Widget GalleryDemoBuilder();
 
@@ -18,7 +18,8 @@ class GalleryItem extends StatelessWidget {
     @required this.category,
     @required this.routeName,
     @required this.buildRoute,
-  }) : assert(title != null),
+  })
+      : assert(title != null),
         assert(category != null),
         assert(routeName != null),
         assert(buildRoute != null);
@@ -36,14 +37,11 @@ class GalleryItem extends StatelessWidget {
         subtitle: new Text(subtitle),
         onTap: () {
           if (routeName != null) {
-            Timeline.instantSync('Start Transition', arguments: <String, String>{
-              'from': '/',
-              'to': routeName
-            });
+            Timeline.instantSync('Start Transition',
+                arguments: <String, String>{'from': '/', 'to': routeName});
             Navigator.pushNamed(context, routeName);
           }
-        }
-    );
+        });
   }
 }
 
@@ -58,6 +56,13 @@ List<GalleryItem> _buildGalleryItems() {
       category: 'Demos',
       routeName: LoginPage.routeName,
       buildRoute: (BuildContext context) => new LoginPage(),
+    ),
+    new GalleryItem(
+      title: 'Shrine',
+      subtitle: 'Basic shopping app',
+      category: 'Demos',
+      routeName: InputPasswordPage.routeName,
+      buildRoute: (BuildContext context) => new InputPasswordPage(),
     ),
   ];
 
