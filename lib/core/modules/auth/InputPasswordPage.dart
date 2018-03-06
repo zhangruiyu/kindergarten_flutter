@@ -1,28 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:kindergarten/core/base/BasePageRoute.dart';
+import 'package:kindergarten/core/base/BasePageState.dart';
 import 'package:kindergarten/core/uikit/SubmitButton.dart';
 import 'package:kindergarten/net/RequestHelper.dart';
 import 'package:kindergarten/repository/UserModel.dart';
 import 'package:kindergarten/style/TextStyle.dart';
 
-class InputPasswordPage extends StatefulWidget {
+class InputPasswordPage extends BasePageRoute {
   static const String routeName = '/InputPasswordPage';
 
+  InputPasswordPage([Map<String, String> props]) : super(props);
+
   @override
-  State<StatefulWidget> createState() => new InputPasswordPageState();
+  State<StatefulWidget> createState() => new InputPasswordPageState(props);
 }
 
-class InputPasswordPageState extends State<InputPasswordPage> {
+class InputPasswordPageState extends BasePageState<InputPasswordPage> {
+  String password = '123123123';
+
+  InputPasswordPageState(Map<String, String> props) : super(props);
+
   void _login() async {
 //    await new UserProvide().open();
 //    await UserProvide.insert(new UserModel(tel: '15201231806', name: 'aaaaa'));
     /*await UserProvide.getOnlineUser().then((onValue) {
       print(onValue.tel);
     });*/
-    RequestHelper.verifyIsRegister('15201231805').then((value) {
-      if (value['data'] == '1') {}
-      print(value);
-//      new UserModel(tel: '15201231806', name: 'aaaaa')
-    });
+    if (password.length > 4) {
+      RequestHelper.login(props['tel'], password).then((value) {
+//        value
+        value['isOnline'] = '1';
+        UserProvide.insert(new UserModel.fromMap(value));
+        Navigator.of(context).pop(true);
+        Navigator.of(context).pop(true);
+      });
+    }
   }
 
   @override
@@ -43,8 +55,12 @@ class InputPasswordPageState extends State<InputPasswordPage> {
                 maxLength: 11,
                 keyboardType: TextInputType.phone,
                 // obscureText：是否隐藏正在编辑的文本
-                decoration: const InputDecoration(labelText: "手机号"),
+                decoration: const InputDecoration(labelText: "登陆密码"),
                 style: autoTitleStyle,
+                controller: new TextEditingController(text: password),
+                onChanged: (String str) {
+                  password = str;
+                },
               ),
               margin:
                   const EdgeInsets.symmetric(vertical: 20.0, horizontal: 00.0),

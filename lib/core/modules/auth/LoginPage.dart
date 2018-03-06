@@ -13,7 +13,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class LoginPageState extends State<LoginPage> {
-  String tel = '';
+  String tel = '15201231805';
 
   void _login() async {
 //    await new UserProvide().open();
@@ -21,12 +21,14 @@ class LoginPageState extends State<LoginPage> {
     /*await UserProvide.getOnlineUser().then((onValue) {
       print(onValue.tel);
     });*/
-    if (tel.length < 11) {
-
-    }
+    if (tel.length < 11) {}
     RequestHelper.verifyIsRegister(tel).then((value) {
       if (value['data'] == '1') {
-        Navigator.of(context).pushNamed(InputPasswordPage.routeName);
+        Navigator
+            .of(context)
+            .push(new MaterialPageRoute<bool>(builder: (BuildContext context) {
+          return new InputPasswordPage({'tel': tel});
+        }));
       } else {}
 //      new UserModel(tel: '15201231806', name: 'aaaaa')
     });
@@ -52,6 +54,7 @@ class LoginPageState extends State<LoginPage> {
                 // obscureText：是否隐藏正在编辑的文本
                 decoration: const InputDecoration(labelText: "手机号"),
                 style: autoTitleStyle,
+                controller: new TextEditingController(text: tel),
                 onChanged: (String str) {
                   tel = str;
                 },

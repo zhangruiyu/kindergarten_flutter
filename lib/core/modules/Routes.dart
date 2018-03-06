@@ -57,13 +57,6 @@ List<GalleryItem> _buildGalleryItems() {
       routeName: LoginPage.routeName,
       buildRoute: (BuildContext context) => new LoginPage(),
     ),
-    new GalleryItem(
-      title: 'Shrine',
-      subtitle: 'Basic shopping app',
-      category: 'Demos',
-      routeName: InputPasswordPage.routeName,
-      buildRoute: (BuildContext context) => new InputPasswordPage(),
-    ),
   ];
 
   // Keep Pesto around for its regression test value. It is not included

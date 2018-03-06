@@ -26,7 +26,6 @@ import 'package:path_provider/path_provider.dart';
 final String UserTalbeName = "k_user_table";
 
 final String TEL = "tel";
-final String NAME = "name";
 final String TOKEN = "token";
 final String ISONLINE = "isOnline";
 final String NICKNAME = "nickName";
@@ -41,11 +40,27 @@ final String QQOPENID = "qqOpenId";
 final String WXOPENID = "wxOpenId";
 final String QQNICKNAME = "qqNickName";
 final String WXNICKNAME = "wxNickName";
-
+final List<String> UserTalbeCloum = [
+  TEL,
+  TOKEN,
+  ISONLINE,
+  NICKNAME,
+  ROLECODE,
+  AVATAR,
+  GENDER,
+  ADDRESS,
+  RELATION,
+  YSTOKEN,
+  SCHOOLNAME,
+  QQOPENID,
+  WXOPENID,
+  QQNICKNAME,
+  WXNICKNAME
+];
 final String userTableSql = '''
-              CREATE TABLE $UserTalbeName (
+              CREATE TABLE 
+$UserTalbeName (
                         tel        VARCHAR PRIMARY KEY,
-                        name       VARCHAR,
                         token      VARCHAR,
                         isOnline   VARCHAR,
                         nickName   VARCHAR,
@@ -65,8 +80,6 @@ final String userTableSql = '''
 
 class UserModel {
   String tel;
-
-  String name;
 
   String token;
 
@@ -98,7 +111,6 @@ class UserModel {
 
   UserModel(
       {this.tel,
-      this.name,
       this.token,
       this.isOnline,
       this.nickName,
@@ -116,17 +128,26 @@ class UserModel {
 
   UserModel.fromMap(Map map) {
     tel = map[TEL];
-    name = map[NAME];
+    token = map[TOKEN];
     isOnline = map[ISONLINE];
+    nickName = map[NICKNAME];
+    roleCode = map[ROLECODE];
+    avatar = map[AVATAR];
+    gender = map[GENDER];
+    address = map[ADDRESS];
+    relation = map[RELATION];
+    ysToken = map[YSTOKEN];
+    schoolName = map[SCHOOLNAME];
+    qqOpenId = map[QQOPENID];
+    wxOpenId = map[WXOPENID];
+    qqNickName = map[QQNICKNAME];
+    wxNickName = map[WXNICKNAME];
   }
 
   Map toMap() {
     Map map = {};
     if (tel != null) {
       map[TEL] = tel;
-    }
-    if (name != null) {
-      map[NAME] = name;
     }
     if (token != null) {
       map[TOKEN] = token;
@@ -175,24 +196,31 @@ class UserModel {
 }
 
 class UserProvide {
-  static Future<UserModel> insert(UserModel todo) async {
+  static Future<UserModel> insert(UserModel user) async {
     Database db = await KindergartenDatabase.openKindergartenDatabase();
-    var code = await db.insert(UserTalbeName, todo.toMap());
+    var deleteCode = await db
+        .delete(UserTalbeName, where: "$TEL = ?", whereArgs: [user.tel]);
+    var code = await db.insert(UserTalbeName, user.toMap());
     db.close();
-    return todo;
+    return user;
   }
 
   static Future<UserModel> getOnlineUser() async {
     Database db = await KindergartenDatabase.openKindergartenDatabase();
     List<Map> maps = await db.query(UserTalbeName,
-        columns: [TEL, NAME, ISONLINE],
-        where: "$TEL = ?",
-        whereArgs: ['15201231806']);
+        columns: UserTalbeCloum,
+        where: "$ISONLINE = ?",
+        whereArgs: ['1']);
     db.close();
     if (maps.length > 0) {
-      return new UserModel.fromMap(maps.first);
+      print(maps.last);
+      return new UserModel.fromMap(maps.last);
     }
 
     return null;
+  }
+
+  static haveOnlineUser() {
+    return getOnlineUser() != null;
   }
 }
