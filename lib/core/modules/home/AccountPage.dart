@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:kindergarten/core/base/BasePageRoute.dart';
+import 'package:kindergarten/core/base/BasePageState.dart';
 import 'package:kindergarten/core/modules/auth/LoginPage.dart';
 import 'package:kindergarten/core/modules/home/account/LoginIconItem.dart';
 import 'package:kindergarten/core/modules/home/entity/ItemEntitys.dart';
@@ -24,11 +26,22 @@ final List<HomeItemWidget> accountBottomItemList = <HomeItemWidget>[
   new HomeItemWidget(url: "ic_settings_black.png", title: "关于"),
 ];
 
-class AccountPage extends StatelessWidget {
+class AccountPage extends BasePageRoute {
+  AccountPage([Map<String, String> props]) : super(props);
+
+  @override
+  State<StatefulWidget> createState() {
+    return new AccountPageState();
+  }
+}
+
+class AccountPageState extends BasePageState<AccountPage> {
+  _refreshPage() {
+    print('AccountPageState  == ');
+  }
 
   @override
   Widget build(BuildContext context) {
-
     return new Scaffold(
       body: new SingleChildScrollView(
           child: new Column(
@@ -56,7 +69,11 @@ class AccountPage extends StatelessWidget {
                               onTap: () {
                                 Navigator
                                     .of(context)
-                                    .pushNamed(loginIcon.routeName);
+                                    .push(new MaterialPageRoute<bool>(
+                                  builder: (BuildContext context) {
+                                    return new LoginPage({'cbk': _refreshPage});
+                                  },
+                                ));
                               },
                               child: new Image.asset(
                                 'images/${loginIcon.url}',

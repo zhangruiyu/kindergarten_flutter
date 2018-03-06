@@ -1,39 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:kindergarten/core/base/BasePageRoute.dart';
+import 'package:kindergarten/core/base/BasePageState.dart';
 import 'package:kindergarten/core/modules/home/entity/ItemEntitys.dart';
 
 typedef void BannerTapCallback(HomeItemWidget photo);
 
-class HomePage extends StatelessWidget {
-  final List<HomeItemWidget> firstLine = <HomeItemWidget>[
-    new HomeItemWidget(
-      url: 'homepage_all_message.png',
-      title: '通知',
-    ),
-    new HomeItemWidget(
-      url: 'homepage_school_message.png',
-      title: '校园消息',
-    ),
-    new HomeItemWidget(
-      url: 'homepage_eat.png',
-      title: '饮食日历',
-    ),
-  ];
-  final List<HomeItemWidget> secondLine = <HomeItemWidget>[
-    new HomeItemWidget(
-      url: 'homepage_album.png',
-      title: '班级相册',
-    ),
-    new HomeItemWidget(
-      url: 'homepage_video.png',
-      title: '在线视频',
-    ),
-    new HomeItemWidget(
-      url: 'homepage_video.png',
-      title: '在线抓娃娃机',
-    ),
-  ];
+final List<HomeItemWidget> firstLine = <HomeItemWidget>[
+  new HomeItemWidget(
+    url: 'homepage_all_message.png',
+    title: '通知',
+  ),
+  new HomeItemWidget(
+    url: 'homepage_school_message.png',
+    title: '校园消息',
+  ),
+  new HomeItemWidget(
+    url: 'homepage_eat.png',
+    title: '饮食日历',
+  ),
+];
+final List<HomeItemWidget> secondLine = <HomeItemWidget>[
+  new HomeItemWidget(
+    url: 'homepage_album.png',
+    title: '班级相册',
+  ),
+  new HomeItemWidget(
+    url: 'homepage_video.png',
+    title: '在线视频',
+  ),
+  new HomeItemWidget(
+    url: 'homepage_video.png',
+    title: '在线抓娃娃机',
+  ),
+];
 
+class HomePage extends BasePageRoute {
+  HomePage([Map<String, String> props]) : super(props);
+
+  @override
+  State<StatefulWidget> createState() {
+    return new HomePageState();
+  }
+}
+
+class HomePageState extends BasePageState<HomePage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(

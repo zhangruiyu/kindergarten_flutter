@@ -1,36 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:kindergarten/core/base/BasePageRoute.dart';
+import 'package:kindergarten/core/base/BasePageState.dart';
 import 'package:kindergarten/core/modules/auth/InputPasswordPage.dart';
 import 'package:kindergarten/core/uikit/SubmitButton.dart';
 import 'package:kindergarten/net/RequestHelper.dart';
-import 'package:kindergarten/repository/UserModel.dart';
 import 'package:kindergarten/style/TextStyle.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends BasePageRoute {
   static const String routeName = '/LoginPage';
 
+  LoginPage([Map<String, dynamic> props]) : super(props);
+
   @override
-  State<StatefulWidget> createState() => new LoginPageState();
+  State<StatefulWidget> createState() => new LoginPageState(props);
 }
 
-class LoginPageState extends State<LoginPage> {
+class LoginPageState extends BasePageState<LoginPage> {
   String tel = '15201231805';
 
+  LoginPageState(Map<String, dynamic> props) : super(props);
+
   void _login() async {
-//    await new UserProvide().open();
-//    await UserProvide.insert(new UserModel(tel: '15201231806', name: 'aaaaa'));
-    /*await UserProvide.getOnlineUser().then((onValue) {
-      print(onValue.tel);
-    });*/
     if (tel.length < 11) {}
     RequestHelper.verifyIsRegister(tel).then((value) {
       if (value['data'] == '1') {
-        Navigator
-            .of(context)
-            .push(new MaterialPageRoute<bool>(builder: (BuildContext context) {
-          return new InputPasswordPage({'tel': tel});
-        }));
+        Navigator.of(context).push(new MaterialPageRoute<bool>(
+          builder: (BuildContext context) {
+            return new InputPasswordPage({'tel': tel});
+          },
+        ));
       } else {}
-//      new UserModel(tel: '15201231806', name: 'aaaaa')
     });
   }
 
