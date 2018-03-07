@@ -9,19 +9,15 @@ LifecycleInterface lifecycleInterface = new LifecycleInterface();
 LinkedHashMap<String, Widget> allPageInstance =
     new LinkedHashMap<String, Widget>();
 
-abstract class BasePageState<T extends BasePageRoute> extends State<T>
-    with WidgetsBindingObserver {
-  BasePageState([this.props]);
-
-  final Map<String, dynamic> props;
-
+abstract class BasePageState<T extends BasePageRoute>
+    extends State<T> /*with WidgetsBindingObserver*/ {
   @override
   void dispose() {
     super.dispose();
     print('BasePageState===$this');
     //执行关闭页面回调
-    if (props != null && props.containsKey('cbk')) {
-      props['cbk']();
+    if (widget.props != null && widget.props.containsKey('cbk')) {
+      widget.props['cbk']();
     }
   }
 }

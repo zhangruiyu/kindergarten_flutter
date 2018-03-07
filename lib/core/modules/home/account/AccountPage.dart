@@ -1,19 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:kindergarten/core/base/BasePageRoute.dart';
 import 'package:kindergarten/core/base/BasePageState.dart';
-import 'package:kindergarten/core/modules/auth/LoginPage.dart';
+import 'package:kindergarten/core/modules/home/account/AccountTopUI.dart';
 import 'package:kindergarten/core/modules/home/account/LoginIconItem.dart';
 import 'package:kindergarten/core/modules/home/entity/ItemEntitys.dart';
-import 'package:kindergarten/net/NetWork.dart';
 import 'package:kindergarten/net/RequestHelper.dart';
-import 'package:kindergarten/style/TextStyle.dart';
-
-final List<HomeItemWidget> loginIconList = <HomeItemWidget>[
-  new HomeItemWidget(url: "phone.png", routeName: LoginPage.routeName),
-  new HomeItemWidget(url: "ic_qq_login.webp", routeName: LoginPage.routeName),
-  new HomeItemWidget(
-      url: "ic_wechat_login.webp", routeName: LoginPage.routeName),
-];
+import 'package:kindergarten/repository/UserModel.dart';
 
 final List<HomeItemWidget> accountCenterItemList = <HomeItemWidget>[
   new HomeItemWidget(url: "ic_local_grocery_store.png", title: "积分商城"),
@@ -36,8 +28,23 @@ class AccountPage extends BasePageRoute {
 }
 
 class AccountPageState extends BasePageState<AccountPage> {
-  _refreshPage() {
-    print('AccountPageState  == ');
+  var accountProfile;
+
+  _refreshPage() async {
+    if (UserProvide.haveOnlineUser()) {
+      RequestHelper.getAccountProfile().then((data) {
+        setState(() {
+          accountProfile = data;
+          print('AccountPageState  == ');
+        });
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _refreshPage();
   }
 
   @override
@@ -53,37 +60,10 @@ class AccountPageState extends BasePageState<AccountPage> {
                 child: new Padding(
               padding: const EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 16.0),
               child: new Center(
-                  child: new Column(
-                children: <Widget>[
-                  new Text(
-                    "登陆小助手,体验更多功能",
-                    style: titleStyle,
-                  ),
-                  new Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: loginIconList.map((HomeItemWidget loginIcon) {
-                        return new Padding(
-                            padding: const EdgeInsets.fromLTRB(
-                                10.0, 20.0, 10.0, 20.0),
-                            child: new GestureDetector(
-                              onTap: () {
-                                Navigator
-                                    .of(context)
-                                    .push(new MaterialPageRoute<bool>(
-                                  builder: (BuildContext context) {
-                                    return new LoginPage({'cbk': _refreshPage});
-                                  },
-                                ));
-                              },
-                              child: new Image.asset(
-                                'images/${loginIcon.url}',
-                                width: 40.0,
-                                height: 40.0,
-                              ),
-                            ));
-                      }).toList()),
-                ],
-              )),
+                  child: new AccountTopUI({
+                'cbk': _refreshPage,
+                'accountProfile': accountProfile,
+              })),
             )),
             //第二行3个标签
           ),

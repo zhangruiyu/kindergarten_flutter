@@ -12,13 +12,11 @@ class LoginPage extends BasePageRoute {
   LoginPage([Map<String, dynamic> props]) : super(props);
 
   @override
-  State<StatefulWidget> createState() => new LoginPageState(props);
+  State<StatefulWidget> createState() => new LoginPageState();
 }
 
 class LoginPageState extends BasePageState<LoginPage> {
   String tel = '15201231805';
-
-  LoginPageState(Map<String, dynamic> props) : super(props);
 
   void _login() async {
     if (tel.length < 11) {}

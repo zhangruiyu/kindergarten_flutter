@@ -1,4 +1,9 @@
+import 'dart:async';
+
 import 'package:kindergarten/net/NetWork.dart';
+
+const USER_URL = "/user/normal";
+const TEACHER_URL = "/user/teacher";
 
 class RequestHelper {
   static login(String tel, String password) {
@@ -8,5 +13,9 @@ class RequestHelper {
 
   static verifyIsRegister(String tel) {
     return RequestClient.request('/public/verifyIsRegister', {'tel': tel});
+  }
+
+  static Future getAccountProfile() {
+    return RequestClient.request("$USER_URL/profile");
   }
 }

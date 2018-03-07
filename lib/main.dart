@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:kindergarten/core/modules/home/home.dart';
+import 'package:kindergarten/repository/UserModel.dart';
 
-void main() => runApp(new KindergartenApp());
+void main() {
+  UserProvide.initOnlineUser().then((onlineUser) {
+    runApp(new KindergartenApp());
+  });
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.

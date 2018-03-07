@@ -196,6 +196,8 @@ class UserModel {
 }
 
 class UserProvide {
+  static UserModel userCache;
+
   static Future<UserModel> insert(UserModel user) async {
     Database db = await KindergartenDatabase.openKindergartenDatabase();
     var deleteCode = await db
@@ -205,22 +207,43 @@ class UserProvide {
     return user;
   }
 
-  static Future<UserModel> getOnlineUser() async {
+  static Future initOnlineUser() async {
     Database db = await KindergartenDatabase.openKindergartenDatabase();
     List<Map> maps = await db.query(UserTalbeName,
-        columns: UserTalbeCloum,
-        where: "$ISONLINE = ?",
-        whereArgs: ['1']);
+        columns: UserTalbeCloum, where: "$ISONLINE = ?", whereArgs: ['1']);
     db.close();
     if (maps.length > 0) {
-      print(maps.last);
-      return new UserModel.fromMap(maps.last);
+//      print(maps.last);
+      var userModel = new UserModel.fromMap(maps.last);
+      userCache = userModel;
+    }
+    return userCache;
+  }
+
+  static Future getOnlineUser() async {
+    if (userCache != null) {
+      return userCache;
+    }
+    Database db = await KindergartenDatabase.openKindergartenDatabase();
+    List<Map> maps = await db.query(UserTalbeName,
+        columns: UserTalbeCloum, where: "$ISONLINE = ?", whereArgs: ['1']);
+    db.close();
+    if (maps.length > 0) {
+//      print(maps.last);
+      var userModel = new UserModel.fromMap(maps.last);
+      return userCache = userModel;
     }
 
     return null;
   }
 
   static haveOnlineUser() {
-    return getOnlineUser() != null;
+    return userCache != null;
+  }
+
+  static getCacheUser() {
+    if (userCache != null) {
+      return userCache;
+    }
   }
 }

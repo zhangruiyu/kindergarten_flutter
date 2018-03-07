@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kindergarten/core/modules/home/AccountPage.dart';
 import 'package:kindergarten/core/modules/home/HomePage.dart';
 import 'package:kindergarten/core/modules/home/NavigationPageView.dart';
+import 'package:kindergarten/core/modules/home/account/AccountPage.dart';
 
 class HomeTab extends StatefulWidget {
   static const String routeName = '/material/bottom_navigation';
@@ -128,8 +128,7 @@ class _BottomNavigationDemoState extends State<HomeTab>
       body: new Center(child: _buildTransitionsStack()),
       bottomNavigationBar: botNavBar,
       floatingActionButton: new FloatingActionButton(
-        onPressed: (){
-        },
+        onPressed: () {},
         tooltip: '长按发表视频动态',
         child: new Icon(Icons.add),
       ),

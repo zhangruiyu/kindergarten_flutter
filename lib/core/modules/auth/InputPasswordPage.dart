@@ -12,13 +12,11 @@ class InputPasswordPage extends BasePageRoute {
   InputPasswordPage([Map<String, String> props]) : super(props);
 
   @override
-  State<StatefulWidget> createState() => new InputPasswordPageState(props);
+  State<StatefulWidget> createState() => new InputPasswordPageState();
 }
 
 class InputPasswordPageState extends BasePageState<InputPasswordPage> {
   String password = '123123123';
-
-  InputPasswordPageState(Map<String, String> props) : super(props);
 
   void _login() async {
 //    await new UserProvide().open();
@@ -27,7 +25,7 @@ class InputPasswordPageState extends BasePageState<InputPasswordPage> {
       print(onValue.tel);
     });*/
     if (password.length > 4) {
-      RequestHelper.login(props['tel'], password).then((value) {
+      RequestHelper.login(widget.props['tel'], password).then((value) {
 //        value
         value['isOnline'] = '1';
         UserProvide.insert(new UserModel.fromMap(value));
