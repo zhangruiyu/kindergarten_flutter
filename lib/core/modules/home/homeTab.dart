@@ -126,6 +126,7 @@ class _BottomNavigationDemoState extends State<HomeTab>
           )
         ],
       ),
+      //TODO 要用viewpage来写  因为这个会老是导致子页面销毁和重建
       body: new Center(child: _buildTransitionsStack()),
       bottomNavigationBar: botNavBar,
       floatingActionButton: new FloatingActionButton(
