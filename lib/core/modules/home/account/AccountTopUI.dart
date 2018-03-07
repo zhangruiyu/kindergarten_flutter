@@ -85,8 +85,8 @@ class AccountTopState extends BasePropsState<AccountTopUI> {
                           },
                           child: new Image.asset(
                             'images/${loginIcon.url}',
-                            width: 80.0,
-                            height: 80.0,
+                            width: 40.0,
+                            height: 40.0,
                           ),
                         ));
                   }).toList()),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kindergarten/core/modules/home/HomePage.dart';
 import 'package:kindergarten/core/modules/home/NavigationPageView.dart';
 import 'package:kindergarten/core/modules/home/account/AccountPage.dart';
+import 'package:kindergarten/core/modules/home/dynamic/DynamicPage.dart';
 
 class HomeTab extends StatefulWidget {
   static const String routeName = '/material/bottom_navigation';
@@ -40,7 +41,7 @@ class _BottomNavigationDemoState extends State<HomeTab>
           title: '校友圈',
           color: accentBackgroundColors,
           vsync: this,
-          content: new HomePage()),
+          content:new DynamicPage()),
       new NavigationPageView(
           icon: const Icon(Icons.menu),
           title: '账户',

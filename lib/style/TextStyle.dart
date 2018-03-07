@@ -8,6 +8,16 @@ const TextStyle titleStyle = const TextStyle(
   textBaseline: TextBaseline.alphabetic,
 );
 
+
+const TextStyle textStyle = const TextStyle(
+  fontFamily: 'Raleway',
+  inherit: false,
+  fontSize: 17.0,
+  color: const Color(0xFF222222),
+  textBaseline: TextBaseline.alphabetic,
+);
+
+
 const TextStyle subjectStyle = const TextStyle(
   fontFamily: 'Raleway',
   inherit: false,
@@ -15,6 +25,7 @@ const TextStyle subjectStyle = const TextStyle(
   color: const Color(0xFF999999),
   textBaseline: TextBaseline.alphabetic,
 );
+//auto界面上的
 const TextStyle autoTitleStyle = const TextStyle(
   fontFamily: 'Raleway',
   inherit: false,
