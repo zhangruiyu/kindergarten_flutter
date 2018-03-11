@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:kindergarten/core/base/NetException.dart';
 import 'dart:io' show Platform;
 
 import 'package:kindergarten/repository/UserModel.dart';
@@ -29,7 +31,12 @@ class RequestClient {
       var data = JSON.decode(json);
       print(requestUrl);
       print(json);
-      return new Future.value(data["data"]);
+      if (data['code'] != '200') {
+//        ScaffoldState.showSnackBar(new SnackBar(content: new Text(data['msg'])));
+        throw new NetException(data['code'],data['msg'] );
+      } else {
+        return new Future.value(data["data"]);
+      }
     } else {
       throw 'Error getting IP address:\nHttp status ${response.statusCode}';
     }

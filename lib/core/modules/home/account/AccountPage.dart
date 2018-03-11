@@ -20,17 +20,18 @@ final List<HomeItemWidget> accountBottomItemList = <HomeItemWidget>[
 
 class AccountPage extends BasePageRoute {
   AccountPage([Map<String, String> props]) : super(props);
+  final AccountPageState accountPageState = new AccountPageState();
 
   @override
   State<StatefulWidget> createState() {
-    return new AccountPageState();
+    return accountPageState;
   }
 }
 
 class AccountPageState extends BasePageState<AccountPage> {
   var accountProfile;
 
-  _refreshPage() async {
+  refreshPage() async {
     if (UserProvide.haveOnlineUser()) {
       RequestHelper.getAccountProfile().then((data) {
         setState(() {
@@ -44,7 +45,6 @@ class AccountPageState extends BasePageState<AccountPage> {
   @override
   void initState() {
     super.initState();
-    _refreshPage();
   }
 
   @override
@@ -61,7 +61,7 @@ class AccountPageState extends BasePageState<AccountPage> {
               padding: const EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 16.0),
               child: new Center(
                   child: new AccountTopUI({
-                'cbk': _refreshPage,
+                'cbk': refreshPage,
                 'accountProfile': accountProfile,
               })),
             )),

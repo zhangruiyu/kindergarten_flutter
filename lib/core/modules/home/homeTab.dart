@@ -60,8 +60,7 @@ class _BottomNavigationDemoState extends State<HomeTab>
 
   @override
   void dispose() {
-    for (NavigationPageView view in _navigationViews)
-      view.controller.dispose();
+    for (NavigationPageView view in _navigationViews) view.controller.dispose();
     super.dispose();
   }
 
@@ -70,7 +69,6 @@ class _BottomNavigationDemoState extends State<HomeTab>
       // Rebuild in order to animate views.
     });
   }
-
 
   Widget _buildTransitionsStack() {
     if (tabStack != null) {
@@ -106,6 +104,14 @@ class _BottomNavigationDemoState extends State<HomeTab>
           _navigationViews[_currentIndex].controller.reverse();
           _currentIndex = index;
           _navigationViews[_currentIndex].controller.forward();
+          var currentView = _navigationViews[_currentIndex].content;
+          if (currentView is HomePage) {
+            currentView.homePageState.refreshPage();
+          } else if (currentView is DynamicPage) {
+            currentView.dynamicPageState.refreshPage();
+          } else if (currentView is AccountPage) {
+            currentView.accountPageState.refreshPage();
+          }
         });
       },
     );
@@ -121,16 +127,16 @@ class _BottomNavigationDemoState extends State<HomeTab>
               });
             },
             itemBuilder: (BuildContext context) =>
-            <PopupMenuItem<BottomNavigationBarType>>[
-              const PopupMenuItem<BottomNavigationBarType>(
-                value: BottomNavigationBarType.fixed,
-                child: const Text('Fixed'),
-              ),
-              const PopupMenuItem<BottomNavigationBarType>(
-                value: BottomNavigationBarType.shifting,
-                child: const Text('Shifting'),
-              )
-            ],
+                <PopupMenuItem<BottomNavigationBarType>>[
+                  const PopupMenuItem<BottomNavigationBarType>(
+                    value: BottomNavigationBarType.fixed,
+                    child: const Text('Fixed'),
+                  ),
+                  const PopupMenuItem<BottomNavigationBarType>(
+                    value: BottomNavigationBarType.shifting,
+                    child: const Text('Shifting'),
+                  )
+                ],
           )
         ],
       ),

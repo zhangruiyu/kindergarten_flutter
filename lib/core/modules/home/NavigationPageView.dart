@@ -12,7 +12,7 @@ class NavigationPageView {
       : _icon = icon,
         _color = color,
         _title = title,
-        _content = content,
+        content = content,
         item = new BottomNavigationBarItem(
           icon: icon,
           title: new Text(title),
@@ -29,7 +29,7 @@ class NavigationPageView {
   }
 
   final Widget _icon;
-  final Widget _content;
+  final Widget content;
   final Color _color;
   final String _title;
   final BottomNavigationBarItem item;
@@ -97,7 +97,7 @@ class NavigationPageView {
           ),
           child: new Semantics(
             label: 'Placeholder for $_title tab',
-            child: _content,
+            child: content,
           ),
         ),
       ),

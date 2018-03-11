@@ -15,16 +15,18 @@ typedef void BannerTapCallback(HomeItemWidget photo);
 class DynamicPage extends BasePageRoute {
   DynamicPage([Map<String, String> props]) : super(props);
 
+  final DynamicPageState dynamicPageState = new DynamicPageState();
+
   @override
   State<StatefulWidget> createState() {
-    return new DynamicPageState();
+    return dynamicPageState;
   }
 }
 
 class DynamicPageState extends BasePageState<DynamicPage> {
   var localList = {'allClassRoomUserInfo': [], 'dynamics': []};
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-  new GlobalKey<RefreshIndicatorState>();
+      new GlobalKey<RefreshIndicatorState>();
 
   Future<Null> _handleRefresh() {
     final Completer<Null> completer = new Completer<Null>();
@@ -33,6 +35,9 @@ class DynamicPageState extends BasePageState<DynamicPage> {
         localList = data;
       });
       completer.complete(null);
+    }).catchError((onError) {
+      completer.complete(null);
+      setState(() {});
     });
     return completer.future;
   }
@@ -40,7 +45,13 @@ class DynamicPageState extends BasePageState<DynamicPage> {
   @override
   void initState() {
     super.initState();
-    new Timer(const Duration(milliseconds: 300), () {
+  }
+
+  refreshPage() {
+    new Timer(
+        new Duration(
+            milliseconds: _refreshIndicatorKey.currentState == null ? 300 : 0),
+        () {
       _refreshIndicatorKey.currentState.show();
     });
   }
@@ -52,26 +63,26 @@ class DynamicPageState extends BasePageState<DynamicPage> {
         onRefresh: _handleRefresh,
         child: localList != null
             ? new ListView.builder(
-          itemCount: localList['dynamics'].length,
+                itemCount: localList['dynamics'].length,
 //          physics: AlwaysScrollableScrollPhysics(),
-          itemBuilder: (BuildContext context, int index) {
-            var singleData = localList['dynamics'][index];
+                itemBuilder: (BuildContext context, int index) {
+                  var singleData = localList['dynamics'][index];
 
-            return new CustomCard(
-                elevation: 1.0,
-                padding:
-                const EdgeInsets.fromLTRB(14.0, 15.0, 10.0, 15.0),
-                child: new Column(
-                  children: <Widget>[
-                    new DynamicItemTop(singleData: singleData),
-                    new DynamicItemCenter(singleData: singleData),
-                    new DynamicItemActions(),
-                    new DynamicItemLikes()
-                  ],
-                ));
-          },
-        )
-            : null);
+                  return new CustomCard(
+                      elevation: 1.0,
+                      padding:
+                          const EdgeInsets.fromLTRB(14.0, 15.0, 10.0, 15.0),
+                      child: new Column(
+                        children: <Widget>[
+                          new DynamicItemTop(singleData: singleData),
+                          new DynamicItemCenter(singleData: singleData),
+                          new DynamicItemActions(),
+                          new DynamicItemLikes()
+                        ],
+                      ));
+                },
+              )
+            : new Text("请登陆后尝试"));
   }
 }
 
@@ -87,7 +98,7 @@ class DynamicItemTop extends StatelessWidget {
         new CircleImage(
           text: 'Hi',
           avatarUrl:
-          'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1027508095,3429874780&fm=27&gp=0.jpg',
+              'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1027508095,3429874780&fm=27&gp=0.jpg',
           isContainsAvatar: true,
         ),
         new Padding(
@@ -130,34 +141,34 @@ class DynamicItemCenter extends StatelessWidget {
         ),
         singleData['dynamicType'] == '0'
             ? new GridView.count(
-          primary: false,
-          crossAxisSpacing: 10.0,
-          mainAxisSpacing: 10.0,
-          crossAxisCount: 3,
-          shrinkWrap: true,
-          children: singleData['kgDynamicPics'].map((picItem) {
-            return picItem['picUrl'];
-          }).map((item) {
-            return new Image.network(item);
-          }).toList(),
-        )
+                primary: false,
+                crossAxisSpacing: 10.0,
+                mainAxisSpacing: 10.0,
+                crossAxisCount: 3,
+                shrinkWrap: true,
+                children: singleData['kgDynamicPics'].map((picItem) {
+                  return picItem['picUrl'];
+                }).map((item) {
+                  return new Image.network(item);
+                }).toList(),
+              )
             : new Align(
-            alignment: Alignment.centerLeft,
-            child: new Stack(
-              alignment: Alignment.center,
-              children: <Widget>[
-                new Image.network(
-                  singleData['kgDynamicVideo']['videoPic'],
-                  height: 250.0,
-                ),
-                new IconButton(
-                    icon: new Icon(
-                      Icons.play_circle_outline,
-                      size: 50.0,
+                alignment: Alignment.centerLeft,
+                child: new Stack(
+                  alignment: Alignment.center,
+                  children: <Widget>[
+                    new Image.network(
+                      singleData['kgDynamicVideo']['videoPic'],
+                      height: 250.0,
                     ),
-                    onPressed: () {}),
-              ],
-            ))
+                    new IconButton(
+                        icon: new Icon(
+                          Icons.play_circle_outline,
+                          size: 50.0,
+                        ),
+                        onPressed: () {}),
+                  ],
+                ))
       ],
     );
   }
