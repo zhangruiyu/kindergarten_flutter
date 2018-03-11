@@ -19,7 +19,7 @@ class RequestHelper {
     return RequestClient.request("$USER_URL/profile");
   }
 
-  static Future getDynamics(int page_index) {
-    return RequestClient.request("$USER_URL/dynamic/list",{'page_index':page_index.toString()});
+  static Future getDynamics(int pageIndex) {
+    return RequestClient.request("$USER_URL/dynamic/list",{'page_index':pageIndex.toString()});
   }
 }

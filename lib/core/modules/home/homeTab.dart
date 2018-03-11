@@ -22,6 +22,8 @@ class _BottomNavigationDemoState extends State<HomeTab>
   List<NavigationPageView> _navigationViews;
   ThemeData _themeData;
 
+  var tabStack;
+
   _BottomNavigationDemoState(ThemeData themeData) : _themeData = themeData;
 
   @override
@@ -41,7 +43,7 @@ class _BottomNavigationDemoState extends State<HomeTab>
           title: '校友圈',
           color: accentBackgroundColors,
           vsync: this,
-          content:new DynamicPage()),
+          content: new DynamicPage()),
       new NavigationPageView(
           icon: const Icon(Icons.menu),
           title: '账户',
@@ -58,7 +60,8 @@ class _BottomNavigationDemoState extends State<HomeTab>
 
   @override
   void dispose() {
-    for (NavigationPageView view in _navigationViews) view.controller.dispose();
+    for (NavigationPageView view in _navigationViews)
+      view.controller.dispose();
     super.dispose();
   }
 
@@ -68,7 +71,11 @@ class _BottomNavigationDemoState extends State<HomeTab>
     });
   }
 
+
   Widget _buildTransitionsStack() {
+    if (tabStack != null) {
+      return tabStack;
+    }
     final List<FadeTransition> transitions = <FadeTransition>[];
 
     for (NavigationPageView view in _navigationViews)
@@ -82,7 +89,8 @@ class _BottomNavigationDemoState extends State<HomeTab>
       final double bValue = bAnimation.value;
       return aValue.compareTo(bValue);
     });
-    return new Stack(children: transitions);
+    tabStack = new Stack(children: transitions);
+    return tabStack;
   }
 
   @override
@@ -113,20 +121,19 @@ class _BottomNavigationDemoState extends State<HomeTab>
               });
             },
             itemBuilder: (BuildContext context) =>
-                <PopupMenuItem<BottomNavigationBarType>>[
-                  const PopupMenuItem<BottomNavigationBarType>(
-                    value: BottomNavigationBarType.fixed,
-                    child: const Text('Fixed'),
-                  ),
-                  const PopupMenuItem<BottomNavigationBarType>(
-                    value: BottomNavigationBarType.shifting,
-                    child: const Text('Shifting'),
-                  )
-                ],
+            <PopupMenuItem<BottomNavigationBarType>>[
+              const PopupMenuItem<BottomNavigationBarType>(
+                value: BottomNavigationBarType.fixed,
+                child: const Text('Fixed'),
+              ),
+              const PopupMenuItem<BottomNavigationBarType>(
+                value: BottomNavigationBarType.shifting,
+                child: const Text('Shifting'),
+              )
+            ],
           )
         ],
       ),
-      //TODO 要用viewpage来写  因为这个会老是导致子页面销毁和重建
       body: new Center(child: _buildTransitionsStack()),
       bottomNavigationBar: botNavBar,
       floatingActionButton: new FloatingActionButton(

@@ -6,7 +6,6 @@ import 'package:kindergarten/core/base/BasePageRoute.dart';
 import 'package:kindergarten/core/base/BasePageState.dart';
 import 'package:kindergarten/core/modules/home/entity/ItemEntitys.dart';
 import 'package:kindergarten/core/uikit/CircleImage.dart';
-import 'package:kindergarten/core/utils/WindowUtils.dart';
 import 'package:kindergarten/net/RequestHelper.dart';
 import 'package:kindergarten/style/TextStyle.dart';
 import 'package:kindergarten/core/uikit/CustomCard.dart';
@@ -25,7 +24,7 @@ class DynamicPage extends BasePageRoute {
 class DynamicPageState extends BasePageState<DynamicPage> {
   var localList = {'allClassRoomUserInfo': [], 'dynamics': []};
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-      new GlobalKey<RefreshIndicatorState>();
+  new GlobalKey<RefreshIndicatorState>();
 
   Future<Null> _handleRefresh() {
     final Completer<Null> completer = new Completer<Null>();
@@ -51,7 +50,8 @@ class DynamicPageState extends BasePageState<DynamicPage> {
     return new RefreshIndicator(
         key: _refreshIndicatorKey,
         onRefresh: _handleRefresh,
-        child: new ListView.builder(
+        child: localList != null
+            ? new ListView.builder(
           itemCount: localList['dynamics'].length,
 //          physics: AlwaysScrollableScrollPhysics(),
           itemBuilder: (BuildContext context, int index) {
@@ -59,7 +59,8 @@ class DynamicPageState extends BasePageState<DynamicPage> {
 
             return new CustomCard(
                 elevation: 1.0,
-                padding: const EdgeInsets.fromLTRB(14.0, 15.0, 10.0, 15.0),
+                padding:
+                const EdgeInsets.fromLTRB(14.0, 15.0, 10.0, 15.0),
                 child: new Column(
                   children: <Widget>[
                     new DynamicItemTop(singleData: singleData),
@@ -69,7 +70,8 @@ class DynamicPageState extends BasePageState<DynamicPage> {
                   ],
                 ));
           },
-        ));
+        )
+            : null);
   }
 }
 
@@ -85,7 +87,7 @@ class DynamicItemTop extends StatelessWidget {
         new CircleImage(
           text: 'Hi',
           avatarUrl:
-              'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1027508095,3429874780&fm=27&gp=0.jpg',
+          'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1027508095,3429874780&fm=27&gp=0.jpg',
           isContainsAvatar: true,
         ),
         new Padding(
@@ -123,39 +125,39 @@ class DynamicItemCenter extends StatelessWidget {
           child: new Text(
             singleData['content'],
             textAlign: TextAlign.left,
-            style: textStyle.merge(new TextStyle()),
+            style: textStyle,
           ),
         ),
         singleData['dynamicType'] == '0'
             ? new GridView.count(
-                primary: false,
-                crossAxisSpacing: 10.0,
-                mainAxisSpacing: 10.0,
-                crossAxisCount: 3,
-                shrinkWrap: true,
-                children: singleData['kgDynamicPics'].map((picItem) {
-                  return picItem['picUrl'];
-                }).map((item) {
-                  return new Image.network(item);
-                }).toList(),
-              )
+          primary: false,
+          crossAxisSpacing: 10.0,
+          mainAxisSpacing: 10.0,
+          crossAxisCount: 3,
+          shrinkWrap: true,
+          children: singleData['kgDynamicPics'].map((picItem) {
+            return picItem['picUrl'];
+          }).map((item) {
+            return new Image.network(item);
+          }).toList(),
+        )
             : new Align(
-                alignment: Alignment.centerLeft,
-                child: new Stack(
-                  alignment: Alignment.center,
-                  children: <Widget>[
-                    new Image.network(
-                      singleData['kgDynamicVideo']['videoPic'],
-                      height: 250.0,
+            alignment: Alignment.centerLeft,
+            child: new Stack(
+              alignment: Alignment.center,
+              children: <Widget>[
+                new Image.network(
+                  singleData['kgDynamicVideo']['videoPic'],
+                  height: 250.0,
+                ),
+                new IconButton(
+                    icon: new Icon(
+                      Icons.play_circle_outline,
+                      size: 50.0,
                     ),
-                    new IconButton(
-                        icon: new Icon(
-                          Icons.play_circle_outline,
-                          size: 50.0,
-                        ),
-                        onPressed: () {}),
-                  ],
-                ))
+                    onPressed: () {}),
+              ],
+            ))
       ],
     );
   }

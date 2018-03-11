@@ -12,7 +12,7 @@ var httpClient = createHttpClient();
 class RequestClient {
   static Future request(String url,
       [Map<String, String> queryParameters]) async {
-    var host = 'localhost:8080';
+    var host = Platform.isAndroid ? '192.168.43.20:8080' : 'localhost:8080';
     var httpClient = new HttpClient();
     var requestUrl = new Uri.http(host, url, queryParameters);
     UserModel onlineUser = UserProvide.getCacheUser();
