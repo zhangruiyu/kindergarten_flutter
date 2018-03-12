@@ -31,7 +31,7 @@ class RequestClient {
       var data = JSON.decode(json);
       print(requestUrl);
       print(json);
-      if (data['code'] != '200') {
+      if (data['code'].toString() != '200') {
 //        ScaffoldState.showSnackBar(new SnackBar(content: new Text(data['msg'])));
         throw new NetException(data['code'],data['msg'] );
       } else {

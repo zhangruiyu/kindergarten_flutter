@@ -20,16 +20,23 @@ final List<HomeItemWidget> accountBottomItemList = <HomeItemWidget>[
 
 class AccountPage extends BasePageRoute {
   AccountPage([Map<String, String> props]) : super(props);
-  final AccountPageState accountPageState = new AccountPageState();
+
+//  final AccountPageState accountPageState = new AccountPageState();
+  AccountPageState accountPageState;
 
   @override
   State<StatefulWidget> createState() {
+    accountPageState = new AccountPageState();
     return accountPageState;
   }
 }
 
 class AccountPageState extends BasePageState<AccountPage> {
   var accountProfile;
+
+  AccountPageState() {
+//    widget.props['refreshPage'] = refreshPage;
+  }
 
   refreshPage() async {
     if (UserProvide.haveOnlineUser()) {

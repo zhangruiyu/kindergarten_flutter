@@ -3,10 +3,11 @@ import 'package:kindergarten/core/modules/home/HomePage.dart';
 import 'package:kindergarten/core/modules/home/NavigationPageView.dart';
 import 'package:kindergarten/core/modules/home/account/AccountPage.dart';
 import 'package:kindergarten/core/modules/home/dynamic/DynamicPage.dart';
+import 'dart:async';
 
 class HomeTab extends StatefulWidget {
   static const String routeName = '/material/bottom_navigation';
-  ThemeData themeData;
+  final ThemeData themeData;
 
   HomeTab(this.themeData);
 
@@ -21,8 +22,6 @@ class _BottomNavigationDemoState extends State<HomeTab>
   BottomNavigationBarType _type = BottomNavigationBarType.shifting;
   List<NavigationPageView> _navigationViews;
   ThemeData _themeData;
-
-  var tabStack;
 
   _BottomNavigationDemoState(ThemeData themeData) : _themeData = themeData;
 
@@ -43,7 +42,7 @@ class _BottomNavigationDemoState extends State<HomeTab>
           title: '校友圈',
           color: accentBackgroundColors,
           vsync: this,
-          content: new DynamicPage()),
+          content: new DynamicPage({})),
       new NavigationPageView(
           icon: const Icon(Icons.menu),
           title: '账户',
@@ -70,14 +69,15 @@ class _BottomNavigationDemoState extends State<HomeTab>
     });
   }
 
-  Widget _buildTransitionsStack() {
-    if (tabStack != null) {
-      return tabStack;
-    }
-    final List<FadeTransition> transitions = <FadeTransition>[];
+  List<FadeTransition> transitions;
 
-    for (NavigationPageView view in _navigationViews)
-      transitions.add(view.transitionPage(_type, context));
+  Widget _buildTransitionsStack() {
+    if (transitions == null) {
+      transitions = <FadeTransition>[];
+
+      for (NavigationPageView view in _navigationViews)
+        transitions.add(view.transitionPage(_type, context));
+    }
 
     // We want to have the newly animating (fading in) views on top.
     transitions.sort((FadeTransition a, FadeTransition b) {
@@ -87,8 +87,7 @@ class _BottomNavigationDemoState extends State<HomeTab>
       final double bValue = bAnimation.value;
       return aValue.compareTo(bValue);
     });
-    tabStack = new Stack(children: transitions);
-    return tabStack;
+    return new Stack(children: transitions);
   }
 
   @override
@@ -105,13 +104,15 @@ class _BottomNavigationDemoState extends State<HomeTab>
           _currentIndex = index;
           _navigationViews[_currentIndex].controller.forward();
           var currentView = _navigationViews[_currentIndex].content;
-          if (currentView is HomePage) {
-            currentView.homePageState.refreshPage();
-          } else if (currentView is DynamicPage) {
-            currentView.dynamicPageState.refreshPage();
-          } else if (currentView is AccountPage) {
-            currentView.accountPageState.refreshPage();
-          }
+          new Timer(new Duration(milliseconds: 200), () {
+            if (currentView is HomePage) {
+//            currentView.homePageState.refreshPage();
+            } else if (currentView is DynamicPage) {
+              currentView.dynamicPageState.refreshPage();
+            } else if (currentView is AccountPage) {
+              currentView.accountPageState.refreshPage();
+            }
+          });
         });
       },
     );

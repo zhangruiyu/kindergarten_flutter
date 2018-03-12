@@ -204,7 +204,7 @@ class UserProvide {
         .delete(UserTalbeName, where: "$TEL = ?", whereArgs: [user.tel]);
     var code = await db.insert(UserTalbeName, user.toMap());
     db.close();
-    return user;
+    return userCache = user;
   }
 
   static Future initOnlineUser() async {

@@ -6,19 +6,21 @@ import 'package:kindergarten/core/base/BasePageRoute.dart';
 import 'package:kindergarten/core/base/BasePageState.dart';
 import 'package:kindergarten/core/modules/home/entity/ItemEntitys.dart';
 import 'package:kindergarten/core/uikit/CircleImage.dart';
+import 'package:kindergarten/core/uikit/CustomCard.dart';
 import 'package:kindergarten/net/RequestHelper.dart';
 import 'package:kindergarten/style/TextStyle.dart';
-import 'package:kindergarten/core/uikit/CustomCard.dart';
 
 typedef void BannerTapCallback(HomeItemWidget photo);
 
 class DynamicPage extends BasePageRoute {
   DynamicPage([Map<String, String> props]) : super(props);
 
-  final DynamicPageState dynamicPageState = new DynamicPageState();
+//  final DynamicPageState dynamicPageState = new DynamicPageState();
+  DynamicPageState dynamicPageState;
 
   @override
   State<StatefulWidget> createState() {
+    dynamicPageState = new DynamicPageState();
     return dynamicPageState;
   }
 }

@@ -37,11 +37,11 @@ final List<HomeItemWidget> secondLine = <HomeItemWidget>[
 
 class HomePage extends BasePageRoute {
   HomePage([Map<String, String> props]) : super(props);
-  final HomePageState homePageState = new HomePageState();
+//  final HomePageState homePageState = new HomePageState();
 
   @override
   State<StatefulWidget> createState() {
-    return homePageState;
+    return new HomePageState();
   }
 }
 
