@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kindergarten/core/base/BasePageRoute.dart';
 import 'package:kindergarten/core/base/BasePageState.dart';
+import 'package:kindergarten/core/modules/SK.dart';
 import 'package:kindergarten/core/modules/home/account/AccountTopUI.dart';
 import 'package:kindergarten/core/modules/home/account/LoginIconItem.dart';
 import 'package:kindergarten/core/modules/home/entity/ItemEntitys.dart';
@@ -19,24 +20,17 @@ final List<HomeItemWidget> accountBottomItemList = <HomeItemWidget>[
 ];
 
 class AccountPage extends BasePageRoute {
-  AccountPage([Map<String, String> props]) : super(props);
-
-//  final AccountPageState accountPageState = new AccountPageState();
-  AccountPageState accountPageState;
+  AccountPage([Map<String, String> props])
+      : super(props, key: SK.accountPageStateKey);
 
   @override
   State<StatefulWidget> createState() {
-    accountPageState = new AccountPageState();
-    return accountPageState;
+    return new AccountPageState();
   }
 }
 
 class AccountPageState extends BasePageState<AccountPage> {
   var accountProfile;
-
-  AccountPageState() {
-//    widget.props['refreshPage'] = refreshPage;
-  }
 
   refreshPage() async {
     if (UserProvide.haveOnlineUser()) {

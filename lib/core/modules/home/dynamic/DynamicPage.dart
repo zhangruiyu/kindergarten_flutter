@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:kindergarten/core/base/BasePageRoute.dart';
 import 'package:kindergarten/core/base/BasePageState.dart';
+import 'package:kindergarten/core/modules/SK.dart';
 import 'package:kindergarten/core/modules/home/dynamic/DynamicComments.dart';
 import 'package:kindergarten/core/modules/home/dynamic/DynamicItemActions.dart';
 import 'package:kindergarten/core/modules/home/dynamic/DynamicItemCenter.dart';
@@ -30,8 +31,6 @@ class DynamicPage extends BasePageRoute {
 
 class DynamicPageState extends BasePageState<DynamicPage> {
   var localList = {'allClassRoomUserInfo': [], 'dynamics': []};
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-  new GlobalKey<RefreshIndicatorState>();
 
   Future<Null> _handleRefresh() {
     final Completer<Null> completer = new Completer<Null>();
@@ -61,9 +60,9 @@ class DynamicPageState extends BasePageState<DynamicPage> {
   refreshPage() {
     new Timer(
         new Duration(
-            milliseconds: _refreshIndicatorKey.currentState == null ? 300 : 0),
+            milliseconds: SK.dynamicRefreshIndicatorKey.currentState == null ? 300 : 0),
             () {
-          _refreshIndicatorKey.currentState.show();
+              SK.dynamicRefreshIndicatorKey.currentState.show();
         });
   }
 
@@ -75,7 +74,7 @@ class DynamicPageState extends BasePageState<DynamicPage> {
       allClassRoomUserMap[value['userId']] = value;
     }
     return new RefreshIndicator(
-        key: _refreshIndicatorKey,
+        key: SK.dynamicRefreshIndicatorKey,
         onRefresh: _handleRefresh,
         child: localList != null
             ? new ListView.builder(

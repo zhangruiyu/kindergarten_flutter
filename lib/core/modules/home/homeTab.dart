@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kindergarten/core/modules/SK.dart';
 import 'package:kindergarten/core/modules/home/HomePage.dart';
 import 'package:kindergarten/core/modules/home/NavigationPageView.dart';
 import 'package:kindergarten/core/modules/home/account/AccountPage.dart';
@@ -108,9 +109,9 @@ class _BottomNavigationDemoState extends State<HomeTab>
             if (currentView is HomePage) {
 //            currentView.homePageState.refreshPage();
             } else if (currentView is DynamicPage) {
-              currentView.dynamicPageState.refreshPage();
+              SK.dynamicRefreshIndicatorKey.currentState.show();
             } else if (currentView is AccountPage) {
-              currentView.accountPageState.refreshPage();
+              SK.accountPageStateKey.currentState.refreshPage();
             }
           });
         });

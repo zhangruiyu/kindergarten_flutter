@@ -5,7 +5,7 @@ import 'package:kindergarten/core/uikit/CircleImage.dart';
 import 'package:kindergarten/style/TextStyle.dart';
 
 class DynamicItemTop extends StatelessWidget {
-  DynamicItemTop({this.singleData,this.allClassRoomUserInfo});
+  DynamicItemTop({this.singleData, this.allClassRoomUserInfo});
 
   final singleData;
   final allClassRoomUserInfo;
@@ -19,14 +19,15 @@ class DynamicItemTop extends StatelessWidget {
           children: <Widget>[
             new CircleImage(
               text: 'Hi',
-              avatarUrl:
-                  'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1027508095,3429874780&fm=27&gp=0.jpg',
+              avatarUrl: allClassRoomUserInfo[singleData['userId'].toString()]
+                  ['avatar'],
               isContainsAvatar: true,
             ),
             new Padding(
               padding: const EdgeInsets.only(left: 5.0),
               child: new Text(
-                allClassRoomUserInfo[singleData['userId'].toString()]['nickName'],
+                allClassRoomUserInfo[singleData['userId'].toString()]
+                    ['nickName'],
                 style: titleStyle,
               ),
             ),
