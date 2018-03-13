@@ -31,13 +31,19 @@ class DynamicPage extends BasePageRoute {
 class DynamicPageState extends BasePageState<DynamicPage> {
   var localList = {'allClassRoomUserInfo': [], 'dynamics': []};
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-      new GlobalKey<RefreshIndicatorState>();
+  new GlobalKey<RefreshIndicatorState>();
 
   Future<Null> _handleRefresh() {
     final Completer<Null> completer = new Completer<Null>();
-    RequestHelper.getDynamics(1).then((data) {
+    RequestHelper.getDynamics(0).then((data) {
       setState(() {
-        localList = data;
+        localList['dynamics'] = data['dynamics'];
+
+        var allClassRoomUserInfo = data['allClassRoomUserInfo'];
+        if (allClassRoomUserInfo is List && allClassRoomUserInfo.length > 0) {
+          localList['allClassRoomUserInfo'] = data['allClassRoomUserInfo'];
+        }
+        print(localList['allClassRoomUserInfo'].length);
       });
       completer.complete(null);
     }).catchError((onError) {
@@ -56,38 +62,45 @@ class DynamicPageState extends BasePageState<DynamicPage> {
     new Timer(
         new Duration(
             milliseconds: _refreshIndicatorKey.currentState == null ? 300 : 0),
-        () {
-      _refreshIndicatorKey.currentState.show();
-    });
+            () {
+          _refreshIndicatorKey.currentState.show();
+        });
   }
 
   @override
   Widget build(BuildContext context) {
+    var allClassRoomUserInfo = localList['allClassRoomUserInfo'];
+    var allClassRoomUserMap = {};
+    for (var value in allClassRoomUserInfo) {
+      allClassRoomUserMap[value['userId']] = value;
+    }
     return new RefreshIndicator(
         key: _refreshIndicatorKey,
         onRefresh: _handleRefresh,
         child: localList != null
             ? new ListView.builder(
-                itemCount: localList['dynamics'].length,
+          itemCount: localList['dynamics'].length,
 //          physics: AlwaysScrollableScrollPhysics(),
-                itemBuilder: (BuildContext context, int index) {
-                  var singleData = localList['dynamics'][index];
+          itemBuilder: (BuildContext context, int index) {
+            var singleData = localList['dynamics'][index];
 
-                  return new CustomCard(
-                      elevation: 1.0,
-                      padding:
-                          const EdgeInsets.fromLTRB(14.0, 15.0, 10.0, 15.0),
-                      child: new Column(
-                        children: <Widget>[
-                          new DynamicItemTop(singleData: singleData),
-                          new DynamicItemCenter(singleData: singleData),
-                          new DynamicItemActions(),
-                          new DynamicItemLikes(),
-                          new DynamicComments(singleData: singleData)
-                        ],
-                      ));
-                },
-              )
+            return new CustomCard(
+                elevation: 1.0,
+                padding:
+                const EdgeInsets.fromLTRB(14.0, 15.0, 10.0, 15.0),
+                child: new Column(
+                  children: <Widget>[
+                    new DynamicItemTop(singleData: singleData,
+                        allClassRoomUserInfo: allClassRoomUserMap),
+                    new DynamicItemCenter(singleData: singleData),
+                    new DynamicItemActions(),
+                    new DynamicItemLikes(singleData:singleData,allClassRoomUserInfo: allClassRoomUserMap),
+                    new DynamicComments(singleData: singleData,
+                        allClassRoomUserInfo: allClassRoomUserMap)
+                  ],
+                ));
+          },
+        )
             : new Text("请登陆后尝试"));
   }
 }

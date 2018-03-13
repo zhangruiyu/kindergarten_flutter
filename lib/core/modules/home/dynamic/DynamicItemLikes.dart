@@ -1,8 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:kindergarten/style/TextStyle.dart';
+import 'package:queries/queries.dart';
+import 'package:queries/collections.dart';
 
 class DynamicItemLikes extends StatelessWidget {
+  DynamicItemLikes({this.singleData, this.allClassRoomUserInfo});
+
+  final singleData;
+  final allClassRoomUserInfo;
+
   @override
   Widget build(BuildContext context) {
+    var fold = (singleData['kgDynamicLiked'] as List).fold(new StringBuffer(),
+        (previousValue, next) {
+      previousValue.write(allClassRoomUserInfo[next.toString()]['nickName']);
+      previousValue.write("、");
+      return previousValue;
+    });
+//    allClassRoomUserInfo[list[j]['userId']
     return new Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -12,7 +27,9 @@ class DynamicItemLikes extends StatelessWidget {
         ),
         new Flexible(
           child: new Text(
-            "小明爸爸,小康叔叔,小莉爷爷,小马,小明爸爸,小康叔叔,小莉爷爷,小马,小明爸爸,小康叔叔,小莉爷爷,小马等已点赞",
+            "$fold已点赞",
+            style: subjectStyle
+                .merge(new TextStyle(color: Theme.of(context).accentColor)),
           ),
           flex: 1,
         ),

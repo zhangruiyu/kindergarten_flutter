@@ -5,9 +5,10 @@ import 'package:kindergarten/core/uikit/CircleImage.dart';
 import 'package:kindergarten/style/TextStyle.dart';
 
 class DynamicItemTop extends StatelessWidget {
-  DynamicItemTop({this.singleData});
+  DynamicItemTop({this.singleData,this.allClassRoomUserInfo});
 
   final singleData;
+  final allClassRoomUserInfo;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class DynamicItemTop extends StatelessWidget {
             new Padding(
               padding: const EdgeInsets.only(left: 5.0),
               child: new Text(
-                singleData['userId'].toString(),
+                allClassRoomUserInfo[singleData['userId'].toString()]['nickName'],
                 style: titleStyle,
               ),
             ),
