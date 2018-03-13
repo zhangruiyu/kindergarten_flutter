@@ -25,6 +25,7 @@ import 'package:path_provider/path_provider.dart';
 
 final String UserTalbeName = "k_user_table";
 
+final String ID = "id";
 final String TEL = "tel";
 final String TOKEN = "token";
 final String ISONLINE = "isOnline";
@@ -41,6 +42,7 @@ final String WXOPENID = "wxOpenId";
 final String QQNICKNAME = "qqNickName";
 final String WXNICKNAME = "wxNickName";
 final List<String> UserTalbeCloum = [
+  ID,
   TEL,
   TOKEN,
   ISONLINE,
@@ -61,6 +63,7 @@ final String userTableSql = '''
               CREATE TABLE 
 $UserTalbeName (
                         tel        VARCHAR PRIMARY KEY,
+                        id      VARCHAR,
                         token      VARCHAR,
                         isOnline   VARCHAR,
                         nickName   VARCHAR,
@@ -79,6 +82,8 @@ $UserTalbeName (
               ''';
 
 class UserModel {
+  String id;
+
   String tel;
 
   String token;
@@ -110,7 +115,8 @@ class UserModel {
   String wxNickName;
 
   UserModel(
-      {this.tel,
+      {this.id,
+      this.tel,
       this.token,
       this.isOnline,
       this.nickName,
@@ -127,6 +133,7 @@ class UserModel {
       this.wxNickName});
 
   UserModel.fromMap(Map map) {
+    id = map[ID];
     tel = map[TEL];
     token = map[TOKEN];
     isOnline = map[ISONLINE];
@@ -146,6 +153,9 @@ class UserModel {
 
   Map toMap() {
     Map map = {};
+    if (id != null) {
+      map[ID] = id;
+    }
     if (tel != null) {
       map[TEL] = tel;
     }
@@ -241,9 +251,7 @@ class UserProvide {
     return userCache != null;
   }
 
-  static getCacheUser() {
-    if (userCache != null) {
-      return userCache;
-    }
+  static UserModel getCacheUser() {
+    return userCache;
   }
 }
