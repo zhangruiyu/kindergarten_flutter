@@ -58,12 +58,7 @@ class DynamicPageState extends BasePageState<DynamicPage> {
   }
 
   refreshPage() {
-    new Timer(
-        new Duration(
-            milliseconds: SK.dynamicRefreshIndicatorKey.currentState == null ? 300 : 0),
-            () {
-              SK.dynamicRefreshIndicatorKey.currentState.show();
-        });
+    SK.dynamicRefreshIndicatorKey.currentState.show();
   }
 
   @override
@@ -78,28 +73,32 @@ class DynamicPageState extends BasePageState<DynamicPage> {
         onRefresh: _handleRefresh,
         child: localList != null
             ? new ListView.builder(
-          itemCount: localList['dynamics'].length,
+                itemCount: localList['dynamics'].length,
 //          physics: AlwaysScrollableScrollPhysics(),
-          itemBuilder: (BuildContext context, int index) {
-            var singleData = localList['dynamics'][index];
+                itemBuilder: (BuildContext context, int index) {
+                  var singleData = localList['dynamics'][index];
 
-            return new CustomCard(
-                elevation: 1.0,
-                padding:
-                const EdgeInsets.fromLTRB(14.0, 15.0, 10.0, 15.0),
-                child: new Column(
-                  children: <Widget>[
-                    new DynamicItemTop(singleData: singleData,
-                        allClassRoomUserInfo: allClassRoomUserMap),
-                    new DynamicItemCenter(singleData: singleData),
-                    new DynamicItemActions(),
-                    new DynamicItemLikes(singleData:singleData,allClassRoomUserInfo: allClassRoomUserMap),
-                    new DynamicComments(singleData: singleData,
-                        allClassRoomUserInfo: allClassRoomUserMap)
-                  ],
-                ));
-          },
-        )
+                  return new CustomCard(
+                      elevation: 1.0,
+                      padding:
+                          const EdgeInsets.fromLTRB(14.0, 15.0, 10.0, 15.0),
+                      child: new Column(
+                        children: <Widget>[
+                          new DynamicItemTop(
+                              singleData: singleData,
+                              allClassRoomUserInfo: allClassRoomUserMap),
+                          new DynamicItemCenter(singleData: singleData),
+                          new DynamicItemActions(),
+                          new DynamicItemLikes(
+                              singleData: singleData,
+                              allClassRoomUserInfo: allClassRoomUserMap),
+                          new DynamicComments(
+                              singleData: singleData,
+                              allClassRoomUserInfo: allClassRoomUserMap)
+                        ],
+                      ));
+                },
+              )
             : new Text("请登陆后尝试"));
   }
 }
