@@ -78,7 +78,7 @@ class DynamicItemActionsState extends State<DynamicItemActions> {
                 size: 32.0,
                 color: const Color(0x30808080),
               ),
-              onPressed: _neverSatisfied,
+              onPressed: widget.props['showCommitBigCommentDialog'],
             ),
             new IconButton(
               padding: const EdgeInsets.all(10.0),

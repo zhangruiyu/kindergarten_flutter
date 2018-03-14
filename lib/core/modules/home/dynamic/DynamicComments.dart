@@ -1,32 +1,54 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:kindergarten/style/TextStyle.dart';
-import 'package:queries/queries.dart';
+import 'package:kindergarten/core/dialog/CommitCommentDialog.dart';
+import 'package:kindergarten/core/modules/home/dynamic/DynamicItemActions.dart';
 import 'package:queries/collections.dart';
 
-class DynamicComments extends StatelessWidget {
+class DynamicComments extends StatefulWidget {
   DynamicComments({this.singleData, this.allClassRoomUserInfo});
 
   final singleData;
   final allClassRoomUserInfo;
 
   @override
+  State<StatefulWidget> createState() {
+    return new DynamicCommentsState();
+  }
+}
+
+class DynamicCommentsState extends State<DynamicComments> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    //所有的按钮和点赞和大评论控件
+    var allCommentWidget = [];
+
     var accentColor = Theme.of(context).accentColor;
-    var list = new Collection(singleData['kgDynamicComment']).groupBy((it) {
+    var kgDynamicCommentLists =
+        new Collection(widget.singleData['kgDynamicComment']).groupBy((it) {
       return it['groupTag'];
     }).toList();
 
     var result = {};
-    for (var group in list) {
+    for (var group in kgDynamicCommentLists) {
       result[group.key] = [];
-      for (var child in singleData['kgDynamicComment']) {
+      for (var child in widget.singleData['kgDynamicComment']) {
         if (child['groupTag'] == group.key) {
           result[group.key].add(child);
         }
       }
     }
-    //所有的大评论控件
-    var allCommentWidget = [];
+
+    allCommentWidget.add(new DynamicItemActions({
+      'singleData': widget.singleData,
+      'allClassRoomUserInfo': widget.allClassRoomUserInfo,
+      'showCommitBigCommentDialog': showCommitBigCommentDialog
+    }));
 
     for (int i = 0; i < result.values.length; i++) {
       var list = result.values.toList()[i];
@@ -39,19 +61,21 @@ class DynamicComments extends StatelessWidget {
         //遍历单个大评论的子评论
         for (int j = 0; j < list.length; j++) {
           //单个子评论控件集合
+          var singleCommentEntity = list[j];
+          singleCommentEntity;
           var singleCommentWidget = [];
           singleCommentWidget.add(
             new TextSpan(
-                text: allClassRoomUserInfo[list[j]['userId'].toString()]
-                    ['nickName'],
+                text: widget.allClassRoomUserInfo[
+                    singleCommentEntity['userId'].toString()]['nickName'],
                 style: new TextStyle(color: accentColor)),
           );
           //如果是第一个,那么就是根评论
           if (j != 0) {
             //回复的用户名字
-            var replyUserNickName = allClassRoomUserInfo[
-                allSingeComment[list[j]['parentCommentId'].toString()]
-                    ['userId']]['nickName'];
+            var replyUserNickName = widget.allClassRoomUserInfo[allSingeComment[
+                    singleCommentEntity['parentCommentId'].toString()]
+                ['userId']]['nickName'];
             singleCommentWidget.add(
               new TextSpan(
                 text: ' 回复 ',
@@ -66,7 +90,7 @@ class DynamicComments extends StatelessWidget {
 
           singleCommentWidget.add(
             new TextSpan(
-                text: ': ${list[j]['commentContent']}',
+                text: ': ${singleCommentEntity['commentContent']}',
                 style: new TextStyle(fontWeight: FontWeight.bold)),
           );
           allCommentWidget.add(new Align(
@@ -78,12 +102,17 @@ class DynamicComments extends StatelessWidget {
                     : const EdgeInsets.only(
                         left: 40.0,
                       ),
-                child: new RichText(
-                  text: new TextSpan(
-                    style: DefaultTextStyle.of(context).style,
-                    children: singleCommentWidget,
-                  ),
-                )),
+                child: new GestureDetector(
+                    onTap: () {
+//                      singleCommentEntity
+                      _neverSatisfied(singleCommentEntity);
+                    },
+                    child: new RichText(
+                      text: new TextSpan(
+                        style: DefaultTextStyle.of(context).style,
+                        children: singleCommentWidget,
+                      ),
+                    ))),
             alignment: Alignment.centerLeft,
           ));
         }
@@ -92,6 +121,24 @@ class DynamicComments extends StatelessWidget {
     return new Column(
 //      crossAxisAlignment: CrossAxisAlignment.start,
       children: allCommentWidget,
+    );
+  }
+
+  //显示大评论dialog
+  showCommitBigCommentDialog() {
+    Map bigCommentParams = {'dynamicId':widget.singleData['id']};
+    _neverSatisfied(bigCommentParams);
+  }
+
+  Future<Null> _neverSatisfied(parentCommentEntity) async {
+    return showDialog<Null>(
+      context: context,
+      barrierDismissible: true, // user must tap button!
+      child: new CommitCommentDialog(
+          widget.allClassRoomUserInfo, parentCommentEntity, widget.singleData,
+          (callback) {
+        this.setState(callback);
+      }),
     );
   }
 }

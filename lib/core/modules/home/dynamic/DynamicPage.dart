@@ -5,7 +5,6 @@ import 'package:kindergarten/core/base/BasePageRoute.dart';
 import 'package:kindergarten/core/base/BasePageState.dart';
 import 'package:kindergarten/core/modules/SK.dart';
 import 'package:kindergarten/core/modules/home/dynamic/DynamicComments.dart';
-import 'package:kindergarten/core/modules/home/dynamic/DynamicItemActions.dart';
 import 'package:kindergarten/core/modules/home/dynamic/DynamicItemCenter.dart';
 import 'package:kindergarten/core/modules/home/dynamic/DynamicItemTop.dart';
 import 'package:kindergarten/core/modules/home/entity/ItemEntitys.dart';
@@ -87,10 +86,6 @@ class DynamicPageState extends BasePageState<DynamicPage> {
                               singleData: singleData,
                               allClassRoomUserInfo: allClassRoomUserMap),
                           new DynamicItemCenter(singleData: singleData),
-                          new DynamicItemActions({
-                            'singleData': singleData,
-                            'allClassRoomUserInfo': allClassRoomUserMap
-                          }),
                           new DynamicComments(
                               singleData: singleData,
                               allClassRoomUserInfo: allClassRoomUserMap)

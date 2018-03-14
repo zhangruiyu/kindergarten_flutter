@@ -20,6 +20,17 @@ class RequestHelper {
   }
 
   static Future getDynamics(int pageIndex) {
-    return RequestClient.request("$USER_URL/dynamic/list",{'page_index':pageIndex.toString()});
+    return RequestClient.request(
+        "$USER_URL/dynamic/list", {'page_index': pageIndex.toString()});
+  }
+
+  static Future commitDynamicComment(String commentContent, String dynamicId,
+      String parentCommentId, String groupTag) {
+    return RequestClient.request("$USER_URL/dynamic/commitComment", {
+      'commentContent': commentContent.toString(),
+      'dynamicId': dynamicId.toString(),
+      'parentCommentId': parentCommentId.toString(),
+      'groupTag': groupTag.toString()
+    });
   }
 }

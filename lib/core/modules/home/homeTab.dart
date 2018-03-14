@@ -10,21 +10,21 @@ class HomeTab extends StatefulWidget {
   static const String routeName = '/material/bottom_navigation';
   final ThemeData themeData;
 
-  HomeTab(this.themeData);
+  HomeTab(this.themeData) : super(key: SK.bottomNavigationDemoStateKey);
 
   @override
   State<StatefulWidget> createState() =>
-      new _BottomNavigationDemoState(themeData);
+      new BottomNavigationDemoState(themeData);
 }
 
-class _BottomNavigationDemoState extends State<HomeTab>
+class BottomNavigationDemoState extends State<HomeTab>
     with TickerProviderStateMixin {
   int _currentIndex = 0;
   BottomNavigationBarType _type = BottomNavigationBarType.shifting;
   List<NavigationPageView> _navigationViews;
   ThemeData _themeData;
 
-  _BottomNavigationDemoState(ThemeData themeData) : _themeData = themeData;
+  BottomNavigationDemoState(ThemeData themeData) : _themeData = themeData;
 
   @override
   void initState() {
