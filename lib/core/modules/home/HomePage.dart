@@ -3,6 +3,9 @@ import 'package:flutter/foundation.dart';
 import 'package:kindergarten/core/base/BasePageRoute.dart';
 import 'package:kindergarten/core/base/BasePageState.dart';
 import 'package:kindergarten/core/modules/home/entity/ItemEntitys.dart';
+import 'package:kindergarten/core/uikit/banner/Banner.dart';
+import 'package:image_picker/image_picker.dart';
+
 
 typedef void BannerTapCallback(HomeItemWidget photo);
 
@@ -37,6 +40,7 @@ final List<HomeItemWidget> secondLine = <HomeItemWidget>[
 
 class HomePage extends BasePageRoute {
   HomePage([Map<String, String> props]) : super(props);
+
 //  final HomePageState homePageState = new HomePageState();
 
   @override
@@ -55,6 +59,11 @@ class HomePageState extends BasePageState<HomePage> {
     super.initState();
     refreshPage();
   }
+  getImage() async {
+    var _fileName = await ImagePicker.pickImage();
+    print(_fileName);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +71,17 @@ class HomePageState extends BasePageState<HomePage> {
         body: new SingleChildScrollView(
             child: new Column(
       children: <Widget>[
+        new BannerView(
+          data: ['a', 'b', 'c'],
+          buildShowView: (index,data) {
+            print(data);
+            return new BannerShowWidget(text: data);
+          },
+          onBannerClickListener: (index,data){
+            print(index);
+            getImage();
+          },
+        ),
         //第一行3个标签
         new Padding(
           padding: const EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 16.0),
@@ -91,6 +111,18 @@ class HomePageState extends BasePageState<HomePage> {
     )));
   }
 }
+
+class BannerShowWidget extends StatelessWidget {
+  BannerShowWidget({this.text});
+
+  final text;
+
+  @override
+  Widget build(BuildContext context) {
+    return new Text('xx' + text);
+  }
+}
+
 
 class HomePageItemWidget extends StatelessWidget {
   HomePageItemWidget(

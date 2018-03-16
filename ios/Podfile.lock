@@ -5,6 +5,8 @@ PODS:
   - FMDB/common (2.5)
   - FMDB/standard (2.5):
     - FMDB/common
+  - image_picker (0.0.1):
+    - Flutter
   - path_provider (0.0.1):
     - Flutter
   - sqflite (0.0.1):
@@ -13,12 +15,15 @@ PODS:
 
 DEPENDENCIES:
   - Flutter (from `Pods/.symlinks/flutter/ios`)
+  - image_picker (from `Pods/.symlinks/plugins/image_picker-0.3.0/ios`)
   - path_provider (from `Pods/.symlinks/plugins/path_provider-0.4.0/ios`)
   - sqflite (from `Pods/.symlinks/plugins/sqflite-0.8.2/ios`)
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Pods/.symlinks/flutter/ios
+  image_picker:
+    :path: Pods/.symlinks/plugins/image_picker-0.3.0/ios
   path_provider:
     :path: Pods/.symlinks/plugins/path_provider-0.4.0/ios
   sqflite:
@@ -27,6 +32,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Flutter: 9d0fac939486c9aba2809b7982dfdbb47a7b0296
   FMDB: 96e8f1bcc1329e269330f99770ad4285d9003e52
+  image_picker: ee00aab0487cedc80a304085219503cc6d0f2e22
   path_provider: 09407919825bfe3c2deae39453b7a5b44f467873
   sqflite: edb0e4df7640c26fea6a107c21ed1542219e761a
 
