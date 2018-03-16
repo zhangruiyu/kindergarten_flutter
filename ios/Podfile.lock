@@ -9,6 +9,8 @@ PODS:
     - Flutter
   - path_provider (0.0.1):
     - Flutter
+  - shared_preferences (0.0.1):
+    - Flutter
   - sqflite (0.0.1):
     - Flutter
     - FMDB
@@ -16,7 +18,8 @@ PODS:
 DEPENDENCIES:
   - Flutter (from `Pods/.symlinks/flutter/ios`)
   - image_picker (from `Pods/.symlinks/plugins/image_picker-0.3.0/ios`)
-  - path_provider (from `Pods/.symlinks/plugins/path_provider-0.4.0/ios`)
+  - path_provider (from `Pods/.symlinks/plugins/path_provider-0.3.1/ios`)
+  - shared_preferences (from `Pods/.symlinks/plugins/shared_preferences-0.3.3/ios`)
   - sqflite (from `Pods/.symlinks/plugins/sqflite-0.8.2/ios`)
 
 EXTERNAL SOURCES:
@@ -25,7 +28,9 @@ EXTERNAL SOURCES:
   image_picker:
     :path: Pods/.symlinks/plugins/image_picker-0.3.0/ios
   path_provider:
-    :path: Pods/.symlinks/plugins/path_provider-0.4.0/ios
+    :path: Pods/.symlinks/plugins/path_provider-0.3.1/ios
+  shared_preferences:
+    :path: Pods/.symlinks/plugins/shared_preferences-0.3.3/ios
   sqflite:
     :path: Pods/.symlinks/plugins/sqflite-0.8.2/ios
 
@@ -34,6 +39,7 @@ SPEC CHECKSUMS:
   FMDB: 96e8f1bcc1329e269330f99770ad4285d9003e52
   image_picker: ee00aab0487cedc80a304085219503cc6d0f2e22
   path_provider: 09407919825bfe3c2deae39453b7a5b44f467873
+  shared_preferences: 5a1d487c427ee18fcd3ea1f2a131569481834b53
   sqflite: edb0e4df7640c26fea6a107c21ed1542219e761a
 
 PODFILE CHECKSUM: 0420ab312a523ae0eecfb1fc19ea51dd82cc17c7

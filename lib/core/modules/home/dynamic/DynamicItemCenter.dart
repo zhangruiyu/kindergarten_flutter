@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kindergarten/style/TextStyle.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class DynamicItemCenter extends StatelessWidget {
   DynamicItemCenter({this.singleData});
@@ -33,7 +34,11 @@ class DynamicItemCenter extends StatelessWidget {
                 children: singleData['kgDynamicPics'].map((picItem) {
                   return picItem['picUrl'];
                 }).map((item) {
-                  return new Image.network(item);
+                  return new CachedNetworkImage(
+                    imageUrl: item,
+                    placeholder: new CircularProgressIndicator(),
+                    errorWidget: new Icon(Icons.error),
+                  );
                 }).toList(),
               )
             : new Align(
@@ -41,8 +46,10 @@ class DynamicItemCenter extends StatelessWidget {
                 child: new Stack(
                   alignment: Alignment.center,
                   children: <Widget>[
-                    new Image.network(
-                      singleData['kgDynamicVideo']['videoPic'],
+                    new CachedNetworkImage(
+                      imageUrl: singleData['kgDynamicVideo']['videoPic'],
+                      placeholder: new CircularProgressIndicator(),
+                      errorWidget: new Icon(Icons.error),
                       height: 250.0,
                     ),
                     new IconButton(

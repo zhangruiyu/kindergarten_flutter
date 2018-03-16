@@ -49,7 +49,7 @@ class DynamicItemActionsState extends State<DynamicItemActions> {
     var likes = widget.props['singleData']['kgDynamicLiked'] as List;
     var fold = (likes).fold(new StringBuffer(), (previousValue, next) {
       previousValue.write(
-          widget.props['allClassRoomUserInfo'][next.toString()]['nickName']);
+          widget.props['allClassRoomUserInfo'][next.toString()]== null?"已毕业同学":widget.props['allClassRoomUserInfo'][next.toString()]['nickName']);
       previousValue.write("、");
       return previousValue;
     });

@@ -64,18 +64,26 @@ class DynamicCommentsState extends State<DynamicComments> {
           var singleCommentEntity = list[j];
           singleCommentEntity;
           var singleCommentWidget = [];
+          var containsUser = (widget.allClassRoomUserInfo as Map)
+              .containsKey(singleCommentEntity['userId'].toString());
           singleCommentWidget.add(
             new TextSpan(
-                text: widget.allClassRoomUserInfo[
-                    singleCommentEntity['userId'].toString()]['nickName'],
+                text: containsUser
+                    ? widget.allClassRoomUserInfo[
+                        singleCommentEntity['userId'].toString()]['nickName']
+                    : "已毕业同学",
                 style: new TextStyle(color: accentColor)),
           );
           //如果是第一个,那么就是根评论
           if (j != 0) {
             //回复的用户名字
             var replyUserNickName = widget.allClassRoomUserInfo[allSingeComment[
-                    singleCommentEntity['parentCommentId'].toString()]
-                ['userId']]['nickName'];
+                        singleCommentEntity['parentCommentId'].toString()]] ==
+                    null
+                ? "已毕业同学"
+                : widget.allClassRoomUserInfo[allSingeComment[
+                        singleCommentEntity['parentCommentId'].toString()]
+                    ['userId']]['nickName'];
             singleCommentWidget.add(
               new TextSpan(
                 text: ' 回复 ',
@@ -126,7 +134,7 @@ class DynamicCommentsState extends State<DynamicComments> {
 
   //显示大评论dialog
   showCommitBigCommentDialog() {
-    Map bigCommentParams = {'dynamicId':widget.singleData['id']};
+    Map bigCommentParams = {'dynamicId': widget.singleData['id']};
     _neverSatisfied(bigCommentParams);
   }
 

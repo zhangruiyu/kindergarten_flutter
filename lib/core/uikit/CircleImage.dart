@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class CircleImage extends StatelessWidget {
@@ -13,11 +14,8 @@ class CircleImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return new CircleAvatar(
       child: isContainsAvatar ? null : new Text(text),
-      backgroundImage: isContainsAvatar
-          ? new NetworkImage(
-              avatarUrl,
-            )
-          : null,
+      backgroundImage:
+          isContainsAvatar ? new CachedNetworkImageProvider(avatarUrl) : null,
 //                  backgroundColor: Colors.transparent,
     );
   }
