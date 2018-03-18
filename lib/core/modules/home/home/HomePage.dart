@@ -108,48 +108,42 @@ class HomePageState extends BasePageState<HomePage> {
         key: SK.homepageRefreshIndicatorKey,
         onRefresh: _handleRefresh,
         child: new SingleChildScrollView(
+            physics: new AlwaysScrollableScrollPhysics(),
             child: new Column(
-          children: <Widget>[
-            new BannerView(
-              data: bannerData,
-              buildShowView: (index, data) {
-                return new BannerShowWidget(data: data);
-              },
-              onBannerClickListener: (index, data) {
-//                print(index);
-                getImage();
-              },
-            ),
-            //第一行3个标签
-            new Padding(
-              padding: const EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 16.0),
-              child: new Row(
-                  children: firstLine.map((HomeItemWidget photo) {
-                return new HomePageItemWidget(
-                    photo: photo,
-                    onBannerTap: (HomeItemWidget photo) {
-                      /* setState(() {
-                      photo.isFavorite = !photo.isFavorite;
-                    });*/
-                      UserProvide.loginChecked(context, () {
-                        Navigator.of(context).pushNamed(photo.routeName);
+              children: <Widget>[
+                new BannerView(
+                  data: bannerData,
+                  buildShowView: (index, data) {
+                    return new BannerShowWidget(data: data);
+                  },
+                  onBannerClickListener: (index, data) {
+                    getImage();
+                  },
+                ),
+                //第一行3个标签
+                new Padding(
+                  padding: const EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 16.0),
+                  child: new Row(
+                      children: firstLine.map((HomeItemWidget photo) {
+                    return new HomePageItemWidget(
+                        photo: photo,
+                        onBannerTap: (HomeItemWidget photo) {
+                          UserProvide.loginChecked(context, () {
+                            Navigator.of(context).pushNamed(photo.routeName);
+                          });
+                        });
+                  }).toList()),
+                ),
+                //第二行3个标签
+                new Row(
+                    children: secondLine.map((HomeItemWidget photo) {
+                  return new HomePageItemWidget(
+                      photo: photo,
+                      onBannerTap: (HomeItemWidget photo) {
                       });
-                    });
-              }).toList()),
-            ),
-            //第二行3个标签
-            new Row(
-                children: secondLine.map((HomeItemWidget photo) {
-              return new HomePageItemWidget(
-                  photo: photo,
-                  onBannerTap: (HomeItemWidget photo) {
-                    /* setState(() {
-                      photo.isFavorite = !photo.isFavorite;
-                    });*/
-                  });
-            }).toList()),
-          ],
-        )));
+                }).toList()),
+              ],
+            )));
   }
 }
 
