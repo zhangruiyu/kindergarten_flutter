@@ -19,9 +19,28 @@ class RequestHelper {
     return RequestClient.request("$USER_URL/profile");
   }
 
+  static Future getHomepage() {
+    return RequestClient.request("/canUserToken/getBanner");
+  }
+
   static Future getDynamics(int pageIndex) {
     return RequestClient.request(
         "$USER_URL/dynamic/list", {'page_index': pageIndex.toString()});
+  }
+
+  static Future getInforms(int pageIndex) {
+    return RequestClient.request("$USER_URL/messageList/schoolMessage",
+        {'page_index': pageIndex.toString()});
+  }
+
+  static Future getSchoolMessage(int pageIndex) {
+    return RequestClient.request("$USER_URL/messageList/classroomMessage",
+        {'page_index': pageIndex.toString()});
+  }
+
+  static Future commitSchoolMessage(String message) {
+    return RequestClient.request("$TEACHER_URL/messageList/addClassroomMessage",
+        {'message': message.toString()});
   }
 
   static Future commitDynamicComment(String commentContent, String dynamicId,

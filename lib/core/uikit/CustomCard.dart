@@ -63,6 +63,7 @@ class CustomCard extends StatelessWidget {
     this.color,
     this.elevation: 2.0,
     this.child,
+    this.horizontalMargin = 0.0,
     this.padding,
   })
       : super(key: key);
@@ -81,13 +82,14 @@ class CustomCard extends StatelessWidget {
   ///
   /// Defaults to 2, the appropriate elevation for cards.
   final double elevation;
+  final double horizontalMargin;
 
   @override
   Widget build(BuildContext context) {
     return new Semantics(
       container: true,
       child: new Container(
-          margin: const EdgeInsets.symmetric(vertical: 4.0),
+          margin: new EdgeInsets.symmetric(vertical: 4.0,horizontal: horizontalMargin),
           child: new Material(
               color: color,
               type: MaterialType.card,

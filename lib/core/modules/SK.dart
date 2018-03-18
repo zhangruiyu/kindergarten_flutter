@@ -8,6 +8,8 @@ class SK {
   new GlobalKey<BottomNavigationDemoState>();
   //动态列表页state
   static final GlobalKey<RefreshIndicatorState> dynamicRefreshIndicatorKey =
+      new GlobalKey<RefreshIndicatorState>(); //动态列表页state
+  static final GlobalKey<RefreshIndicatorState> homepageRefreshIndicatorKey =
       new GlobalKey<RefreshIndicatorState>();
   //账户页面整个state
   static final GlobalKey<AccountPageState> accountPageStateKey =

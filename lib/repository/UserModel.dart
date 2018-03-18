@@ -16,7 +16,8 @@
 //    wxNickName VARCHAR
 
 import 'dart:async';
-import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:kindergarten/core/modules/auth/LoginPage.dart';
 
 import 'package:kindergarten/repository/KindergartenDatabase.dart';
 import 'package:path/path.dart';
@@ -206,7 +207,7 @@ class UserModel {
 }
 
 class UserProvide {
-  static UserModel userCache;
+  static UserModel _userCache;
 
   static Future<UserModel> insert(UserModel user) async {
     Database db = await KindergartenDatabase.openKindergartenDatabase();
@@ -214,7 +215,15 @@ class UserProvide {
         .delete(UserTalbeName, where: "$TEL = ?", whereArgs: [user.tel]);
     var code = await db.insert(UserTalbeName, user.toMap());
     db.close();
-    return userCache = user;
+    return _userCache = user;
+  }
+
+  static update() async {
+    Database db = await KindergartenDatabase.openKindergartenDatabase();
+
+    await db.update(UserTalbeName, getCacheUser().toMap(),
+        where: "$TEL = ?", whereArgs: [getCacheUser().tel]);
+    db.close();
   }
 
   static Future initOnlineUser() async {
@@ -225,14 +234,14 @@ class UserProvide {
     if (maps.length > 0) {
 //      print(maps.last);
       var userModel = new UserModel.fromMap(maps.last);
-      userCache = userModel;
+      _userCache = userModel;
     }
-    return userCache;
+    return _userCache;
   }
 
   static Future getOnlineUser() async {
-    if (userCache != null) {
-      return userCache;
+    if (_userCache != null) {
+      return _userCache;
     }
     Database db = await KindergartenDatabase.openKindergartenDatabase();
     List<Map> maps = await db.query(UserTalbeName,
@@ -241,17 +250,41 @@ class UserProvide {
     if (maps.length > 0) {
 //      print(maps.last);
       var userModel = new UserModel.fromMap(maps.last);
-      return userCache = userModel;
+      return _userCache = userModel;
     }
 
     return null;
   }
 
+  //更细到内存并写入数据库
+  static saveAndUpdate(setUp) {
+    setUp();
+    update();
+  }
+
   static haveOnlineUser() {
-    return userCache != null;
+    return _userCache != null;
   }
 
   static UserModel getCacheUser() {
-    return userCache;
+    return _userCache;
+  }
+
+  static loginChecked(context, onSuccessCallback, [props = const {}]) {
+    if (haveOnlineUser()) {
+      onSuccessCallback();
+    } else {
+      Navigator.of(context).push(new MaterialPageRoute<bool>(
+        builder: (BuildContext context) {
+          return new LoginPage(props);
+        },
+      ));
+    }
+  }
+
+  //是否是普通人员
+  static isNormalPeople() {
+    return (UserProvide.getCacheUser().roleCode != null &&
+        int.parse(UserProvide.getCacheUser().roleCode) < 1);
   }
 }

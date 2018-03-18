@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:kindergarten/core/modules/SK.dart';
-import 'package:kindergarten/core/modules/home/HomePage.dart';
+import 'package:kindergarten/core/modules/home/home/HomePage.dart';
 import 'package:kindergarten/core/modules/home/NavigationPageView.dart';
 import 'package:kindergarten/core/modules/home/account/AccountPage.dart';
 import 'package:kindergarten/core/modules/home/dynamic/DynamicPage.dart';
 import 'dart:async';
+
+import 'package:kindergarten/repository/UserModel.dart';
 
 class HomeTab extends StatefulWidget {
   static const String routeName = '/material/bottom_navigation';
@@ -61,6 +63,8 @@ class BottomNavigationDemoState extends State<HomeTab>
   @override
   void dispose() {
     for (NavigationPageView view in _navigationViews) view.controller.dispose();
+    //保存数据到sqlite
+    UserProvide.update();
     super.dispose();
   }
 
@@ -107,7 +111,7 @@ class BottomNavigationDemoState extends State<HomeTab>
           var currentView = _navigationViews[_currentIndex].content;
           new Timer(new Duration(milliseconds: 200), () {
             if (currentView is HomePage) {
-//            currentView.homePageState.refreshPage();
+              SK.homepageRefreshIndicatorKey.currentState.show();
             } else if (currentView is DynamicPage) {
               SK.dynamicRefreshIndicatorKey.currentState.show();
             } else if (currentView is AccountPage) {

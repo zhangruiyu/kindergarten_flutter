@@ -37,6 +37,11 @@ class AccountPageState extends BasePageState<AccountPage> {
       RequestHelper.getAccountProfile().then((data) {
         setState(() {
           accountProfile = data;
+          UserProvide.saveAndUpdate(() {
+            UserProvide.getCacheUser().roleCode =
+                accountProfile['roleCode'];
+            print(  accountProfile['roleCode']);
+          });
           print('AccountPageState  == ');
         });
       });

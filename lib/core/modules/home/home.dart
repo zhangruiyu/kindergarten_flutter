@@ -71,7 +71,7 @@ class KindergartenAppState extends State<KindergartenApp> {
       // using named routes, consider the example in the Navigator class documentation:
       // https://docs.flutter.io/flutter/widgets/Navigator-class.html
       _kRoutes[item.routeName] = (BuildContext context) {
-        return item.buildRoute(context);
+        return item.buildRoute;
       };
     }
     return new MaterialApp(
