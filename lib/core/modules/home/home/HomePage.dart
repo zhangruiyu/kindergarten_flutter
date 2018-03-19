@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:kindergarten/core/base/BasePageRoute.dart';
 import 'package:kindergarten/core/base/BasePageState.dart';
 import 'package:kindergarten/core/modules/SK.dart';
+import 'package:kindergarten/core/modules/cameralist/CameraListPage.dart';
 import 'package:kindergarten/core/modules/home/entity/ItemEntitys.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kindergarten/core/modules/inform/InformPage.dart';
@@ -43,7 +44,7 @@ final List<HomeItemWidget> secondLine = <HomeItemWidget>[
   new HomeItemWidget(
     url: 'homepage_video.png',
     title: '在线视频',
-    routeName: InformPage.routeName,
+    routeName: CameraListPage.routeName,
   ),
   new HomeItemWidget(
     url: 'homepage_video.png',
@@ -140,6 +141,9 @@ class HomePageState extends BasePageState<HomePage> {
                   return new HomePageItemWidget(
                       photo: photo,
                       onBannerTap: (HomeItemWidget photo) {
+                        UserProvide.loginChecked(context, () {
+                          Navigator.of(context).pushNamed(photo.routeName);
+                        });
                       });
                 }).toList()),
               ],

@@ -63,8 +63,6 @@ class BottomNavigationDemoState extends State<HomeTab>
   @override
   void dispose() {
     for (NavigationPageView view in _navigationViews) view.controller.dispose();
-    //保存数据到sqlite
-    UserProvide.update();
     super.dispose();
   }
 

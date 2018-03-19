@@ -43,6 +43,10 @@ class RequestHelper {
         {'message': message.toString()});
   }
 
+  static Future getCameraList() {
+    return RequestClient.request("$USER_URL/ys/classroom/list");
+  }
+
   static Future commitDynamicComment(String commentContent, String dynamicId,
       String parentCommentId, String groupTag) {
     return RequestClient.request("$USER_URL/dynamic/commitComment", {

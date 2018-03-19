@@ -8,6 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:kindergarten/core/modules/auth/InputPasswordPage.dart';
 import 'package:kindergarten/core/modules/auth/LoginPage.dart';
+import 'package:kindergarten/core/modules/cameralist/CameraListPage.dart';
 import 'package:kindergarten/core/modules/inform/InformPage.dart';
 import 'package:kindergarten/core/modules/schoolmessage/SchoolMessagePage.dart';
 
@@ -41,6 +42,10 @@ List<GalleryItem> _buildGalleryItems() {
     new GalleryItem(
       routeName: SchoolMessagePage.routeName,
       buildRoute: new SchoolMessagePage(),
+    ),
+    new GalleryItem(
+      routeName: CameraListPage.routeName,
+      buildRoute: new CameraListPage(),
     ),
   ];
 
