@@ -14,6 +14,8 @@ PODS:
   - sqflite (0.0.1):
     - Flutter
     - FMDB
+  - video_player (0.0.1):
+    - Flutter
 
 DEPENDENCIES:
   - Flutter (from `Pods/.symlinks/flutter/ios`)
@@ -21,6 +23,7 @@ DEPENDENCIES:
   - path_provider (from `Pods/.symlinks/plugins/path_provider-0.3.1/ios`)
   - shared_preferences (from `Pods/.symlinks/plugins/shared_preferences-0.3.3/ios`)
   - sqflite (from `Pods/.symlinks/plugins/sqflite-0.8.3/ios`)
+  - video_player (from `Pods/.symlinks/plugins/video_player-0.3.0/ios`)
 
 EXTERNAL SOURCES:
   Flutter:
@@ -33,6 +36,8 @@ EXTERNAL SOURCES:
     :path: Pods/.symlinks/plugins/shared_preferences-0.3.3/ios
   sqflite:
     :path: Pods/.symlinks/plugins/sqflite-0.8.3/ios
+  video_player:
+    :path: Pods/.symlinks/plugins/video_player-0.3.0/ios
 
 SPEC CHECKSUMS:
   Flutter: 9d0fac939486c9aba2809b7982dfdbb47a7b0296
@@ -41,6 +46,7 @@ SPEC CHECKSUMS:
   path_provider: 09407919825bfe3c2deae39453b7a5b44f467873
   shared_preferences: 5a1d487c427ee18fcd3ea1f2a131569481834b53
   sqflite: edb0e4df7640c26fea6a107c21ed1542219e761a
+  video_player: 906796a841943c8d370ac7c13b18039aa9b56498
 
 PODFILE CHECKSUM: 0420ab312a523ae0eecfb1fc19ea51dd82cc17c7
 

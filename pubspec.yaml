@@ -9,6 +9,7 @@ dependencies:
   queries: any
   image_picker: any
   banner: any
+  video_player: any
   cached_network_image: "^0.3.0"
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

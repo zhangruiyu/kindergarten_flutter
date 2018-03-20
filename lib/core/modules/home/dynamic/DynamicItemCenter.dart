@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kindergarten/core/modules/home/dynamic/PlayDynamicVideoPage.dart';
 import 'package:kindergarten/style/TextStyle.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -57,7 +58,18 @@ class DynamicItemCenter extends StatelessWidget {
                           Icons.play_circle_outline,
                           size: 50.0,
                         ),
-                        onPressed: () {}),
+                        onPressed: () {
+                          Navigator
+                              .of(context)
+                              .push(new MaterialPageRoute<bool>(
+                            builder: (BuildContext context) {
+                              return new PlayDynamicVideoPage({
+                                'videoUrl': singleData['kgDynamicVideo']
+                                    ['videoUrl']
+                              });
+                            },
+                          ));
+                        }),
                   ],
                 ))
       ],
