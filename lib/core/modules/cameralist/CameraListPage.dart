@@ -57,9 +57,10 @@ class CameraListPageState extends BasePageState<CameraListPage> {
             key: refreshIndicatorKey,
             onRefresh: _handleRefresh,
             child: new ListView.builder(
-              itemCount:
-                  cameraListData == null ? 0 : cameraListData['data'].length+1,
-//          physics: AlwaysScrollableScrollPhysics(),
+              itemCount: cameraListData == null
+                  ? 0
+                  : cameraListData['data'].length + 1,
+              physics: new AlwaysScrollableScrollPhysics(),
               itemBuilder: (BuildContext context, int index) {
                 if (index == 0) {
                   return new Padding(
@@ -72,7 +73,7 @@ class CameraListPageState extends BasePageState<CameraListPage> {
                 }
                 var singleData = cameraListData['data'][--index];
 
-                return new CameraListItemView(singleData: singleData);
+                return new CameraListItemView(singleData: singleData,ezToken:cameraListData['addition']['data']);
               },
             )));
   }

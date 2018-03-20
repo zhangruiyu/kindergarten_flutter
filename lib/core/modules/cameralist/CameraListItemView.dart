@@ -1,11 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:kindergarten/core/modules/cameraplay/ezviz.dart';
 import 'package:kindergarten/core/utils/WindowUtils.dart';
 
 class CameraListItemView extends StatelessWidget {
-  CameraListItemView({this.singleData});
+  CameraListItemView({this.singleData, this.ezToken});
 
   final dynamic singleData;
+  final String ezToken;
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +55,9 @@ class CameraListItemView extends StatelessWidget {
 
     return new GestureDetector(
       onTap: () {
+        var kgCamera = singleData['kgCamera'];
         if (singleData['unWatch'].toString() == '1') {
-          if (singleData['kgCamera']['deviceSerial'] == null) {
+          if (kgCamera['deviceSerial'] == null) {
             Scaffold.of(context).showSnackBar(new SnackBar(
                 content: new Text("此教室暂未开放在线摄像头"),
                 backgroundColor: Theme.of(context).errorColor));
@@ -64,6 +67,7 @@ class CameraListItemView extends StatelessWidget {
               content: new Text("未到开放时间,请下拉刷新后再次尝试"),
               backgroundColor: Theme.of(context).errorColor));
         }
+        Ezviz.startCameraPlayPage(this.ezToken,kgCamera['deviceSerial'],kgCamera['verifyCode'],'1');
       },
       child: new Container(
         alignment: Alignment.center,

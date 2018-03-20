@@ -1,19 +1,19 @@
 import 'dart:async';
 
+import 'package:banner/banner.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:kindergarten/core/base/BasePageRoute.dart';
 import 'package:kindergarten/core/base/BasePageState.dart';
 import 'package:kindergarten/core/modules/SK.dart';
 import 'package:kindergarten/core/modules/cameralist/CameraListPage.dart';
 import 'package:kindergarten/core/modules/home/entity/ItemEntitys.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:kindergarten/core/modules/inform/InformPage.dart';
 import 'package:kindergarten/core/modules/schoolmessage/SchoolMessagePage.dart';
 import 'package:kindergarten/core/utils/WindowUtils.dart';
 import 'package:kindergarten/net/RequestHelper.dart';
-import 'package:banner/banner.dart';
 import 'package:kindergarten/repository/UserModel.dart';
 
 typedef void BannerTapCallback(HomeItemWidget photo);
