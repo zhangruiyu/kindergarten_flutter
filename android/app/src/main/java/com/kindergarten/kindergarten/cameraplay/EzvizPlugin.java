@@ -35,7 +35,6 @@ public class EzvizPlugin implements MethodCallHandler {
     @Override
     public void onMethodCall(MethodCall call, Result result) {
         Log.d(TAG, call.arguments.toString());
-        Log.d(TAG, call.argument("a").toString());
         if (call.method.equals("getPlatformVersion")) {
             result.success("Android " + android.os.Build.VERSION.RELEASE);
 //            call.argument("");
@@ -43,8 +42,8 @@ public class EzvizPlugin implements MethodCallHandler {
         } else if (call.method.equals("startCameraPlayPage")) {
             Activity activity = registrar.activity();
             if (activity != null){
-                EZOpenSDK.getInstance().setAccessToken("");
-                PlayActivity.startPlayActivity(activity,"","","");
+                EZOpenSDK.getInstance().setAccessToken((String) call.argument("ezToken"));
+                PlayActivity.startPlayActivity(activity, (String) call.argument("deviceSerial"),(String) call.argument("verifyCode"),(String) call.argument("cameraNo"));
             }
         } else {
             result.notImplemented();

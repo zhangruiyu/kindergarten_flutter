@@ -46,6 +46,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".cameraplay.PlayActivity"/>
+        <activity android:name=".cameraplay.PlayActivity"
+                  android:theme="@style/PlayTheme"/>
     </application>
 </manifest>

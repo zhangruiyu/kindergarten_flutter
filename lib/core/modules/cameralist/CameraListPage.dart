@@ -72,7 +72,6 @@ class CameraListPageState extends BasePageState<CameraListPage> {
                   );
                 }
                 var singleData = cameraListData['data'][--index];
-
                 return new CameraListItemView(singleData: singleData,ezToken:cameraListData['addition']['data']);
               },
             )));
