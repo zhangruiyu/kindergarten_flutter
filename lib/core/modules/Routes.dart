@@ -11,6 +11,7 @@ import 'package:kindergarten/core/modules/auth/LoginPage.dart';
 import 'package:kindergarten/core/modules/cameralist/CameraListPage.dart';
 import 'package:kindergarten/core/modules/inform/InformPage.dart';
 import 'package:kindergarten/core/modules/schoolmessage/SchoolMessagePage.dart';
+import 'package:kindergarten/core/modules/setting/SettingPage.dart';
 
 typedef Widget GalleryDemoBuilder();
 
@@ -46,6 +47,10 @@ List<GalleryItem> _buildGalleryItems() {
     new GalleryItem(
       routeName: CameraListPage.routeName,
       buildRoute: new CameraListPage(),
+    ),
+    new GalleryItem(
+      routeName: SettingPage.routeName,
+      buildRoute: new SettingPage(),
     ),
   ];
 

@@ -6,6 +6,7 @@ import 'package:kindergarten/core/modules/home/homeTab.dart';
 final ThemeData _kGalleryLightTheme = new ThemeData(
   brightness: Brightness.light,
   primarySwatch: Colors.blue,
+  backgroundColor: const Color(0xfff4f4f4)
 );
 
 final ThemeData _kGalleryDarkTheme = new ThemeData(
