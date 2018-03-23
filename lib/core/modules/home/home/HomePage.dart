@@ -74,7 +74,7 @@ class HomePageState extends BasePageState<HomePage> {
   @override
   void initState() {
     super.initState();
-    refreshPage();
+//    refreshPage();
   }
 
   getImage() async {

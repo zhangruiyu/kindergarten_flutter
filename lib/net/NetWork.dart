@@ -34,7 +34,7 @@ class RequestClient {
       print(json);
       if (data['code'].toString() != '200') {
 //        ScaffoldState.showSnackBar(new SnackBar(content: new Text(data['msg'])));
-        throw new NetException(data['code'],data['msg'] );
+//        throw new NetException(data['code'],data['msg'] );
       } else {
         return new Future.value(data["data"]);
       }

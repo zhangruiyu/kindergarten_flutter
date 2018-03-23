@@ -84,6 +84,9 @@ class KindergartenAppState extends State<KindergartenApp> {
       checkerboardOffscreenLayers: _checkerboardOffscreenLayers,
       routes: _kRoutes,
       home: _applyScaleFactor(home),
+      navigatorObservers: [
+        new KgNavigatorObserver()
+      ],
       builder: (BuildContext context, Widget child) {
         return new Directionality(
           textDirection: _overrideDirection,
@@ -92,4 +95,32 @@ class KindergartenAppState extends State<KindergartenApp> {
       },
     );
   }
+}
+class KgNavigatorObserver extends NavigatorObserver{
+
+  /// The [Navigator] pushed `route`.
+  void didPush(Route<dynamic> route, Route<dynamic> previousRoute) {
+    print('didPush$route');
+  }
+
+  /// The [Navigator] popped `route`.
+  void didPop(Route<dynamic> route, Route<dynamic> previousRoute) {
+    print('didPop$route');
+  }
+
+  /// The [Navigator] removed `route`.
+  void didRemove(Route<dynamic> route, Route<dynamic> previousRoute) {
+    print('didRemove$route');
+  }
+
+  /// The [Navigator]'s routes are being moved by a user gesture.
+  ///
+  /// For example, this is called when an iOS back gesture starts, and is used
+  /// to disabled hero animations during such interactions.
+  void didStartUserGesture() { }
+
+  /// User gesture is no longer controlling the [Navigator].
+  ///
+  /// Paired with an earlier call to [didStartUserGesture].
+  void didStopUserGesture() { }
 }

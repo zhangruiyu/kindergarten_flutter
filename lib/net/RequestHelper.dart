@@ -25,7 +25,9 @@ class RequestHelper {
 
   static Future getDynamics(int pageIndex) {
     return RequestClient.request(
-        "$USER_URL/dynamic/list", {'page_index': pageIndex.toString()});
+        "$USER_URL/dynamic/list", {'page_index': pageIndex.toString(),
+      'dynamic_type': '1',
+      'page_size': '5'});
   }
 
   static Future getInforms(int pageIndex) {
