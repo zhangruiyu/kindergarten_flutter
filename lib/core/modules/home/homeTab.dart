@@ -110,11 +110,11 @@ class BottomNavigationDemoState extends State<HomeTab>
           var currentView = _navigationViews[_currentIndex].content;
           new Timer(new Duration(milliseconds: 200), () {
             if (currentView is HomePage) {
-              SK.homepageRefreshIndicatorKey.currentState.show();
+              SK.homepageRefreshIndicatorKey.currentState?.show();
             } else if (currentView is DynamicPage) {
-              SK.dynamicRefreshIndicatorKey.currentState.show();
+              SK.dynamicRefreshIndicatorKey.currentState?.show();
             } else if (currentView is AccountPage) {
-              SK.accountPageStateKey.currentState.refreshPage();
+              SK.accountPageStateKey.currentState?.refreshPage();
             }
           });
         });
@@ -122,7 +122,7 @@ class BottomNavigationDemoState extends State<HomeTab>
     );
     //初始页面未点击,但是首页需要数据
     new Timer(new Duration(milliseconds: refreshDelay), () {
-      SK.homepageRefreshIndicatorKey.currentState.show();
+      SK.homepageRefreshIndicatorKey.currentState?.show();
     });
 
 
