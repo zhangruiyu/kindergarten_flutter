@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kindergarten/core/constant/Constant.dart';
 import 'package:kindergarten/core/modules/SK.dart';
 import 'package:kindergarten/core/modules/home/home/HomePage.dart';
 import 'package:kindergarten/core/modules/home/NavigationPageView.dart';
@@ -119,6 +120,11 @@ class BottomNavigationDemoState extends State<HomeTab>
         });
       },
     );
+    //初始页面未点击,但是首页需要数据
+    new Timer(new Duration(milliseconds: refreshDelay), () {
+      SK.homepageRefreshIndicatorKey.currentState.show();
+    });
+
 
     return new Scaffold(
       appBar: new AppBar(
