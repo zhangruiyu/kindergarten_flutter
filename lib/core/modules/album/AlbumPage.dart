@@ -78,9 +78,10 @@ class AlbumPageState extends BasePageState<AlbumPage> {
                   child: new Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      new Padding(padding: const EdgeInsets.only(left: 10.0,bottom: 10.0)
-                      ,child:  new Text(singleData['data'].toString(),
-                              textAlign: TextAlign.left),),
+                      new Padding(
+                        padding: const EdgeInsets.only(left: 10.0, bottom: 10.0)
+                        , child: new Text(singleData['data'].toString(),
+                          textAlign: TextAlign.left),),
 
                       new GridView.count(
                         primary: false,
@@ -94,7 +95,6 @@ class AlbumPageState extends BasePageState<AlbumPage> {
                         }).map((item) {
                           return new CachedNetworkImage(
                             imageUrl: item,
-                            placeholder: new CircularProgressIndicator(),
                             errorWidget: new Icon(Icons.error),
                           );
                         }).toList(),

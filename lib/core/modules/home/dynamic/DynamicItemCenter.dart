@@ -37,7 +37,6 @@ class DynamicItemCenter extends StatelessWidget {
                 }).map((item) {
                   return new CachedNetworkImage(
                     imageUrl: item,
-                    placeholder: new CircularProgressIndicator(),
                     errorWidget: new Icon(Icons.error),
                   );
                 }).toList(),
@@ -49,7 +48,6 @@ class DynamicItemCenter extends StatelessWidget {
                   children: <Widget>[
                     new CachedNetworkImage(
                       imageUrl: singleData['kgDynamicVideo']['videoPic'],
-                      placeholder: new CircularProgressIndicator(),
                       errorWidget: new Icon(Icons.error),
                       height: 250.0,
                     ),

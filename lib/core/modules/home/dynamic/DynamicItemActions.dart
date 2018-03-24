@@ -36,7 +36,7 @@ class DynamicItemActionsState extends State<DynamicItemActions> {
             child: new Text('发布回复'),
             onPressed: () {
 //              Navigator.of(context).pop();
-            print(textEditingController.text);
+              print(textEditingController.text);
             },
           ),
         ],
@@ -49,12 +49,17 @@ class DynamicItemActionsState extends State<DynamicItemActions> {
     var likes = widget.props['singleData']['kgDynamicLiked'] as List;
     var fold = (likes).fold(new StringBuffer(), (previousValue, next) {
       previousValue.write(
-          widget.props['allClassRoomUserInfo'][next.toString()]== null?"已毕业同学":widget.props['allClassRoomUserInfo'][next.toString()]['nickName']);
+          widget.props['allClassRoomUserInfo'][next.toString()] == null
+              ? "已毕业同学"
+              : widget.props['allClassRoomUserInfo'][next
+              .toString()]['nickName']);
       previousValue.write("、");
       return previousValue;
     });
 //    allClassRoomUserInfo[list[j]['userId']
-    var accentColor = Theme.of(context).accentColor;
+    var accentColor = Theme
+        .of(context)
+        .accentColor;
     return new Column(
       children: <Widget>[
         new Row(
@@ -65,7 +70,10 @@ class DynamicItemActionsState extends State<DynamicItemActions> {
               icon: new Icon(
                 Icons.favorite,
                 size: 30.0,
-                color: likes.contains(UserProvide.getCacheUser().id.toString())
+                color: likes.contains(UserProvide
+                    .getCacheUser()
+                    .id
+                    .toString())
                     ? accentColor
                     : const Color(0x30808080),
               ),
@@ -91,6 +99,7 @@ class DynamicItemActionsState extends State<DynamicItemActions> {
             ),
           ],
         ),
+        likes.length > 0 ?
         new Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -102,13 +111,15 @@ class DynamicItemActionsState extends State<DynamicItemActions> {
               child: new Text(
                 "$fold已点赞",
                 style: subjectStyle
-                    .merge(new TextStyle(color: Theme.of(context).accentColor)),
+                    .merge(new TextStyle(color: Theme
+                    .of(context)
+                    .accentColor)),
               ),
               flex: 1,
             ),
           ],
-        )
-      ],
+        ) : null
+      ].where((object) => object != null).toList(),
     );
   }
 }
