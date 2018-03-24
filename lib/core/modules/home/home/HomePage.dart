@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:kindergarten/core/base/BasePageRoute.dart';
 import 'package:kindergarten/core/base/BasePageState.dart';
 import 'package:kindergarten/core/modules/SK.dart';
+import 'package:kindergarten/core/modules/album/AlbumPage.dart';
 import 'package:kindergarten/core/modules/cameralist/CameraListPage.dart';
 import 'package:kindergarten/core/modules/home/entity/ItemEntitys.dart';
 import 'package:kindergarten/core/modules/inform/InformPage.dart';
@@ -39,7 +40,7 @@ final List<HomeItemWidget> secondLine = <HomeItemWidget>[
   new HomeItemWidget(
     url: 'homepage_album.png',
     title: '班级相册',
-    routeName: InformPage.routeName,
+    routeName: AlbumPage.routeName,
   ),
   new HomeItemWidget(
     url: 'homepage_video.png',

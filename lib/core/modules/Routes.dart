@@ -6,6 +6,7 @@ import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:kindergarten/core/modules/album/AlbumPage.dart';
 import 'package:kindergarten/core/modules/auth/InputPasswordPage.dart';
 import 'package:kindergarten/core/modules/auth/LoginPage.dart';
 import 'package:kindergarten/core/modules/cameralist/CameraListPage.dart';
@@ -51,6 +52,9 @@ List<GalleryItem> _buildGalleryItems() {
     new GalleryItem(
       routeName: SettingPage.routeName,
       buildRoute: new SettingPage(),
+    ), new GalleryItem(
+      routeName: AlbumPage.routeName,
+      buildRoute: new AlbumPage(),
     ),
   ];
 

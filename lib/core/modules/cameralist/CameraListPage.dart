@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:kindergarten/core/base/BasePageRoute.dart';
 import 'package:kindergarten/core/base/BasePageState.dart';
+import 'package:kindergarten/core/constant/Constant.dart';
 import 'package:kindergarten/core/modules/cameralist/CameraListItemView.dart';
 import 'package:kindergarten/core/modules/inform/InformItemView.dart';
 import 'package:kindergarten/core/uikit/CustomCard.dart';
@@ -28,7 +29,7 @@ class CameraListPageState extends BasePageState<CameraListPage> {
   @override
   initState() {
     super.initState();
-    new Timer(new Duration(milliseconds: 300), () {
+    new Timer(new Duration(milliseconds: refreshDelay), () {
       refreshIndicatorKey.currentState.show();
     });
   }

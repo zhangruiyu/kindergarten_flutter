@@ -30,6 +30,11 @@ class RequestHelper {
       'page_size': '5'});
   }
 
+  static Future getSchoolAlbum() {
+    return RequestClient.request(
+      "$USER_URL/album/schoolAlbum",);
+  }
+
   static Future getInforms(int pageIndex) {
     return RequestClient.request("$USER_URL/messageList/schoolMessage",
         {'page_index': pageIndex.toString()});
