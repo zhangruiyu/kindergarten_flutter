@@ -63,4 +63,10 @@ class RequestHelper {
       'groupTag': groupTag.toString()
     });
   }
+
+  static Future commitDynamicLiked(String dynamicId) {
+    return RequestClient.request("$USER_URL/dynamic/commitLiked",
+        {'dynamicId': dynamicId});
+  }
+
 }

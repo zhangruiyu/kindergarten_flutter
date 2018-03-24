@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:kindergarten/core/base/BasePropsWidget.dart';
 import 'package:kindergarten/core/modules/home/dynamic/DynamicItemActions.dart';
+import 'package:kindergarten/net/RequestHelper.dart';
 import 'package:kindergarten/repository/UserModel.dart';
 import 'package:kindergarten/style/TextStyle.dart';
 import 'package:queries/queries.dart';
@@ -18,31 +19,6 @@ class DynamicItemActions extends BasePropsWidget {
 }
 
 class DynamicItemActionsState extends State<DynamicItemActions> {
-  Future<Null> _neverSatisfied() async {
-    var textEditingController = new TextEditingController();
-    return showDialog<Null>(
-      context: context,
-      barrierDismissible: true, // user must tap button!
-      child: new AlertDialog(
-        title: new Text('请输入回复'),
-        content: new TextField(
-          controller: textEditingController,
-          maxLength: 200,
-          maxLines: 5,
-          autofocus: true,
-        ),
-        actions: <Widget>[
-          new FlatButton(
-            child: new Text('发布回复'),
-            onPressed: () {
-//              Navigator.of(context).pop();
-              print(textEditingController.text);
-            },
-          ),
-        ],
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +53,23 @@ class DynamicItemActionsState extends State<DynamicItemActions> {
                     ? accentColor
                     : const Color(0x30808080),
               ),
-              onPressed: () {},
+              onPressed: () {
+                UserProvide.loginChecked(context, () {
+                  if (!likes.contains(UserProvide
+                      .getCacheUser()
+                      .id
+                      .toString())) {
+                    RequestHelper.commitDynamicLiked(
+                        widget.props['singleData']['id']).then((onValue) {
+                      setState(() {
+                        likes.add(UserProvide
+                            .getCacheUser()
+                            .id);
+                      });
+                    }).catchError((onError) {});
+                  }
+                });
+              },
             ),
             new IconButton(
               padding: const EdgeInsets.all(10.0),
