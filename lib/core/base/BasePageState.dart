@@ -11,6 +11,9 @@ LinkedHashMap<String, Widget> allPageInstance =
 
 abstract class BasePageState<T extends BasePageRoute>
     extends State<T> /*with WidgetsBindingObserver*/ {
+  final GlobalKey<ScaffoldState> scaffoldStateKey =
+      new GlobalKey<ScaffoldState>();
+
   @override
   void dispose() {
     super.dispose();

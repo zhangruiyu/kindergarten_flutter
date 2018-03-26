@@ -16,10 +16,12 @@ final List<HomeItemWidget> accountCenterItemList = <HomeItemWidget>[
 ];
 
 final List<HomeItemWidget> accountBottomItemList = <HomeItemWidget>[
-  new HomeItemWidget(url: "ic_local_grocery_store.png",
+  new HomeItemWidget(
+      url: "ic_local_grocery_store.png",
       title: "账号安全",
       routeName: SettingPage.routeName),
-  new HomeItemWidget(url: "ic_settings_black.png",
+  new HomeItemWidget(
+      url: "ic_settings_black.png",
       title: "关于",
       routeName: SettingPage.routeName),
 ];
@@ -43,10 +45,9 @@ class AccountPageState extends BasePageState<AccountPage> {
         setState(() {
           accountProfile = data;
           UserProvide.saveAndUpdate(() {
-            UserProvide
-                .getCacheUser()
-                .roleCode =
-            accountProfile['roleCode'];
+            UserProvide.getCacheUser().roleCode = accountProfile['roleCode'];
+            UserProvide.getCacheUser().avatar = accountProfile['avatar'];
+            UserProvide.getCacheUser().nickName = accountProfile['nickName'];
             print(accountProfile['roleCode']);
           });
           print('AccountPageState  == ');
@@ -65,60 +66,58 @@ class AccountPageState extends BasePageState<AccountPage> {
     return new Scaffold(
       body: new SingleChildScrollView(
           child: new Column(
-            children: <Widget>[
-              //第一行3个标签
-              new Container(
-                margin: const EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 0.0),
-                child: new Card(
-                    child: new Padding(
-                      padding: const EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 16.0),
-                      child: new Center(
-                          child: new AccountTopUI({
-                            'cbk': refreshPage,
-                            'accountProfile': accountProfile,
-                          })),
-                    )),
-                //第二行3个标签
-              ),
-              //中间卡片
-              new Card(
-                elevation: 1.0,
-                child: new Column(
-                    children: accountCenterItemList.map((item) {
-                      return new LoginIconItem(
-                        icon: item.url,
-                        onPressed: () {
-                          /*_scaffoldKey.currentState.showSnackBar(const SnackBar(
+        children: <Widget>[
+          //第一行3个标签
+          new Container(
+            margin: const EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 0.0),
+            child: new Card(
+                child: new Padding(
+              padding: const EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 16.0),
+              child: new Center(
+                  child: new AccountTopUI({
+                'cbk': refreshPage,
+                'accountProfile': accountProfile,
+              })),
+            )),
+            //第二行3个标签
+          ),
+          //中间卡片
+          new Card(
+            elevation: 1.0,
+            child: new Column(
+                children: accountCenterItemList.map((item) {
+              return new LoginIconItem(
+                icon: item.url,
+                onPressed: () {
+                  /*_scaffoldKey.currentState.showSnackBar(const SnackBar(
                   content: const Text('Pretend that this opened your SMS application.')
               ));*/
+                },
+                text: item.title,
+              );
+            }).toList()),
+          ),
+          //底部卡片
+          new Card(
+            elevation: 1.0,
+            child: new Column(
+                children: accountBottomItemList.map((item) {
+              return new LoginIconItem(
+                icon: item.url,
+                onPressed: () {
+                  Navigator.of(context).push(new MaterialPageRoute<bool>(
+                        builder: (BuildContext context) {
+                          return new SettingPage({'cbk': refreshPage});
                         },
-                        text: item.title,
-                      );
-                    }).toList()),
-              ),
-              //底部卡片
-              new Card(
-                elevation: 1.0,
-                child: new Column(
-                    children: accountBottomItemList.map((item) {
-                      return new LoginIconItem(
-                        icon: item.url,
-                        onPressed: () {
-                          Navigator
-                              .of(context)
-                              .push(new MaterialPageRoute<bool>(
-                            builder: (BuildContext context) {
-                              return new SettingPage(
-                                  {'cbk': refreshPage});
-                            },
-                          ));
-                        },
-                        text: item.title,
-                      );
-                    }).toList()),
-              ),
-            ],
-          )),
+                        settings: const RouteSettings(name: SettingPage.routeName),
+                      ));
+                },
+                text: item.title,
+              );
+            }).toList()),
+          ),
+        ],
+      )),
     );
   }
 }

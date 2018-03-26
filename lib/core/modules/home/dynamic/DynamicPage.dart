@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:kindergarten/core/modules/auth/LoginPage.dart';
+import 'package:kindergarten/repository/UserModel.dart';
 import 'package:refresh_wow/refresh_wow.dart';
 import 'package:kindergarten/core/base/BasePageRoute.dart';
 import 'package:kindergarten/core/base/BasePageState.dart';
@@ -18,13 +20,12 @@ typedef void BannerTapCallback(HomeItemWidget photo);
 class DynamicPage extends BasePageRoute {
   DynamicPage([Map<String, String> props]) : super(props);
 
-
   @override
   State<StatefulWidget> createState() => new DynamicPageState();
 }
 
 class DynamicPageState extends BasePageState<DynamicPage> {
-  var localList = {'allClassRoomUserInfo': [], 'dynamics': []};
+  static var localList = {'allClassRoomUserInfo': [], 'dynamics': []};
   var pageIndex = 0;
   var hasMore = false;
 
@@ -61,16 +62,17 @@ class DynamicPageState extends BasePageState<DynamicPage> {
     return completer;
   }
 
-
   @override
   void initState() {
     super.initState();
   }
 
   refreshPage() {
-    SK.dynamicRefreshIndicatorKey.currentState.show();
+    SK.dynamicRefreshIndicatorKey.currentState?.show();
   }
-
+  refreshBackgroundPage() {
+    _fetchData().future.then((v){}).catchError((){});
+  }
   @override
   Widget build(BuildContext context) {
     print(hasMore);
@@ -79,34 +81,37 @@ class DynamicPageState extends BasePageState<DynamicPage> {
     for (var value in allClassRoomUserInfo) {
       allClassRoomUserMap[value['userId']] = value;
     }
-    return
-      localList != null
-          ? new RefreshListView(
-        refreshIndicatorKey: SK.dynamicRefreshIndicatorKey,
-        itemData: localList['dynamics'],
-        onRefresh: _handleRefresh,
-        onLoadMore: hasMore ?
-        _handleLoadMore
-            : null,
+    return UserProvide.getCacheUser() != null
+        ? new RefreshListView(
+            refreshIndicatorKey: SK.dynamicRefreshIndicatorKey,
+            itemData: localList['dynamics'],
+            onRefresh: _handleRefresh,
+            onLoadMore: hasMore ? _handleLoadMore : null,
 //          physics: AlwaysScrollableScrollPhysics(),
-        itemBuilder: (BuildContext context, int index, dynamic singleData) {
-          return new CustomCard(
-              elevation: 1.0,
-              padding:
-              const EdgeInsets.fromLTRB(14.0, 15.0, 10.0, 15.0),
-              child: new Column(
-                children: <Widget>[
-                  new DynamicItemTop(
-                      singleData: singleData,
-                      allClassRoomUserInfo: allClassRoomUserMap),
-                  new DynamicItemCenter(singleData: singleData),
-                  new DynamicComments(
-                      singleData: singleData,
-                      allClassRoomUserInfo: allClassRoomUserMap)
-                ],
-              ));
-        },
-      )
-          : new Text("请登陆后尝试");
+            itemBuilder: (BuildContext context, int index, dynamic singleData) {
+              return new CustomCard(
+                  elevation: 1.0,
+                  padding: const EdgeInsets.fromLTRB(14.0, 15.0, 10.0, 15.0),
+                  child: new Column(
+                    children: <Widget>[
+                      new DynamicItemTop(
+                          singleData: singleData,
+                          allClassRoomUserInfo: allClassRoomUserMap),
+                      new DynamicItemCenter(singleData: singleData),
+                      new DynamicComments(
+                          singleData: singleData,
+                          allClassRoomUserInfo: allClassRoomUserMap)
+                    ],
+                  ));
+            },
+          )
+        : new Center(
+            child: new GestureDetector(
+              child: new Text("请登陆后尝试"),
+              onTap: () {
+                LoginPage.start(context, {'cbk': _handleRefresh});
+              },
+            ),
+          );
   }
 }

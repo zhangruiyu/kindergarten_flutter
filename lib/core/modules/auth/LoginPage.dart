@@ -9,6 +9,14 @@ import 'package:kindergarten/style/TextStyle.dart';
 class LoginPage extends BasePageRoute {
   static const String routeName = '/LoginPage';
 
+  static start(context, props) {
+    Navigator.of(context).push(new MaterialPageRoute<bool>(
+      builder: (BuildContext context) {
+        return new LoginPage(props);
+      },
+    ));
+  }
+
   LoginPage([Map<String, dynamic> props]) : super(props);
 
   @override

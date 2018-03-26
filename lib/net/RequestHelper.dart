@@ -24,15 +24,17 @@ class RequestHelper {
   }
 
   static Future getDynamics(int pageIndex) {
-    return RequestClient.request(
-        "$USER_URL/dynamic/list", {'page_index': pageIndex.toString(),
+    return RequestClient.request("$USER_URL/dynamic/list", {
+      'page_index': pageIndex.toString(),
       'dynamic_type': '1',
-      'page_size': '5'});
+      'page_size': '5'
+    });
   }
 
   static Future getSchoolAlbum() {
     return RequestClient.request(
-      "$USER_URL/album/schoolAlbum",);
+      "$USER_URL/album/schoolAlbum",
+    );
   }
 
   static Future getInforms(int pageIndex) {
@@ -65,8 +67,17 @@ class RequestHelper {
   }
 
   static Future commitDynamicLiked(String dynamicId) {
-    return RequestClient.request("$USER_URL/dynamic/commitLiked",
-        {'dynamicId': dynamicId});
+    return RequestClient
+        .request("$USER_URL/dynamic/commitLiked", {'dynamicId': dynamicId});
   }
 
+  static Future reviseProfile(
+      int checkGender, int relationCheck, String address, String avatarUrl) {
+    return RequestClient.request("$USER_URL/reviseProfile", {
+      'checkGender': checkGender.toString(),
+      'relationCheck': relationCheck.toString(),
+      'address': address.toString(),
+      'avatarUrl': avatarUrl.toString(),
+    });
+  }
 }

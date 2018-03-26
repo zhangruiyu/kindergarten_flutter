@@ -66,7 +66,7 @@ class HomePage extends BasePageRoute {
 }
 
 class HomePageState extends BasePageState<HomePage> {
-  List bannerData = [];
+  static List bannerData = [];
 
   refreshPage() async {
     _handleRefresh().then((onValue) {});

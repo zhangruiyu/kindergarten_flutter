@@ -15,10 +15,6 @@ class SettingPage extends BasePageRoute {
 }
 
 class SettingPageState extends BasePageState<SettingPage> {
-  static final GlobalKey<ScaffoldState> scaffoldStateKey =
-  new GlobalKey<ScaffoldState>();
-
-
   @override
   Widget build(BuildContext context) {
     var edgeInsets = new EdgeInsets.only(top: 10.0);
@@ -65,7 +61,7 @@ class SettingPageState extends BasePageState<SettingPage> {
                           new Align(
                             child: new Padding(
                               padding:
-                              const EdgeInsets.symmetric(horizontal: 20.0),
+                                  const EdgeInsets.symmetric(horizontal: 20.0),
                               child: new Text(
                                 '关于我们',
                                 style: textStyle,
@@ -85,7 +81,7 @@ class SettingPageState extends BasePageState<SettingPage> {
                           new Align(
                             child: new Padding(
                               padding:
-                              const EdgeInsets.symmetric(horizontal: 20.0),
+                                  const EdgeInsets.symmetric(horizontal: 20.0),
                               child: new Text(
                                 '版本更新',
                                 style: textStyle,
@@ -98,31 +94,28 @@ class SettingPageState extends BasePageState<SettingPage> {
                 // onSubmitted：当用户在键盘上点击完成编辑时调用
               ]),
             ),
-            UserProvide.getCacheUser() == null ? null :
-            new FlatButton(
-              padding: new EdgeInsets.only(
-                  bottom: WindowUtils.isIPhoneX(context) ? 26.0 : 0.0),
-              child: new SizedBox(
-                  width: WindowUtils.getScreenWidth(),
-                  height: 45.0,
-                  child: new Center(
-                    child: new Text(
-                      '退出登录',
-                      textAlign: TextAlign.center,
-                      style: new TextStyle(
-                          color: const Color(0xffffffff), fontSize: 18.0),
-                    ),
-                  )),
-              onPressed: () async {
-                await UserProvide.loginOut();
-                Navigator
-                    .of(context).pop();
-              },
-              color: Theme
-                  .of(context)
-                  .accentColor,
-            ),
-
+            UserProvide.getCacheUser() == null
+                ? null
+                : new FlatButton(
+                    padding: new EdgeInsets.only(
+                        bottom: WindowUtils.isIPhoneX(context) ? 26.0 : 0.0),
+                    child: new SizedBox(
+                        width: WindowUtils.getScreenWidth(),
+                        height: 45.0,
+                        child: new Center(
+                          child: new Text(
+                            '退出登录',
+                            textAlign: TextAlign.center,
+                            style: new TextStyle(
+                                color: const Color(0xffffffff), fontSize: 18.0),
+                          ),
+                        )),
+                    onPressed: () async {
+                      await UserProvide.loginOut();
+                      Navigator.of(context).pop();
+                    },
+                    color: Theme.of(context).accentColor,
+                  ),
           ].where((Object o) => o != null).toList(),
         ));
   }
