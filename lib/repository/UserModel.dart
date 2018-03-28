@@ -16,6 +16,7 @@
 //    wxNickName VARCHAR
 
 import 'dart:async';
+import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:kindergarten/core/modules/auth/LoginPage.dart';
 
@@ -152,7 +153,7 @@ class UserModel {
   }
 
   Map toMap() {
-    Map map = {};
+    HashMap<String, dynamic> map = new HashMap<String, dynamic>();
     if (id != null) {
       map[ID] = id;
     }
