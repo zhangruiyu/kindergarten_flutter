@@ -116,22 +116,23 @@ class UserModel {
 
   String wxNickName;
 
-  UserModel({this.id,
-    this.tel,
-    this.token,
-    this.isOnline,
-    this.nickName,
-    this.roleCode,
-    this.avatar,
-    this.gender,
-    this.address,
-    this.relation,
-    this.ysToken,
-    this.schoolName,
-    this.qqOpenId,
-    this.wxOpenId,
-    this.qqNickName,
-    this.wxNickName});
+  UserModel(
+      {this.id,
+      this.tel,
+      this.token,
+      this.isOnline,
+      this.nickName,
+      this.roleCode,
+      this.avatar,
+      this.gender,
+      this.address,
+      this.relation,
+      this.ysToken,
+      this.schoolName,
+      this.qqOpenId,
+      this.wxOpenId,
+      this.qqNickName,
+      this.wxNickName});
 
   UserModel.fromMap(Map map) {
     id = map[ID];
@@ -258,11 +259,12 @@ class UserProvide {
 
   static loginOut() async {
     Database db = await KindergartenDatabase.openKindergartenDatabase();
-    await db.delete(UserTalbeName,);
+    await db.delete(
+      UserTalbeName,
+    );
     db.close();
     _userCache = null;
   }
-
 
   //更细到内存并写入数据库
   static saveAndUpdate(setUp) {
@@ -282,21 +284,13 @@ class UserProvide {
     if (haveOnlineUser()) {
       onSuccessCallback();
     } else {
-      Navigator.of(context).push(new MaterialPageRoute<bool>(
-        builder: (BuildContext context) {
-          return new LoginPage(props);
-        },
-      ));
+      LoginPage.start(context, props);
     }
   }
 
   //是否是普通人员
   static isNormalPeople() {
-    return (UserProvide
-        .getCacheUser()
-        .roleCode != null &&
-        int.parse(UserProvide
-            .getCacheUser()
-            .roleCode) < 1);
+    return (UserProvide.getCacheUser().roleCode != null &&
+        int.parse(UserProvide.getCacheUser().roleCode) < 1);
   }
 }

@@ -1,29 +1,28 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:kindergarten/core/base/BasePageRoute.dart';
 import 'package:kindergarten/core/base/BasePageState.dart';
-import 'package:kindergarten/core/modules/inform/InformItemView.dart';
-import 'package:kindergarten/core/uikit/CustomCard.dart';
-import 'package:kindergarten/core/utils/WindowUtils.dart';
 import 'package:kindergarten/net/RequestHelper.dart';
 
-class InformPage extends BasePageRoute {
-  static const String routeName = '/InformPage';
+class WebViewPage extends BasePageRoute {
+  static const String routeName = '/WebViewPage';
 
   @override
   String getRouteName() {
     return routeName;
   }
-  InformPage([Map<String, dynamic> props]) : super(props);
+
+  WebViewPage([Map<String, dynamic> props]) : super(props);
 
   @override
   State<StatefulWidget> createState() {
-    return new InformPageState();
+    return new WebViewPageState();
   }
 }
 
-class InformPageState extends BasePageState<InformPage> {
+class WebViewPageState extends BasePageState<WebViewPage> {
   var informData = [];
   final GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
       new GlobalKey<RefreshIndicatorState>();
@@ -31,9 +30,6 @@ class InformPageState extends BasePageState<InformPage> {
   @override
   initState() {
     super.initState();
-    new Timer(new Duration(milliseconds: 300), () {
-      refreshIndicatorKey.currentState.show();
-    });
   }
 
   Future<Null> _handleRefresh() {
@@ -59,21 +55,17 @@ class InformPageState extends BasePageState<InformPage> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-        appBar: new AppBar(
-          title: new Text('通知'),
-        ),
-        body: new RefreshIndicator(
-            key: refreshIndicatorKey,
-            onRefresh: _handleRefresh,
-            child: new ListView.builder(
-              itemCount: informData.length,
-//          physics: AlwaysScrollableScrollPhysics(),
-              itemBuilder: (BuildContext context, int index) {
-                var singleData = informData[index];
-
-                return new InformItemView(singleData: singleData);
-              },
-            )));
+    return new WebviewScaffold(
+      appBar: new AppBar(title: new Text('发布动态'), actions: [
+        new IconButton(
+          icon: const Icon(Icons.refresh),
+          tooltip: '刷新',
+          onPressed: () {
+//        commitChange();
+          },
+        )
+      ]),
+      url: widget.props['url'],
+    );
   }
 }

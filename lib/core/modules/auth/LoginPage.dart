@@ -9,12 +9,13 @@ import 'package:kindergarten/style/TextStyle.dart';
 class LoginPage extends BasePageRoute {
   static const String routeName = '/LoginPage';
 
+  @override
+  String getRouteName() {
+    return routeName;
+  }
+
   static start(context, props) {
-    Navigator.of(context).push(new MaterialPageRoute<bool>(
-      builder: (BuildContext context) {
-        return new LoginPage(props);
-      },
-    ));
+    Navigator.of(context).push(new LoginPage(props).route());
   }
 
   LoginPage([Map<String, dynamic> props]) : super(props);
@@ -30,11 +31,7 @@ class LoginPageState extends BasePageState<LoginPage> {
     if (tel.length < 11) {}
     RequestHelper.verifyIsRegister(tel).then((value) {
       if (value['data'] == '1') {
-        Navigator.of(context).push(new MaterialPageRoute<bool>(
-          builder: (BuildContext context) {
-            return new InputPasswordPage({'tel': tel});
-          },
-        ));
+        Navigator.of(context).push(new InputPasswordPage({'tel': tel}).route());
       } else {}
     });
   }

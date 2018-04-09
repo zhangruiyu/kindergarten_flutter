@@ -11,7 +11,7 @@ class CameraListItemView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var classRoomWidgets = [];
+    List<Widget> classRoomWidgets = [];
     classRoomWidgets.add(
       new Image.asset(
         'images/unwatch.png',

@@ -18,20 +18,25 @@ class AlbumPage extends BasePageRoute {
 
   static get routeName => '/AlbumPage';
 
-
   @override
   State<StatefulWidget> createState() => new AlbumPageState();
+
+  @override
+  String getRouteName() {
+    return routeName;
+  }
 }
 
 class AlbumPageState extends BasePageState<AlbumPage> {
-  static final GlobalKey<RefreshIndicatorState> albumPageRefreshIndicatorKey =
-  new GlobalKey<RefreshIndicatorState>();
-  List<Map<String, List<Map>>>localList = [];
+  final GlobalKey<RefreshIndicatorState> albumPageRefreshIndicatorKey =
+      new GlobalKey<RefreshIndicatorState>();
+  List localList = [];
+
+//  List<Map<String, List<Map>>>localList = [];
 
   Future<Null> _handleRefresh() {
     return _fetchData().future;
   }
-
 
   Completer<Null> _fetchData() {
     final Completer<Null> completer = new Completer<Null>();
@@ -40,13 +45,9 @@ class AlbumPageState extends BasePageState<AlbumPage> {
       setState(() {
         localList = data;
       });
-    }).catchError((onError) {
-      completer.complete(null);
-      setState(() {});
     });
     return completer;
   }
-
 
   @override
   void initState() {
@@ -56,52 +57,48 @@ class AlbumPageState extends BasePageState<AlbumPage> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
-    return
-      new Scaffold(
-          appBar: new AppBar(
-            title: new Text('校园相册'),
-          ),
-          body: new RefreshListView(
-            refreshIndicatorKey: albumPageRefreshIndicatorKey,
-            itemData: localList,
-            onRefresh: _handleRefresh,
+    return new Scaffold(
+        appBar: new AppBar(
+          title: new Text('校园相册'),
+        ),
+        body: new RefreshListView(
+          refreshIndicatorKey: albumPageRefreshIndicatorKey,
+          itemData: localList,
+          onRefresh: _handleRefresh,
 //          physics: AlwaysScrollableScrollPhysics(),
-            itemBuilder: (BuildContext context, int index,
-                Map<String, List<Map>> singleData) {
-              return new CustomCard(
-                  elevation: 1.0,
-                  padding:
-                  const EdgeInsets.fromLTRB(14.0, 15.0, 10.0, 15.0),
-                  child: new Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      new Padding(
-                        padding: const EdgeInsets.only(left: 10.0, bottom: 10.0)
-                        , child: new Text(singleData['data'].toString(),
-                          textAlign: TextAlign.left),),
-
-                      new GridView.count(
-                        primary: false,
-                        crossAxisSpacing: 10.0,
-                        mainAxisSpacing: 10.0,
-                        crossAxisCount: 3,
-                        shrinkWrap: true,
-                        children: singleData['addition'].map((picItem) {
-                          print(picItem);
-                          return picItem['picUrl'];
-                        }).map((item) {
-                          return new CachedNetworkImage(
-                            imageUrl: item,
-                            errorWidget: new Icon(Icons.error),
-                          );
-                        }).toList(),
-                      )
-                    ],
-                  ));
-            },
-          ));
+          itemBuilder: (BuildContext context, int index, dynamic singleData) {
+            return new CustomCard(
+                elevation: 1.0,
+                padding: const EdgeInsets.fromLTRB(14.0, 15.0, 10.0, 15.0),
+                child: new Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    new Padding(
+                      padding: const EdgeInsets.only(left: 10.0, bottom: 10.0),
+                      child: new Text(singleData['data'].toString(),
+                          textAlign: TextAlign.left),
+                    ),
+                    new GridView.count(
+                      primary: false,
+                      crossAxisSpacing: 10.0,
+                      mainAxisSpacing: 10.0,
+                      crossAxisCount: 3,
+                      shrinkWrap: true,
+                      children: singleData['addition'].map((picItem) {
+                        print(picItem);
+                        return picItem['picUrl'];
+                      }).map<Widget>((item) {
+                        return new CachedNetworkImage(
+                          imageUrl: item,
+                          errorWidget: new Icon(Icons.error),
+                        );
+                      }).toList(),
+                    )
+                  ],
+                ));
+          },
+        ));
   }
 }

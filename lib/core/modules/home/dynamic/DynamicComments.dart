@@ -26,7 +26,7 @@ class DynamicCommentsState extends State<DynamicComments> {
   @override
   Widget build(BuildContext context) {
     //所有的按钮和点赞和大评论控件
-    var allCommentWidget = [];
+    List<Widget> allCommentWidget = [];
 
     var accentColor = Theme.of(context).accentColor;
     var kgDynamicCommentLists =
@@ -63,7 +63,7 @@ class DynamicCommentsState extends State<DynamicComments> {
           //单个子评论控件集合
           var singleCommentEntity = list[j];
           singleCommentEntity;
-          var singleCommentWidget = [];
+          List<TextSpan> singleCommentWidget = [];
           var containsUser = (widget.allClassRoomUserInfo as Map)
               .containsKey(singleCommentEntity['userId'].toString());
           singleCommentWidget.add(

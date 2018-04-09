@@ -8,22 +8,23 @@ import 'package:kindergarten/core/uikit/CustomCard.dart';
 import 'package:kindergarten/core/utils/WindowUtils.dart';
 import 'package:kindergarten/net/RequestHelper.dart';
 
-class InformPage extends BasePageRoute {
-  static const String routeName = '/InformPage';
+class EditDynamicPage extends BasePageRoute {
+  static const String routeName = '/EditDynamicPage';
 
   @override
   String getRouteName() {
     return routeName;
   }
-  InformPage([Map<String, dynamic> props]) : super(props);
+
+  EditDynamicPage([Map<String, dynamic> props]) : super(props);
 
   @override
   State<StatefulWidget> createState() {
-    return new InformPageState();
+    return new EditDynamicPageState();
   }
 }
 
-class InformPageState extends BasePageState<InformPage> {
+class EditDynamicPageState extends BasePageState<EditDynamicPage> {
   var informData = [];
   final GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
       new GlobalKey<RefreshIndicatorState>();
@@ -60,20 +61,25 @@ class InformPageState extends BasePageState<InformPage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        appBar: new AppBar(
-          title: new Text('通知'),
-        ),
-        body: new RefreshIndicator(
-            key: refreshIndicatorKey,
-            onRefresh: _handleRefresh,
-            child: new ListView.builder(
-              itemCount: informData.length,
-//          physics: AlwaysScrollableScrollPhysics(),
-              itemBuilder: (BuildContext context, int index) {
-                var singleData = informData[index];
-
-                return new InformItemView(singleData: singleData);
-              },
-            )));
+        appBar: new AppBar(title: new Text('发布动态'), actions: [
+          new IconButton(
+            icon: const Icon(Icons.send),
+            tooltip: '提交修改',
+            onPressed: () {
+//        commitChange();
+            },
+          )
+        ]),
+        body: Container(
+          padding: const EdgeInsets.all(8.0),
+          constraints: BoxConstraints(minHeight: 120.0),
+          height: 200.0,
+          child: TextFormField(
+            maxLines: 1,
+//            keyboardType: TextInputType.multiline,
+//            maxLength: 500,
+            decoration: const InputDecoration(hintText: '请输入内容...'),
+          ),
+        ));
   }
 }

@@ -16,12 +16,18 @@ import 'package:kindergarten/net/RequestHelper.dart';
 
 typedef void BannerTapCallback(HomeItemWidget photo);
 
-// ignore: must_be_immutable
 class DynamicPage extends BasePageRoute {
   DynamicPage([Map<String, String> props]) : super(props);
 
   @override
   State<StatefulWidget> createState() => new DynamicPageState();
+
+  static String routeName = 'DynamicPage';
+
+  @override
+  String getRouteName() {
+    return routeName;
+  }
 }
 
 class DynamicPageState extends BasePageState<DynamicPage> {
@@ -70,9 +76,11 @@ class DynamicPageState extends BasePageState<DynamicPage> {
   refreshPage() {
     SK.dynamicRefreshIndicatorKey.currentState?.show();
   }
+
   refreshBackgroundPage() {
-    _fetchData().future.then((v){}).catchError((){});
+    _fetchData().future.then((v) {}).catchError(() {});
   }
+
   @override
   Widget build(BuildContext context) {
     print(hasMore);

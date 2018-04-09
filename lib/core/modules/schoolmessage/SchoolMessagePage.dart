@@ -13,6 +13,10 @@ import 'package:kindergarten/repository/UserModel.dart';
 class SchoolMessagePage extends BasePageRoute {
   static const String routeName = '/SchoolMessagePage';
 
+  @override
+  String getRouteName() {
+    return routeName;
+  }
   SchoolMessagePage([Map<String, dynamic> props]) : super(props);
 
   @override

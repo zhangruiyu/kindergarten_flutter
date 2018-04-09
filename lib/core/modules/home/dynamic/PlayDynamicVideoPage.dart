@@ -11,6 +11,13 @@ typedef void BannerTapCallback(HomeItemWidget photo);
 // ignore: must_be_immutable
 
 class PlayDynamicVideoPage extends BasePageRoute {
+  static String routeName = 'PlayDynamicVideoPage';
+
+  @override
+  String getRouteName() {
+    return routeName;
+  }
+
   PlayDynamicVideoPage([Map<String, String> props]) : super(props) {
     /*SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeRight,

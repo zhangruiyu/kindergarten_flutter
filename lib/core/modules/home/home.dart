@@ -4,26 +4,23 @@ import 'package:kindergarten/core/modules/Routes.dart';
 import 'package:kindergarten/core/modules/home/homeTab.dart';
 
 final ThemeData _kGalleryLightTheme = new ThemeData(
-  brightness: Brightness.light,
-  primarySwatch: Colors.blue,
-  backgroundColor: const Color(0xfff4f4f4)
-);
+    brightness: Brightness.light,
+    primarySwatch: Colors.blue,
+    backgroundColor: const Color(0xfff4f4f4));
 
 final ThemeData _kGalleryDarkTheme = new ThemeData(
   brightness: Brightness.dark,
   primarySwatch: Colors.blue,
 );
 
-
 class KindergartenApp extends StatefulWidget {
-  const KindergartenApp({
-    this.enablePerformanceOverlay: true,
-    this.checkerboardRasterCacheImages: true,
-    this.checkerboardOffscreenLayers: true,
-    this.onSendFeedback,
-    Key key}
-      ) : super(key: key);
-
+  const KindergartenApp(
+      {this.enablePerformanceOverlay: true,
+      this.checkerboardRasterCacheImages: true,
+      this.checkerboardOffscreenLayers: true,
+      this.onSendFeedback,
+      Key key})
+      : super(key: key);
 
   final bool enablePerformanceOverlay;
 
@@ -37,7 +34,6 @@ class KindergartenApp extends StatefulWidget {
   KindergartenAppState createState() => new KindergartenAppState();
 }
 
-
 class KindergartenAppState extends State<KindergartenApp> {
   bool _useLightTheme = true;
   bool _showPerformanceOverlay = false;
@@ -49,22 +45,20 @@ class KindergartenAppState extends State<KindergartenApp> {
   // A null value indicates "use system default".
   double _textScaleFactor;
 
-
   Widget _applyScaleFactor(Widget child) {
     return new Builder(
       builder: (BuildContext context) => new MediaQuery(
-        data: MediaQuery.of(context).copyWith(
-          textScaleFactor: _textScaleFactor,
-        ),
-        child: child,
-      ),
+            data: MediaQuery.of(context).copyWith(
+                  textScaleFactor: _textScaleFactor,
+                ),
+            child: child,
+          ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     Widget home = new HomeTab(Theme.of(context));
-
 
     final Map<String, WidgetBuilder> _kRoutes = <String, WidgetBuilder>{};
     for (GalleryItem item in kAllGalleryItems) {
@@ -78,15 +72,14 @@ class KindergartenAppState extends State<KindergartenApp> {
     return new MaterialApp(
       title: 'Flutter Gallery',
       color: Colors.grey,
-      theme: (_useLightTheme ? _kGalleryLightTheme : _kGalleryDarkTheme).copyWith(platform: _platform ?? defaultTargetPlatform),
+      theme: (_useLightTheme ? _kGalleryLightTheme : _kGalleryDarkTheme)
+          .copyWith(platform: _platform ?? defaultTargetPlatform),
       showPerformanceOverlay: _showPerformanceOverlay,
       checkerboardRasterCacheImages: _checkerboardRasterCacheImages,
       checkerboardOffscreenLayers: _checkerboardOffscreenLayers,
       routes: _kRoutes,
       home: _applyScaleFactor(home),
-      navigatorObservers: [
-        new KgNavigatorObserver()
-      ],
+      navigatorObservers: [new KgNavigatorObserver()],
       builder: (BuildContext context, Widget child) {
         return new Directionality(
           textDirection: _overrideDirection,
@@ -96,16 +89,20 @@ class KindergartenAppState extends State<KindergartenApp> {
     );
   }
 }
-class KgNavigatorObserver extends NavigatorObserver{
 
+class KgNavigatorObserver extends NavigatorObserver {
   /// The [Navigator] pushed `route`.
   void didPush(Route<dynamic> route, Route<dynamic> previousRoute) {
-    print('didPush$route');
+    if (route is MaterialPageRoute) {
+      print('didPush${route.settings.name}');
+    }
   }
 
   /// The [Navigator] popped `route`.
   void didPop(Route<dynamic> route, Route<dynamic> previousRoute) {
-    print('didPop$route');
+    if (route is MaterialPageRoute) {
+      print('didPop${route.settings.name}');
+    }
   }
 
   /// The [Navigator] removed `route`.
@@ -117,10 +114,10 @@ class KgNavigatorObserver extends NavigatorObserver{
   ///
   /// For example, this is called when an iOS back gesture starts, and is used
   /// to disabled hero animations during such interactions.
-  void didStartUserGesture() { }
+  void didStartUserGesture() {}
 
   /// User gesture is no longer controlling the [Navigator].
   ///
   /// Paired with an earlier call to [didStartUserGesture].
-  void didStopUserGesture() { }
+  void didStopUserGesture() {}
 }

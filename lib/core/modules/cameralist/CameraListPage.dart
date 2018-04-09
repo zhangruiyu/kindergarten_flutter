@@ -13,6 +13,10 @@ import 'package:kindergarten/net/RequestHelper.dart';
 class CameraListPage extends BasePageRoute {
   static const String routeName = '/CameraListPage';
 
+  @override
+  String getRouteName() {
+    return routeName;
+  }
   CameraListPage([Map<String, dynamic> props]) : super(props);
 
   @override

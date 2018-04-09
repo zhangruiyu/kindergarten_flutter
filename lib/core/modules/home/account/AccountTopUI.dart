@@ -32,59 +32,57 @@ class AccountTopState extends BasePropsState<AccountTopUI> {
         widget.props['accountProfile']['avatar'] != null;
     return UserProvide.getCacheUser() != null
         ? new Padding(
-        padding: const EdgeInsets.fromLTRB(30.0, 10.0, 10.0, 10.0),
-        child: new GestureDetector(
-            onTap: () {
-              Navigator.of(context).push(new MaterialPageRoute<bool>(
-                builder: (BuildContext context) {
-                  return new UserInfoPage({'cbk': widget.props['cbk']});
+            padding: const EdgeInsets.fromLTRB(30.0, 10.0, 10.0, 10.0),
+            child: new GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                      new UserInfoPage({'cbk': widget.props['cbk']}).route());
                 },
-              ));
-            },
-            child: new Row(
-              children: <Widget>[
-                new CircleImage(
-                  isContainsAvatar: isContainsAvatar,
-                  text: 'Hi',
-                  avatarUrl: isContainsAvatar
-                      ? widget.props['accountProfile']['avatar']
-                      : '',
-                ),
-                new Padding(
-                  padding: const EdgeInsets.only(left: 18.0),
-                  child: new Column(
-                    children: <Widget>[
-                      new Text('nick', style: titleStyle),
-                      new Text('nick2', style: subjectStyle)
-                    ],
-                  ),
-                )
-              ],
-            )))
-        : new Column(
-      children: [
-        new Text(
-          "登陆小助手,体验更多功能",
-          style: titleStyle,
-        ),
-        new Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: loginIconList.map((HomeItemWidget loginIcon) {
-              return new Padding(
-                  padding:
-                  const EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 20.0),
-                  child: new GestureDetector(
-                    onTap: () {
-                      LoginPage.start(context, {'cbk': widget.props['cbk']});
-                    },
-                    child: new Image.asset(
-                      'images/${loginIcon.url}',
-                      width: 40.0,
-                      height: 40.0,
+                child: new Row(
+                  children: <Widget>[
+                    new CircleImage(
+                      isContainsAvatar: isContainsAvatar,
+                      text: 'Hi',
+                      avatarUrl: isContainsAvatar
+                          ? widget.props['accountProfile']['avatar']
+                          : '',
                     ),
-                  ));
-            }).toList()),
-      ],
-    );
+                    new Padding(
+                      padding: const EdgeInsets.only(left: 18.0),
+                      child: new Column(
+                        children: <Widget>[
+                          new Text('nick', style: titleStyle),
+                          new Text('nick2', style: subjectStyle)
+                        ],
+                      ),
+                    )
+                  ],
+                )))
+        : new Column(
+            children: [
+              new Text(
+                "登陆小助手,体验更多功能",
+                style: titleStyle,
+              ),
+              new Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: loginIconList.map((HomeItemWidget loginIcon) {
+                    return new Padding(
+                        padding:
+                            const EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 20.0),
+                        child: new GestureDetector(
+                          onTap: () {
+                            LoginPage
+                                .start(context, {'cbk': widget.props['cbk']});
+                          },
+                          child: new Image.asset(
+                            'images/${loginIcon.url}',
+                            width: 40.0,
+                            height: 40.0,
+                          ),
+                        ));
+                  }).toList()),
+            ],
+          );
   }
 }

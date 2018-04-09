@@ -17,7 +17,12 @@ import 'package:refresh_wow/refresh_wow.dart';
 typedef void BannerTapCallback(HomeItemWidget photo);
 
 class UserInfoPage extends BasePageRoute {
-  UserInfoPage([Map<String, String> props]) : super(props);
+  UserInfoPage([Map<String, dynamic> props]) : super(props);
+
+  @override
+  String getRouteName() {
+    return routeName;
+  }
 
   static get routeName => '/UserInfoPage';
 

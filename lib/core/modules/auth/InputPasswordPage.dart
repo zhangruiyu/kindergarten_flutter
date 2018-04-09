@@ -13,6 +13,11 @@ class InputPasswordPage extends BasePageRoute {
 
   @override
   State<StatefulWidget> createState() => new InputPasswordPageState();
+
+  @override
+  String getRouteName() {
+    return routeName;
+  }
 }
 
 class InputPasswordPageState extends BasePageState<InputPasswordPage> {

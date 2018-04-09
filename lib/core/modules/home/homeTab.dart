@@ -1,23 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:kindergarten/core/base/BasePageRoute.dart';
 import 'package:kindergarten/core/constant/Constant.dart';
 import 'package:kindergarten/core/modules/SK.dart';
+import 'package:kindergarten/core/modules/editdynamic/EditDynamicPage.dart';
 import 'package:kindergarten/core/modules/home/home/HomePage.dart';
 import 'package:kindergarten/core/modules/home/NavigationPageView.dart';
 import 'package:kindergarten/core/modules/home/account/AccountPage.dart';
 import 'package:kindergarten/core/modules/home/dynamic/DynamicPage.dart';
+import 'package:kindergarten/core/modules/webview/WebViewPage.dart';
 import 'dart:async';
 
 import 'package:kindergarten/repository/UserModel.dart';
 
-class HomeTab extends StatefulWidget {
+class HomeTab extends BasePageRoute {
   static const String routeName = '/material/bottom_navigation';
   final ThemeData themeData;
 
-  HomeTab(this.themeData) : super(key: SK.bottomNavigationDemoStateKey);
+  HomeTab(this.themeData) : super({}, key: SK.bottomNavigationDemoStateKey);
 
   @override
   State<StatefulWidget> createState() =>
       new BottomNavigationDemoState(themeData);
+
+  @override
+  String getRouteName() {
+    return routeName;
+  }
 }
 
 class BottomNavigationDemoState extends State<HomeTab>
@@ -108,7 +116,7 @@ class BottomNavigationDemoState extends State<HomeTab>
           _currentIndex = index;
           _navigationViews[_currentIndex].controller.forward();
           var currentView = _navigationViews[_currentIndex].content;
-          new Timer(new Duration(milliseconds: 200), () {
+          new Timer(new Duration(milliseconds: 50), () {
             if (currentView is HomePage) {
               SK.homepageRefreshIndicatorKey.currentState?.show();
             } else if (currentView is DynamicPage) {
@@ -124,7 +132,6 @@ class BottomNavigationDemoState extends State<HomeTab>
     new Timer(new Duration(milliseconds: refreshDelay), () {
       SK.homepageRefreshIndicatorKey.currentState?.show();
     });
-
 
     return new Scaffold(
       appBar: new AppBar(
@@ -153,7 +160,10 @@ class BottomNavigationDemoState extends State<HomeTab>
       body: new Center(child: _buildTransitionsStack()),
       bottomNavigationBar: botNavBar,
       floatingActionButton: new FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).push(new EditDynamicPage().route());
+//          Navigator.of(context).push(new WebViewPage({'url':'http://baidu.com'}).route());
+        },
         tooltip: '长按发表视频动态',
         child: new Icon(Icons.add),
       ),

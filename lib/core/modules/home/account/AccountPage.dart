@@ -30,6 +30,13 @@ class AccountPage extends BasePageRoute {
   AccountPage([Map<String, String> props])
       : super(props, key: SK.accountPageStateKey);
 
+  static String routeName = 'AccountPage';
+
+  @override
+  String getRouteName() {
+    return routeName;
+  }
+
   @override
   State<StatefulWidget> createState() {
     return new AccountPageState();
@@ -105,12 +112,9 @@ class AccountPageState extends BasePageState<AccountPage> {
               return new LoginIconItem(
                 icon: item.url,
                 onPressed: () {
-                  Navigator.of(context).push(new MaterialPageRoute<bool>(
-                        builder: (BuildContext context) {
-                          return new SettingPage({'cbk': refreshPage});
-                        },
-                        settings: const RouteSettings(name: SettingPage.routeName),
-                      ));
+                  Navigator
+                      .of(context)
+                      .push(new SettingPage({'cbk': refreshPage}).route());
                 },
                 text: item.title,
               );

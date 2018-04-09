@@ -13,6 +13,7 @@ import 'package:kindergarten/core/modules/cameralist/CameraListPage.dart';
 import 'package:kindergarten/core/modules/home/entity/ItemEntitys.dart';
 import 'package:kindergarten/core/modules/inform/InformPage.dart';
 import 'package:kindergarten/core/modules/schoolmessage/SchoolMessagePage.dart';
+import 'package:kindergarten/core/modules/webview/WebViewPage.dart';
 import 'package:kindergarten/core/utils/WindowUtils.dart';
 import 'package:kindergarten/net/RequestHelper.dart';
 import 'package:kindergarten/repository/UserModel.dart';
@@ -55,7 +56,14 @@ final List<HomeItemWidget> secondLine = <HomeItemWidget>[
 ];
 
 class HomePage extends BasePageRoute {
+  static String routeName = 'HomePage';
+
   HomePage([Map<String, String> props]) : super(props);
+
+  @override
+  String getRouteName() {
+    return routeName;
+  }
 
 //  final HomePageState homePageState = new HomePageState();
 
@@ -79,7 +87,7 @@ class HomePageState extends BasePageState<HomePage> {
   }
 
   getImage() async {
-    var _fileName = await ImagePicker.pickImage();
+    var _fileName = await ImagePicker.pickImage(source: ImageSource.gallery);
     print(_fileName);
   }
 
@@ -119,7 +127,8 @@ class HomePageState extends BasePageState<HomePage> {
                     return new BannerShowWidget(data: data);
                   },
                   onBannerClickListener: (index, data) {
-                    getImage();
+//                    getImage();
+                    Navigator.of(context).push(new WebViewPage({'url':'http://baidu.com'}).route());
                   },
                 ),
                 //第一行3个标签

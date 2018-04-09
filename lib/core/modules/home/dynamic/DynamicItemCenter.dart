@@ -32,9 +32,9 @@ class DynamicItemCenter extends StatelessWidget {
                 mainAxisSpacing: 10.0,
                 crossAxisCount: 3,
                 shrinkWrap: true,
-                children: singleData['kgDynamicPics'].map((picItem) {
+                children: (singleData['kgDynamicPics'] as List).map((picItem) {
                   return picItem['picUrl'];
-                }).map((item) {
+                }).map<Widget>((item) {
                   return new CachedNetworkImage(
                     imageUrl: item,
                     errorWidget: new Icon(Icons.error),
@@ -57,16 +57,10 @@ class DynamicItemCenter extends StatelessWidget {
                           size: 50.0,
                         ),
                         onPressed: () {
-                          Navigator
-                              .of(context)
-                              .push(new MaterialPageRoute<bool>(
-                            builder: (BuildContext context) {
-                              return new PlayDynamicVideoPage({
+                          Navigator.of(context).push(new PlayDynamicVideoPage({
                                 'videoUrl': singleData['kgDynamicVideo']
                                     ['videoUrl']
-                              });
-                            },
-                          ));
+                              }).route());
                         }),
                   ],
                 ))

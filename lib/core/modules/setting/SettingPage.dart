@@ -8,6 +8,10 @@ import 'package:kindergarten/repository/UserModel.dart';
 class SettingPage extends BasePageRoute {
   static const String routeName = '/SettingPage';
 
+  @override
+  String getRouteName() {
+    return routeName;
+  }
   SettingPage([Map<String, dynamic> props]) : super(props);
 
   @override
