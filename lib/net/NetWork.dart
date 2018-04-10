@@ -1,15 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:kindergarten/core/base/NetException.dart';
 import 'dart:io' show Platform;
 
+import 'package:kindergarten/core/base/NetException.dart';
 import 'package:kindergarten/repository/UserModel.dart';
-
-var httpClient = createHttpClient();
 
 class RequestClient {
   static Future request(String url,
@@ -28,10 +23,10 @@ class RequestClient {
       return request.close();
     });
     if (response.statusCode == HttpStatus.OK) {
-      var json = await response.transform(UTF8.decoder).join();
-      var data = JSON.decode(json);
+      var jsonData = await response.transform(UTF8.decoder).join();
+      var data = json.decode(jsonData);
       print(requestUrl);
-      print(json);
+      print(jsonData);
       if (data['code'].toString() == '1003') {
         UserProvide.loginOut();
         return new Future.value(data["data"]);

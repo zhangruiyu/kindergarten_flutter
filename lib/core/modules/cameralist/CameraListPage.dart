@@ -5,9 +5,6 @@ import 'package:kindergarten/core/base/BasePageRoute.dart';
 import 'package:kindergarten/core/base/BasePageState.dart';
 import 'package:kindergarten/core/constant/Constant.dart';
 import 'package:kindergarten/core/modules/cameralist/CameraListItemView.dart';
-import 'package:kindergarten/core/modules/inform/InformItemView.dart';
-import 'package:kindergarten/core/uikit/CustomCard.dart';
-import 'package:kindergarten/core/utils/WindowUtils.dart';
 import 'package:kindergarten/net/RequestHelper.dart';
 
 class CameraListPage extends BasePageRoute {

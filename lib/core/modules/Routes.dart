@@ -2,12 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'dart:developer';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:kindergarten/core/modules/album/AlbumPage.dart';
-import 'package:kindergarten/core/modules/auth/InputPasswordPage.dart';
 import 'package:kindergarten/core/modules/auth/LoginPage.dart';
 import 'package:kindergarten/core/modules/cameralist/CameraListPage.dart';
 import 'package:kindergarten/core/modules/inform/InformPage.dart';

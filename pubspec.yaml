@@ -9,7 +9,7 @@ dependencies:
   queries: any
   image_picker: any
   banner: any
-  video_player: ^0.3.0
+  video_player: any
   refresh_wow: any
   cached_network_image: any
   flutter_webview_plugin: any

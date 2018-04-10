@@ -38,9 +38,7 @@ class PlayDynamicVideoPageState extends BasePageState<PlayDynamicVideoPage> {
   @override
   void initState() {
     super.initState();
-    _controller = new VideoPlayerController(
-      widget.props['videoUrl']
-    )
+    _controller = new VideoPlayerController.network(widget.props['videoUrl'])
       ..addListener(() {
         final bool isPlaying = _controller.value.isPlaying;
         if (isPlaying != _isPlaying) {

@@ -3,9 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:kindergarten/core/base/BasePageRoute.dart';
 import 'package:kindergarten/core/base/BasePageState.dart';
-import 'package:kindergarten/core/modules/inform/InformItemView.dart';
-import 'package:kindergarten/core/uikit/CustomCard.dart';
-import 'package:kindergarten/core/utils/WindowUtils.dart';
 import 'package:kindergarten/net/RequestHelper.dart';
 
 class EditDynamicPage extends BasePageRoute {
@@ -72,13 +69,16 @@ class EditDynamicPageState extends BasePageState<EditDynamicPage> {
         ]),
         body: Container(
           padding: const EdgeInsets.all(8.0),
-          constraints: BoxConstraints(minHeight: 120.0),
-          height: 200.0,
-          child: TextFormField(
-            maxLines: 1,
-//            keyboardType: TextInputType.multiline,
-//            maxLength: 500,
-            decoration: const InputDecoration(hintText: '请输入内容...'),
+//          constraints: BoxConstraints(minHeight: 120.0),
+          child: Column(
+            children: <Widget>[
+              new TextField(
+                keyboardType: TextInputType.multiline,
+                maxLines: 5,
+                maxLength: 500,
+                decoration: InputDecoration(hintText: '请输入内容...'),
+              ),
+            ],
           ),
         ));
   }
