@@ -29,11 +29,11 @@ class DynamicCommentsState extends State<DynamicComments> {
     List<Widget> allCommentWidget = [];
 
     var accentColor = Theme.of(context).accentColor;
-    var kgDynamicCommentLists =
-        new Collection(widget.singleData['kgDynamicComment']).groupBy((it) {
+  /*  var kgDynamicCommentLists =
+    (widget.singleData['kgDynamicComment']  as Map).groupBy((it) {
       return it['groupTag'];
-    }).toList();
-
+    }).toList();*/
+    var kgDynamicCommentLists = [];
     var result = {};
     for (var group in kgDynamicCommentLists) {
       result[group.key] = [];

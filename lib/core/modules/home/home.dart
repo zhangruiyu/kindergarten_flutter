@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show defaultTargetPlatform;
 import 'package:kindergarten/core/modules/Routes.dart';
 import 'package:kindergarten/core/modules/home/homeTab.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 
 final ThemeData _kGalleryLightTheme = new ThemeData(
     brightness: Brightness.light,
@@ -69,6 +71,7 @@ class KindergartenAppState extends State<KindergartenApp> {
         return item.buildRoute;
       };
     }
+    FirebaseAnalytics analytics = new FirebaseAnalytics();
     return new MaterialApp(
       title: 'Flutter Gallery',
       color: Colors.grey,
@@ -79,7 +82,10 @@ class KindergartenAppState extends State<KindergartenApp> {
       checkerboardOffscreenLayers: _checkerboardOffscreenLayers,
       routes: _kRoutes,
       home: _applyScaleFactor(home),
-      navigatorObservers: [new KgNavigatorObserver()],
+      navigatorObservers: [
+        new FirebaseAnalyticsObserver(analytics: analytics),
+        new KgNavigatorObserver()
+      ],
       builder: (BuildContext context, Widget child) {
         return new Directionality(
           textDirection: _overrideDirection,

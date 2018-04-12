@@ -13,6 +13,8 @@ dependencies:
   refresh_wow: any
   cached_network_image: any
   flutter_webview_plugin: any
+  firebase_storage: any
+  firebase_analytics: any
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.0

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "737671692574",
+    "firebase_url": "https://kindergarten-92c04.firebaseio.com",
+    "project_id": "kindergarten-92c04",
+    "storage_bucket": "kindergarten-92c04.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:737671692574:android:2b656dc48005b0cd",
+        "android_client_info": {
+          "package_name": "android.kindergartens.com"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "737671692574-maafgqq11qpc488nq8ast8bsnkh501qg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0b008LshVI6hK53LeiELiOL3At1j9BQA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

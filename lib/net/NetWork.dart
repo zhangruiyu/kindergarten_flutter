@@ -9,7 +9,7 @@ import 'package:kindergarten/repository/UserModel.dart';
 class RequestClient {
   static Future request(String url,
       [Map<String, String> queryParameters]) async {
-    var host = Platform.isAndroid ? '192.168.31.150:8080' : '127.0.0.1:8080';
+    var host = Platform.isAndroid ? '192.168.2.16:8080' : '192.168.2.16:8080';
     var httpClient = new HttpClient();
     var requestUrl = new Uri.http(host, url, queryParameters);
     UserModel onlineUser = UserProvide.getCacheUser();
@@ -23,7 +23,7 @@ class RequestClient {
       return request.close();
     });
     if (response.statusCode == HttpStatus.OK) {
-      var jsonData = await response.transform(UTF8.decoder).join();
+      var jsonData = await response.transform(utf8.decoder).join();
       var data = json.decode(jsonData);
       print(requestUrl);
       print(jsonData);
