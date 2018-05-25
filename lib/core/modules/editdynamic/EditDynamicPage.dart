@@ -70,15 +70,18 @@ class EditDynamicPageState extends BasePageState<EditDynamicPage> {
           )
         ]),
         body: Container(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.only(left: 18.0, right: 18.0, top: 40.0),
 //          constraints: BoxConstraints(minHeight: 120.0),
           child: Column(
             children: <Widget>[
-              new TextField(
-                keyboardType: TextInputType.multiline,
-                maxLines: 5,
+              new TextFormField(
+                decoration: const InputDecoration(
+                  border: const OutlineInputBorder(),
+                  hintText: '请输入内容...',
+                  labelText: '园中动态内容',
+                ),
+                maxLines: 8,
                 maxLength: 500,
-                decoration: InputDecoration(hintText: '请输入内容...'),
               ),
             ],
           ),
