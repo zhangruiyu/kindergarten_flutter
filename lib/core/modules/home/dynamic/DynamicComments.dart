@@ -1,9 +1,10 @@
 import 'dart:async';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:kindergarten/core/dialog/CommitCommentDialog.dart';
 import 'package:kindergarten/core/modules/home/dynamic/DynamicItemActions.dart';
-import 'package:queries/collections.dart';
+//import 'package:queries/collections.dart';
 
 class DynamicComments extends StatefulWidget {
   DynamicComments({this.singleData, this.allClassRoomUserInfo});
@@ -29,29 +30,17 @@ class DynamicCommentsState extends State<DynamicComments> {
     List<Widget> allCommentWidget = [];
 
     var accentColor = Theme.of(context).accentColor;
-  /*  var kgDynamicCommentLists =
-    (widget.singleData['kgDynamicComment']  as Map).groupBy((it) {
-      return it['groupTag'];
-    }).toList();*/
-    var kgDynamicCommentLists = [];
-    var result = {};
-    for (var group in kgDynamicCommentLists) {
-      result[group.key] = [];
-      for (var child in widget.singleData['kgDynamicComment']) {
-        if (child['groupTag'] == group.key) {
-          result[group.key].add(child);
-        }
-      }
-    }
-
+    Map<String, List<dynamic>> kgDynamicCommentLists = groupBy(
+        (widget.singleData['kgDynamicComment'] as List<dynamic>), (key) {
+      return key['groupTag'];
+    });
     allCommentWidget.add(new DynamicItemActions({
       'singleData': widget.singleData,
       'allClassRoomUserInfo': widget.allClassRoomUserInfo,
       'showCommitBigCommentDialog': showCommitBigCommentDialog
     }));
-
-    for (int i = 0; i < result.values.length; i++) {
-      var list = result.values.toList()[i];
+    for (int i = 0; i < kgDynamicCommentLists.length; i++) {
+      var list = kgDynamicCommentLists.values.toList()[i];
       if (list is List) {
         //把当前子评论的所有id搞成map
         var allSingeComment = {};

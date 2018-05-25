@@ -57,6 +57,8 @@ class EditDynamicPageState extends BasePageState<EditDynamicPage> {
 
   @override
   Widget build(BuildContext context) {
+    //上传图片
+//    https://stackoverflow.com/questions/46515679/flutter-firebase-compression-before-upload-image?rq=1
     return new Scaffold(
         appBar: new AppBar(title: new Text('发布动态'), actions: [
           new IconButton(

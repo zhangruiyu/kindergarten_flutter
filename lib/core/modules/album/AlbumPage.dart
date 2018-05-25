@@ -30,6 +30,8 @@ class AlbumPageState extends BasePageState<AlbumPage> {
   final GlobalKey<RefreshIndicatorState> albumPageRefreshIndicatorKey =
       new GlobalKey<RefreshIndicatorState>();
   List localList = [];
+  GlobalKey<RefreshListViewState> refreshListViewStateKey =
+      new GlobalKey<RefreshListViewState>();
 
 //  List<Map<String, List<Map>>>localList = [];
 
@@ -41,9 +43,8 @@ class AlbumPageState extends BasePageState<AlbumPage> {
     final Completer<Null> completer = new Completer<Null>();
     RequestHelper.getSchoolAlbum().then((data) {
       completer.complete(null);
-      setState(() {
-        localList = data;
-      });
+      localList = data;
+      refreshListViewStateKey.currentState.setData(localList, null);
     });
     return completer;
   }
@@ -62,42 +63,46 @@ class AlbumPageState extends BasePageState<AlbumPage> {
         appBar: new AppBar(
           title: new Text('校园相册'),
         ),
-        body: new RefreshListView(
-          refreshIndicatorKey: albumPageRefreshIndicatorKey,
-          itemData: localList,
-          onRefresh: _handleRefresh,
-//          physics: AlwaysScrollableScrollPhysics(),
-          itemBuilder: (BuildContext context, int index, dynamic singleData) {
-            return new CustomCard(
-                elevation: 1.0,
-                padding: const EdgeInsets.fromLTRB(14.0, 15.0, 10.0, 15.0),
-                child: new Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    new Padding(
-                      padding: const EdgeInsets.only(left: 10.0, bottom: 10.0),
-                      child: new Text(singleData['data'].toString(),
-                          textAlign: TextAlign.left),
-                    ),
-                    new GridView.count(
-                      primary: false,
-                      crossAxisSpacing: 10.0,
-                      mainAxisSpacing: 10.0,
-                      crossAxisCount: 3,
-                      shrinkWrap: true,
-                      children: singleData['addition'].map((picItem) {
-                        print(picItem);
-                        return picItem['picUrl'];
-                      }).map<Widget>((item) {
-                        return new CachedNetworkImage(
-                          imageUrl: item,
-                          errorWidget: new Icon(Icons.error),
-                        );
-                      }).toList(),
-                    )
-                  ],
-                ));
-          },
-        ));
+        body: new RefreshIndicator(
+            onRefresh: _handleRefresh,
+            key: albumPageRefreshIndicatorKey,
+            child: new RefreshListView(
+              refreshListViewKey: refreshListViewStateKey,
+              itemData: localList,
+              physics: AlwaysScrollableScrollPhysics(),
+              itemBuilder:
+                  (BuildContext context, int index, dynamic singleData) {
+                return new CustomCard(
+                    elevation: 1.0,
+                    padding: const EdgeInsets.fromLTRB(14.0, 15.0, 10.0, 15.0),
+                    child: new Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        new Padding(
+                          padding:
+                              const EdgeInsets.only(left: 10.0, bottom: 10.0),
+                          child: new Text(singleData['data'].toString(),
+                              textAlign: TextAlign.left),
+                        ),
+                        new GridView.count(
+                          primary: false,
+                          crossAxisSpacing: 10.0,
+                          mainAxisSpacing: 10.0,
+                          crossAxisCount: 3,
+                          shrinkWrap: true,
+                          children: singleData['addition'].map((picItem) {
+                            print(picItem);
+                            return picItem['picUrl'];
+                          }).map<Widget>((item) {
+                            return new CachedNetworkImage(
+                              imageUrl: item,
+                              errorWidget: new Icon(Icons.error),
+                            );
+                          }).toList(),
+                        )
+                      ],
+                    ));
+              },
+            )));
   }
 }

@@ -8,6 +8,9 @@ PODS:
   - firebase_analytics (0.0.1):
     - Firebase/Core
     - Flutter
+  - firebase_core (0.0.1):
+    - Firebase/Core
+    - Flutter
   - firebase_storage (0.0.1):
     - Firebase/Storage
     - Flutter
@@ -52,25 +55,28 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
-  - firebase_analytics (from `Pods/.symlinks/plugins/firebase_analytics-0.3.1/ios`)
-  - firebase_storage (from `Pods/.symlinks/plugins/firebase_storage-0.2.2/ios`)
+  - firebase_analytics (from `Pods/.symlinks/plugins/firebase_analytics-1.0.0/ios`)
+  - firebase_core (from `Pods/.symlinks/plugins/firebase_core-0.2.3/ios`)
+  - firebase_storage (from `Pods/.symlinks/plugins/firebase_storage-0.3.5/ios`)
   - Flutter (from `Pods/.symlinks/flutter/ios`)
-  - flutter_webview_plugin (from `Pods/.symlinks/plugins/flutter_webview_plugin-0.1.5/ios`)
+  - flutter_webview_plugin (from `Pods/.symlinks/plugins/flutter_webview_plugin-0.1.6/ios`)
   - image_picker (from `Pods/.symlinks/plugins/image_picker-0.4.1/ios`)
   - path_provider (from `Pods/.symlinks/plugins/path_provider-0.4.0/ios`)
   - shared_preferences (from `Pods/.symlinks/plugins/shared_preferences-0.4.1/ios`)
-  - sqflite (from `Pods/.symlinks/plugins/sqflite-0.8.6/ios`)
-  - video_player (from `Pods/.symlinks/plugins/video_player-0.4.1/ios`)
+  - sqflite (from `Pods/.symlinks/plugins/sqflite-0.8.9/ios`)
+  - video_player (from `Pods/.symlinks/plugins/video_player-0.5.2/ios`)
 
 EXTERNAL SOURCES:
   firebase_analytics:
-    :path: Pods/.symlinks/plugins/firebase_analytics-0.3.1/ios
+    :path: Pods/.symlinks/plugins/firebase_analytics-1.0.0/ios
+  firebase_core:
+    :path: Pods/.symlinks/plugins/firebase_core-0.2.3/ios
   firebase_storage:
-    :path: Pods/.symlinks/plugins/firebase_storage-0.2.2/ios
+    :path: Pods/.symlinks/plugins/firebase_storage-0.3.5/ios
   Flutter:
     :path: Pods/.symlinks/flutter/ios
   flutter_webview_plugin:
-    :path: Pods/.symlinks/plugins/flutter_webview_plugin-0.1.5/ios
+    :path: Pods/.symlinks/plugins/flutter_webview_plugin-0.1.6/ios
   image_picker:
     :path: Pods/.symlinks/plugins/image_picker-0.4.1/ios
   path_provider:
@@ -78,13 +84,14 @@ EXTERNAL SOURCES:
   shared_preferences:
     :path: Pods/.symlinks/plugins/shared_preferences-0.4.1/ios
   sqflite:
-    :path: Pods/.symlinks/plugins/sqflite-0.8.6/ios
+    :path: Pods/.symlinks/plugins/sqflite-0.8.9/ios
   video_player:
-    :path: Pods/.symlinks/plugins/video_player-0.4.1/ios
+    :path: Pods/.symlinks/plugins/video_player-0.5.2/ios
 
 SPEC CHECKSUMS:
   Firebase: cc13dfab1038c8b45d7903e01fc690451d6d0b24
   firebase_analytics: fcc60a9de4b8e07aa5af8941303a7f5fe6e0383f
+  firebase_core: c96aa8b2fcf7f5167d32f22034f502f9304952b8
   firebase_storage: e34d30ff8bb57e691191b70e9d255ec2eba2351f
   FirebaseAnalytics: 3dfae28d4a5e06f86c4fae830efc2ad3fadb19bc
   FirebaseCore: b981f47e5254cbcfdeb483355300d743f6fcab2c

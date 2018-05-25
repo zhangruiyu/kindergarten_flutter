@@ -2,26 +2,26 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:io' show Platform;
+import 'package:dio/dio.dart';
 
 import 'package:kindergarten/core/base/NetException.dart';
 import 'package:kindergarten/repository/UserModel.dart';
 
 class RequestClient {
   static Future request(String url,
-      [Map<String, String> queryParameters]) async {
-    var host = Platform.isAndroid ? '192.168.2.16:8080' : '192.168.2.16:8080';
+      [Map<String, dynamic> queryParameters]) async {
+    var host = Platform.isAndroid ? '192.168.2.16:8080' : '127.0.0.1:8080';
     var httpClient = new HttpClient();
-    var requestUrl = new Uri.http(host, url, queryParameters);
     UserModel onlineUser = UserProvide.getCacheUser();
-    var response =
-        await httpClient.postUrl(requestUrl).then((HttpClientRequest request) {
-      request.headers.add('os', Platform.operatingSystem);
-      if (onlineUser != null) {
-        request.headers.add('token', onlineUser.token);
-      }
-      print(request.headers);
-      return request.close();
-    });
+    Options options= new Options(
+        baseUrl:'http://${Platform.isAndroid ? '192.168.2.16:8080' : '127.0.0.1:8080'}',
+        connectTimeout:15000,
+        receiveTimeout:13000,
+      headers: {'os': Platform.operatingSystem,'token': onlineUser.token}
+    );
+    Dio dio = new Dio(options);
+    String requestUrl = '$url';
+    var response = await dio.post(requestUrl,data: new FormData.from(queryParameters),);
     if (response.statusCode == HttpStatus.OK) {
       var jsonData = await response.transform(utf8.decoder).join();
       var data = json.decode(jsonData);

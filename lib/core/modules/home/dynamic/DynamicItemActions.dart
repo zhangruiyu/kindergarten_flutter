@@ -6,8 +6,6 @@ import 'package:kindergarten/core/modules/home/dynamic/DynamicItemActions.dart';
 import 'package:kindergarten/net/RequestHelper.dart';
 import 'package:kindergarten/repository/UserModel.dart';
 import 'package:kindergarten/style/TextStyle.dart';
-import 'package:queries/queries.dart';
-import 'package:queries/collections.dart';
 
 class DynamicItemActions extends BasePropsWidget {
   DynamicItemActions(Map<String, dynamic> props) : super(props);

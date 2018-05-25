@@ -34,6 +34,8 @@ class DynamicPageState extends BasePageState<DynamicPage> {
   static var localList = {'allClassRoomUserInfo': [], 'dynamics': []};
   var pageIndex = 0;
   var hasMore = false;
+  GlobalKey<RefreshListViewState> refreshListViewStateKey =
+      new GlobalKey<RefreshListViewState>();
 
   Future<Null> _handleRefresh() {
     pageIndex = 0;
@@ -48,19 +50,20 @@ class DynamicPageState extends BasePageState<DynamicPage> {
     final Completer<Null> completer = new Completer<Null>();
     RequestHelper.getDynamics(pageIndex).then((data) {
       completer.complete(null);
-      setState(() {
-        if (pageIndex == 0) {
-          localList['dynamics'] = data['dynamics'];
-          var allClassRoomUserInfo = data['allClassRoomUserInfo'];
-          if (allClassRoomUserInfo is List && allClassRoomUserInfo.length > 0) {
-            localList['allClassRoomUserInfo'] = data['allClassRoomUserInfo'];
-          }
-        } else {
-          localList['dynamics'].addAll(data['dynamics']);
+      if (pageIndex == 0) {
+        localList['dynamics'] = data['dynamics'];
+        var allClassRoomUserInfo = data['allClassRoomUserInfo'];
+        if (allClassRoomUserInfo is List && allClassRoomUserInfo.length > 0) {
+          localList['allClassRoomUserInfo'] = data['allClassRoomUserInfo'];
         }
-        ++pageIndex;
-        hasMore = (data['dynamics'] as List).length >= 5;
-      });
+      } else {
+        localList['dynamics'].addAll(data['dynamics']);
+      }
+      ++pageIndex;
+      hasMore = (data['dynamics'] as List).length >= 5;
+      print('hasMore$hasMore');
+      refreshListViewStateKey.currentState
+          ?.setData(localList['dynamics'], hasMore ? _handleLoadMore : null);
     }).catchError((onError) {
       completer.complete(null);
       setState(() {});
@@ -90,29 +93,32 @@ class DynamicPageState extends BasePageState<DynamicPage> {
       allClassRoomUserMap[value['userId']] = value;
     }
     return UserProvide.getCacheUser() != null
-        ? new RefreshListView(
-            refreshIndicatorKey: SK.dynamicRefreshIndicatorKey,
-            itemData: localList['dynamics'],
+        ? new RefreshIndicator(
+            key: SK.dynamicRefreshIndicatorKey,
             onRefresh: _handleRefresh,
-            onLoadMore: hasMore ? _handleLoadMore : null,
+            child: new RefreshListView(
+              refreshListViewKey: refreshListViewStateKey,
+              itemData: localList['dynamics'],
+              onLoadMore: hasMore ? _handleLoadMore : null,
 //          physics: AlwaysScrollableScrollPhysics(),
-            itemBuilder: (BuildContext context, int index, dynamic singleData) {
-              return new CustomCard(
-                  elevation: 1.0,
-                  padding: const EdgeInsets.fromLTRB(14.0, 15.0, 10.0, 15.0),
-                  child: new Column(
-                    children: <Widget>[
-                      new DynamicItemTop(
-                          singleData: singleData,
-                          allClassRoomUserInfo: allClassRoomUserMap),
-                      new DynamicItemCenter(singleData: singleData),
-                      new DynamicComments(
-                          singleData: singleData,
-                          allClassRoomUserInfo: allClassRoomUserMap)
-                    ],
-                  ));
-            },
-          )
+              itemBuilder:
+                  (BuildContext context, int index, dynamic singleData) {
+                return new CustomCard(
+                    elevation: 1.0,
+                    padding: const EdgeInsets.fromLTRB(14.0, 15.0, 10.0, 15.0),
+                    child: new Column(
+                      children: <Widget>[
+                        new DynamicItemTop(
+                            singleData: singleData,
+                            allClassRoomUserInfo: allClassRoomUserMap),
+                        new DynamicItemCenter(singleData: singleData),
+                        new DynamicComments(
+                            singleData: singleData,
+                            allClassRoomUserInfo: allClassRoomUserMap)
+                      ],
+                    ));
+              },
+            ))
         : new Center(
             child: new GestureDetector(
               child: new Text("请登陆后尝试"),

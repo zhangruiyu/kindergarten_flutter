@@ -73,7 +73,7 @@ class KindergartenAppState extends State<KindergartenApp> {
     }
     FirebaseAnalytics analytics = new FirebaseAnalytics();
     return new MaterialApp(
-      title: 'Flutter Gallery',
+      title: '幼儿园小助手',
       color: Colors.grey,
       theme: (_useLightTheme ? _kGalleryLightTheme : _kGalleryDarkTheme)
           .copyWith(platform: _platform ?? defaultTargetPlatform),
