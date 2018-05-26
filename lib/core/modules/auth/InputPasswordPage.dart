@@ -33,7 +33,7 @@ class InputPasswordPageState extends BasePageState<InputPasswordPage> {
       RequestHelper.login(widget.props['tel'], password).then((value) {
 //        value
         value['isOnline'] = '1';
-        UserProvide.insert(new UserModel.fromMap(value));
+        UserProvide.save(value);
         Navigator.of(context).pop(true);
         Navigator.of(context).pop(true);
       });

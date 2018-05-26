@@ -8,7 +8,7 @@ import 'package:kindergarten/repository/UserModel.dart';
 
 class RequestClient {
   static Future request(String url,
-      [Map<String, dynamic> queryParameters = const {}]) async {
+      [Map<String, dynamic> queryParameters]) async {
     Options options = new Options(
         baseUrl: 'http://${Platform.isAndroid
             ? '192.168.2.16:8080'
@@ -23,7 +23,7 @@ class RequestClient {
     String requestUrl = '$url';
     Response response = await dio.post(
       requestUrl,
-      data: new FormData.from(queryParameters),
+      data: new FormData.from(queryParameters ?? new Map<String, String>()),
     );
     if (response.statusCode == HttpStatus.OK) {
       var data = response.data;

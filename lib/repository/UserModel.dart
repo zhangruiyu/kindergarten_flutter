@@ -15,15 +15,12 @@
 //qqNickName VARCHAR,
 //    wxNickName VARCHAR
 
-import 'dart:async';
 import 'dart:collection';
-import 'package:flutter/material.dart';
-import 'package:kindergarten/core/modules/auth/LoginPage.dart';
+import 'dart:convert';
 
-import 'package:kindergarten/repository/KindergartenDatabase.dart';
-import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:flutter/material.dart';
+import 'package:kindergarten/core/constant/Constant.dart';
+import 'package:kindergarten/core/modules/auth/LoginPage.dart';
 
 final String UserTalbeName = "k_user_table";
 
@@ -208,68 +205,40 @@ class UserModel {
 }
 
 class UserProvide {
+  static const String SP_USER_INFO = 'SP_USER_INFO';
   static UserModel _userCache;
 
-  static Future<UserModel> insert(UserModel user) async {
-    Database db = await KindergartenDatabase.openKindergartenDatabase();
-    var deleteCode = await db
-        .delete(UserTalbeName, where: "$TEL = ?", whereArgs: [user.tel]);
-    var code = await db.insert(UserTalbeName, user.toMap());
-    db.close();
-    return _userCache = user;
-  }
-
-  static update() async {
-    Database db = await KindergartenDatabase.openKindergartenDatabase();
-
-    await db.update(UserTalbeName, getCacheUser().toMap(),
-        where: "$TEL = ?", whereArgs: [getCacheUser().tel]);
-    db.close();
-  }
-
-  static Future initOnlineUser() async {
-    Database db = await KindergartenDatabase.openKindergartenDatabase();
-    List<Map> maps = await db.query(UserTalbeName,
-        columns: UserTalbeCloum, where: "$ISONLINE = ?", whereArgs: ['1']);
-    db.close();
-    if (maps.length > 0) {
-//      print(maps.last);
-      var userModel = new UserModel.fromMap(maps.last);
-      _userCache = userModel;
-    }
+  static UserModel save(Map user) {
+    _userCache = new UserModel.fromMap(user);
+    saveData();
     return _userCache;
   }
 
-  static Future getOnlineUser() async {
-    if (_userCache != null) {
-      return _userCache;
+  static void saveData() {
+    sp.setString(SP_USER_INFO,
+        _userCache != null ? json.encode(_userCache?.toMap()) : '');
+  }
+  static void loadData() {
+    String localData = sp.getString(SP_USER_INFO);
+    //不要去掉问号(..
+//    debugPrint(localData);
+    if (localData?.isNotEmpty == true) {
+      _userCache = new UserModel.fromMap(json.decode(localData));
+      print(_userCache);
+    } else {
+      debugPrint('用户数据为空');
     }
-    Database db = await KindergartenDatabase.openKindergartenDatabase();
-    List<Map> maps = await db.query(UserTalbeName,
-        columns: UserTalbeCloum, where: "$ISONLINE = ?", whereArgs: ['1']);
-    db.close();
-    if (maps.length > 0) {
-//      print(maps.last);
-      var userModel = new UserModel.fromMap(maps.last);
-      return _userCache = userModel;
-    }
-
-    return null;
   }
 
   static loginOut() async {
-    Database db = await KindergartenDatabase.openKindergartenDatabase();
-    await db.delete(
-      UserTalbeName,
-    );
-    db.close();
     _userCache = null;
+    sp.setString(SP_USER_INFO, null);
   }
 
-  //更细到内存并写入数据库
+  //更新到内存并写入数据库
   static saveAndUpdate(setUp) {
     setUp();
-    update();
+    saveData();
   }
 
   static haveOnlineUser() {
