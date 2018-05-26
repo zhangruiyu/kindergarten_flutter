@@ -293,4 +293,16 @@ class UserProvide {
     return (UserProvide.getCacheUser().roleCode != null &&
         int.parse(UserProvide.getCacheUser().roleCode) < 1);
   }
+
+  static String getUserToken() {
+    if (_userCache != null) {
+      return _userCache.token;
+    } else {
+      return "";
+    }
+  }
+
+  static String getTokenUrl() {
+    return '?token=${getUserToken()}';
+  }
 }
