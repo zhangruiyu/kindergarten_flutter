@@ -1,10 +1,13 @@
 import 'dart:async';
+import 'dart:convert';
 
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:kindergarten/core/base/BasePageRoute.dart';
 import 'package:kindergarten/core/base/BasePageState.dart';
+import 'package:kindergarten/core/constant/Constant.dart';
 import 'package:kindergarten/net/RequestHelper.dart';
-
+import 'package:http/http.dart' as http;
 class EditDynamicPage extends BasePageRoute {
   static const String routeName = '/EditDynamicPage';
 
@@ -30,7 +33,7 @@ class EditDynamicPageState extends BasePageState<EditDynamicPage> {
   initState() {
     super.initState();
     new Timer(new Duration(milliseconds: 300), () {
-      refreshIndicatorKey.currentState.show();
+      refreshIndicatorKey.currentState?.show();
     });
   }
 
@@ -64,8 +67,16 @@ class EditDynamicPageState extends BasePageState<EditDynamicPage> {
           new IconButton(
             icon: const Icon(Icons.send),
             tooltip: '提交修改',
-            onPressed: () {
+            onPressed: () async{
 //        commitChange();
+              final StorageReference ref =
+                  storage.ref().child('a').child('hh.txt');
+              final StorageUploadTask uploadTask =   ref.putData(utf8.encode('123'));
+              final Uri downloadUrl = (await uploadTask.future).downloadUrl;
+              final http.Response downloadData = await http.get(downloadUrl);
+              final String name = await ref.getName();
+              final String bucket = await ref.getBucket();
+              final String path = await ref.getPath();
             },
           )
         ]),
@@ -83,6 +94,7 @@ class EditDynamicPageState extends BasePageState<EditDynamicPage> {
                 maxLines: 8,
                 maxLength: 500,
               ),
+              new Image.network('https://firebasestorage.googleapis.com/v0/b/kindergarten-92c04.appspot.com/o/02-%E5%B0%B1%E4%B8%9A%E7%8F%AD-02-14.jpg?alt=media&token=131f7aaf-93de-4535-8dd8-b42aa9bafe71')
             ],
           ),
         ));
