@@ -4,7 +4,6 @@ import 'package:banner/banner.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:kindergarten/core/base/BasePageRoute.dart';
 import 'package:kindergarten/core/base/BasePageState.dart';
 import 'package:kindergarten/core/modules/SK.dart';
@@ -86,10 +85,6 @@ class HomePageState extends BasePageState<HomePage> {
 //    refreshPage();
   }
 
-  getImage() async {
-    var _fileName = await ImagePicker.pickImage(source: ImageSource.gallery);
-    print(_fileName);
-  }
 
   Future<Null> _handleRefresh() {
     final Completer<Null> completer = new Completer<Null>();
