@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kindergarten/core/modules/home/dynamic/PlayDynamicVideoPage.dart';
+import 'package:kindergarten/core/modules/reviewpic/ReviewPicPage.dart';
 import 'package:kindergarten/style/TextStyle.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -10,9 +11,11 @@ class DynamicItemCenter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    try {
-      print(singleData['kgDynamicVideo']['videoUrl']);
-    } catch (e) {} finally {}
+    if (singleData['dynamicType'] == '0') {
+      (singleData['kgDynamicPics'] as List).sort((a, b) {
+        return a['sequence'] - b['sequence'];
+      });
+    }
 
     return new Column(
       children: <Widget>[
@@ -35,9 +38,21 @@ class DynamicItemCenter extends StatelessWidget {
                 children: (singleData['kgDynamicPics'] as List).map((picItem) {
                   return picItem['picUrl'];
                 }).map<Widget>((item) {
-                  return new CachedNetworkImage(
-                    imageUrl: item,
-                    errorWidget: new Icon(Icons.error),
+                  return new GestureDetector(
+                    onTap: () {
+                      List<String> itemPics =
+                          (singleData['kgDynamicPics'] as List).map<String>((picItem) {
+                        return picItem['picUrl'].toString();
+                      }).toList();
+                      ReviewPicPage.start(context, {
+                        'pisition': itemPics.indexOf(item),
+                        'itemPics': itemPics
+                      });
+                    },
+                    child: new CachedNetworkImage(
+                      imageUrl: item,
+                      errorWidget: new Icon(Icons.error),
+                    ),
                   );
                 }).toList(),
               )
