@@ -9,4 +9,9 @@
         <item name="colorPrimary">@color/transparent</item>
         <item name="colorPrimaryDark">@color/transparent</item>
     </style>
+    <style name="customTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:textColorPrimary">#f2f2f2</item>
+        <item name="colorPrimary">#FF1976D2</item>
+        <item name="colorPrimaryDark">#FF1976D2</item>
+    </style>
 </resources>

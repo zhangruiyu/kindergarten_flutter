@@ -48,5 +48,13 @@
         </activity>
         <activity android:name=".cameraplay.PlayActivity"
                   android:theme="@style/PlayTheme"/>
+        <activity android:name="me.iwf.photopicker.PhotoPickerActivity"
+                  android:theme="@style/customTheme"
+                  tools:replace="android:theme"
+        />
+
+        <activity android:name="me.iwf.photopicker.PhotoPagerActivity"
+                  tools:replace="android:theme"
+                  android:theme="@style/Theme.AppCompat.NoActionBar"/>
     </application>
 </manifest>
