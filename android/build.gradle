@@ -16,6 +16,17 @@ allprojects {
         jcenter()
         maven { url "https://www.jitpack.io" }
     }
+    subprojects {
+        project.configurations.all {
+            resolutionStrategy.eachDependency { details ->
+                if (details.requested.group == 'com.android.support'
+                        && !details.requested.name.contains('multidex') ) {
+                    //设置全局support包版本
+                    details.useVersion "27.1.0"
+                }
+            }
+        }
+    }
 }
 
 rootProject.buildDir = '../build'

@@ -5,12 +5,10 @@ import 'package:kindergarten/core/constant/Constant.dart';
 import 'package:kindergarten/core/modules/home/home.dart';
 import 'package:kindergarten/repository/UserModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-
+import 'package:tencent_cos/tencent_cos.dart';
 void main() async {
   sp = await SharedPreferences.getInstance();
-  final FirebaseApp app = await FirebaseApp.configure(
+ /* final FirebaseApp app = await FirebaseApp.configure(
     name: 'kindergarten',
     options: new FirebaseOptions(
       googleAppID: Platform.isIOS
@@ -20,9 +18,10 @@ void main() async {
       apiKey: 'AIzaSyB0b008LshVI6hK53LeiELiOL3At1j9BQA',
       projectID: 'kindergarten-92c04',
     ),
-  );
-  storage = new FirebaseStorage(
-      app: app, storageBucket: 'gs://kindergarten-92c04.appspot.com/');
+  );*/
+  TencentCos.init("tj","1253631018","kindergartens");
+  /*storage = new FirebaseStorage(
+      app: app, storageBucket: 'gs://kindergarten-92c04.appspot.com/');*/
   UserProvide.loadData();
   runApp(new KindergartenApp());
 }

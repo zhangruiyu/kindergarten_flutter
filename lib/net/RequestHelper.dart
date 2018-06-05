@@ -80,4 +80,12 @@ class RequestHelper {
       'avatarUrl': avatarUrl.toString(),
     });
   }
+
+
+  static Future getOCSPeriodEffectiveSignSign(
+      int type) {
+    return RequestClient.request("${USER_URL}/cos/periodEffectiveSign", {
+      'type': type.toString(),
+    });
+  }
 }

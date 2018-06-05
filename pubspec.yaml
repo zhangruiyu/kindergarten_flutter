@@ -4,19 +4,21 @@ description: kindergarten
 dependencies:
   flutter:
     sdk: flutter
-  sqflite: any
   path_provider: any
-#  queries: any
-  image_picker: any
   banner: any
   video_player: any
   refresh_wow: any
   cached_network_image: any
   flutter_webview_plugin: "^0.1.5"
-  firebase_storage: any
+#  firebase_storage: any
   firebase_analytics: any
   dio: "^0.0.13"
   shared_preferences: any
+  image_picker_multiple: any
+  progress_image: any
+  tencent_cos:
+       git:
+          url: https://github.com/zhangruiyu/tencent_cos.git
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.0

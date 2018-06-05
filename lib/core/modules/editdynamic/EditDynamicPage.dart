@@ -1,13 +1,19 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:kindergarten/core/base/BasePageRoute.dart';
 import 'package:kindergarten/core/base/BasePageState.dart';
 import 'package:kindergarten/core/constant/Constant.dart';
+import 'package:kindergarten/core/utils/WindowUtils.dart';
 import 'package:kindergarten/net/RequestHelper.dart';
 import 'package:http/http.dart' as http;
+import 'package:tencent_cos/tencent_cos.dart';
+import 'package:image_picker_multiple/image_picker_multiple.dart';
+import 'package:progress_image/progress_image.dart';
+
 class EditDynamicPage extends BasePageRoute {
   static const String routeName = '/EditDynamicPage';
 
@@ -24,8 +30,13 @@ class EditDynamicPage extends BasePageRoute {
   }
 }
 
+const PIC_TYPE = 0;
+const VIDEO_TYPE = 1;
+
 class EditDynamicPageState extends BasePageState<EditDynamicPage> {
+  List<dynamic> selectedPics = new List<dynamic>();
   var informData = [];
+  var dynamicType = PIC_TYPE; //0是图片动态 1是视频动态
   final GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
       new GlobalKey<RefreshIndicatorState>();
 
@@ -58,44 +69,79 @@ class EditDynamicPageState extends BasePageState<EditDynamicPage> {
     return completer.future;
   }
 
+  void getImage() async {
+    selectedPics = await MultipleImagePicker.pickImage(selectedPics);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     //上传图片
 //    https://stackoverflow.com/questions/46515679/flutter-firebase-compression-before-upload-image?rq=1
+
+    List<Widget> gridItems = new List<Widget>();
+
+    double itemWidth = WindowUtils.getScreenWidth() / 5.toDouble();
+    if (dynamicType == PIC_TYPE) {
+      selectedPics.forEach((selectedPic) {
+        Widget item = new Padding(
+          padding: const EdgeInsets.all(2.0),
+          child: new ProgressImage(
+            builder: (BuildContext context, Size size) {
+              return new Image.file(new File(selectedPic.toString()));
+            },
+            width: itemWidth,
+            height: itemWidth,
+          ),
+        );
+        gridItems.add(item);
+      });
+    }
+    gridItems.add(new IconButton(
+        icon: new Icon(
+          Icons.add_a_photo,
+          size: 30.0,
+          color: const Color(0x40808080),
+        ),
+        onPressed: () {
+          getImage();
+        }));
     return new Scaffold(
         appBar: new AppBar(title: new Text('发布动态'), actions: [
           new IconButton(
             icon: const Icon(Icons.send),
             tooltip: '提交修改',
-            onPressed: () async{
+            onPressed: () async {
 //        commitChange();
-              final StorageReference ref =
-                  storage.ref().child('a').child('hh.txt');
-              final StorageUploadTask uploadTask =   ref.putData(utf8.encode('123'));
-              final Uri downloadUrl = (await uploadTask.future).downloadUrl;
-              final http.Response downloadData = await http.get(downloadUrl);
-              final String name = await ref.getName();
-              final String bucket = await ref.getBucket();
-              final String path = await ref.getPath();
+//              TencentCos.uploadByFile();
+              /* RequestHelper.getOCSPeriodEffectiveSignSign(dynamicType).then((data){
+                TencentCos.uploadByFile(data['cosPath'],_image.toString(),data['sign']);
+              });*/
             },
           )
         ]),
-        body: Container(
-          padding: const EdgeInsets.only(left: 18.0, right: 18.0, top: 40.0),
+        body: new SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 40.0),
 //          constraints: BoxConstraints(minHeight: 120.0),
-          child: Column(
-            children: <Widget>[
-              new TextFormField(
-                decoration: const InputDecoration(
-                  border: const OutlineInputBorder(),
-                  hintText: '请输入内容...',
-                  labelText: '园中动态内容',
+            child: Column(
+              children: <Widget>[
+                new TextFormField(
+                  decoration: const InputDecoration(
+                    border: const OutlineInputBorder(),
+                    hintText: '请输入内容...',
+                    labelText: '园中动态内容',
+                  ),
+                  maxLines: 8,
+                  maxLength: 500,
                 ),
-                maxLines: 8,
-                maxLength: 500,
-              ),
-              new Image.network('https://firebasestorage.googleapis.com/v0/b/kindergarten-92c04.appspot.com/o/02-%E5%B0%B1%E4%B8%9A%E7%8F%AD-02-14.jpg?alt=media&token=131f7aaf-93de-4535-8dd8-b42aa9bafe71')
-            ],
+                new GridView.count(
+                  crossAxisCount: 5,
+                  shrinkWrap: true,
+                  children: gridItems,
+                )
+              ],
+            ),
           ),
         ));
   }
