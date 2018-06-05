@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:kindergarten/core/modules/editdynamic/DynamicSelectedPicTask.dart';
 import 'package:kindergarten/net/NetWork.dart';
 
 const USER_URL = "/user/normal";
@@ -81,11 +82,25 @@ class RequestHelper {
     });
   }
 
-
-  static Future getOCSPeriodEffectiveSignSign(
-      int type) {
+  static Future getOCSPeriodEffectiveSignSign(int type) {
     return RequestClient.request("${USER_URL}/cos/periodEffectiveSign", {
       'type': type.toString(),
+    });
+  }
+
+//发布图片动态
+  static Future commitDynamicPic(
+      String dynamic_content, List<DynamicSelectedPicTask> selectedPics) {
+    String urls = selectedPics
+        .map((DynamicSelectedPicTask dspt) {
+          return dspt.resourcePath;
+        })
+        .toList()
+        .join(",");
+    return RequestClient.request("${USER_URL}/dynamic/commitDynamicPic", {
+      'type': 0,
+      'dynamic_content': dynamic_content,
+      'urls': urls,
     });
   }
 }

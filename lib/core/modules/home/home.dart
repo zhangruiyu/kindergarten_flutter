@@ -7,12 +7,14 @@ import 'package:firebase_analytics/observer.dart';
 
 final ThemeData _kGalleryLightTheme = new ThemeData(
     brightness: Brightness.light,
+    platform: TargetPlatform.iOS,
     primarySwatch: Colors.blue,
     backgroundColor: const Color(0xfff4f4f4));
 
 final ThemeData _kGalleryDarkTheme = new ThemeData(
   brightness: Brightness.dark,
   primarySwatch: Colors.blue,
+  platform: TargetPlatform.iOS,
 );
 
 class KindergartenApp extends StatefulWidget {
@@ -42,7 +44,6 @@ class KindergartenAppState extends State<KindergartenApp> {
   bool _checkerboardRasterCacheImages = false;
   bool _checkerboardOffscreenLayers = false;
   TextDirection _overrideDirection = TextDirection.ltr;
-  TargetPlatform _platform;
 
   // A null value indicates "use system default".
   double _textScaleFactor;
@@ -75,8 +76,7 @@ class KindergartenAppState extends State<KindergartenApp> {
     return new MaterialApp(
       title: '幼儿园小助手',
       color: Colors.grey,
-      theme: (_useLightTheme ? _kGalleryLightTheme : _kGalleryDarkTheme)
-          .copyWith(platform: _platform ?? defaultTargetPlatform),
+      theme: (_useLightTheme ? _kGalleryLightTheme : _kGalleryDarkTheme),
       showPerformanceOverlay: _showPerformanceOverlay,
       checkerboardRasterCacheImages: _checkerboardRasterCacheImages,
       checkerboardOffscreenLayers: _checkerboardOffscreenLayers,

@@ -19,6 +19,7 @@ class RequestClient {
           'os': Platform.operatingSystem,
           'token': UserProvide.getUserToken()
         });
+
     Dio dio = new Dio(options);
     String requestUrl = '$url';
     Response response = await dio.post(
@@ -27,6 +28,7 @@ class RequestClient {
     );
     if (response.statusCode == HttpStatus.OK) {
       var data = response.data;
+      print(options.headers);
       print(requestUrl);
       print(response.data);
       if (data['code'].toString() == '1003') {
