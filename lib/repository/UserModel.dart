@@ -204,7 +204,7 @@ class UserModel {
   }
 }
 
-class UserProvide {
+class UserHelper {
   static const String SP_USER_INFO = 'SP_USER_INFO';
   static UserModel _userCache;
 
@@ -259,8 +259,8 @@ class UserProvide {
 
   //是否是普通人员
   static isNormalPeople() {
-    return (UserProvide.getCacheUser().roleCode != null &&
-        int.parse(UserProvide.getCacheUser().roleCode) < 1);
+    return (UserHelper.getCacheUser().roleCode != null &&
+        int.parse(UserHelper.getCacheUser().roleCode) < 1);
   }
 
   static String getUserToken() {

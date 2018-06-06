@@ -17,7 +17,7 @@ class RequestClient {
         receiveTimeout: 13000,
         headers: {
           'os': Platform.operatingSystem,
-          'token': UserProvide.getUserToken()
+          'token': UserHelper.getUserToken()
         });
 
     Dio dio = new Dio(options);
@@ -32,7 +32,7 @@ class RequestClient {
       print(requestUrl);
       print(response.data);
       if (data['code'].toString() == '1003') {
-        UserProvide.loginOut();
+        UserHelper.loginOut();
         return new Future.value(data["data"]);
       } else if (data['code'].toString() != '200') {
 //        ScaffoldState.showSnackBar(new SnackBar(content: new Text(data['msg'])));

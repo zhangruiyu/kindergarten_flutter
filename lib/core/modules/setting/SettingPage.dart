@@ -98,7 +98,7 @@ class SettingPageState extends BasePageState<SettingPage> {
                 // onSubmitted：当用户在键盘上点击完成编辑时调用
               ]),
             ),
-            UserProvide.getCacheUser() == null
+            UserHelper.getCacheUser() == null
                 ? null
                 : new FlatButton(
                     padding: new EdgeInsets.only(
@@ -115,7 +115,7 @@ class SettingPageState extends BasePageState<SettingPage> {
                           ),
                         )),
                     onPressed: () async {
-                      await UserProvide.loginOut();
+                      await UserHelper.loginOut();
                       Navigator.of(context).pop();
                     },
                     color: Theme.of(context).accentColor,

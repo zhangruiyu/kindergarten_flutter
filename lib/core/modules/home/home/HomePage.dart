@@ -134,7 +134,7 @@ class HomePageState extends BasePageState<HomePage> {
                     return new HomePageItemWidget(
                         photo: photo,
                         onBannerTap: (HomeItemWidget photo) {
-                          UserProvide.loginChecked(context, () {
+                          UserHelper.loginChecked(context, () {
                             Navigator.of(context).pushNamed(photo.routeName);
                           });
                         });
@@ -146,7 +146,7 @@ class HomePageState extends BasePageState<HomePage> {
                   return new HomePageItemWidget(
                       photo: photo,
                       onBannerTap: (HomeItemWidget photo) {
-                        UserProvide.loginChecked(context, () {
+                        UserHelper.loginChecked(context, () {
                           Navigator.of(context).pushNamed(photo.routeName);
                         });
                       });

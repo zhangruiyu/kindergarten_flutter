@@ -44,7 +44,7 @@ class DynamicItemActionsState extends State<DynamicItemActions> {
               icon: new Icon(
                 Icons.favorite,
                 size: 30.0,
-                color: likes.contains(UserProvide
+                color: likes.contains(UserHelper
                     .getCacheUser()
                     .id
                     .toString())
@@ -52,15 +52,15 @@ class DynamicItemActionsState extends State<DynamicItemActions> {
                     : const Color(0x30808080),
               ),
               onPressed: () {
-                UserProvide.loginChecked(context, () {
-                  if (!likes.contains(UserProvide
+                UserHelper.loginChecked(context, () {
+                  if (!likes.contains(UserHelper
                       .getCacheUser()
                       .id
                       .toString())) {
                     RequestHelper.commitDynamicLiked(
                         widget.props['singleData']['id']).then((onValue) {
                       setState(() {
-                        likes.add(UserProvide
+                        likes.add(UserHelper
                             .getCacheUser()
                             .id);
                       });

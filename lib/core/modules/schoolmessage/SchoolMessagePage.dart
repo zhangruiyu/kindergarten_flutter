@@ -59,7 +59,7 @@ class SchoolMessagePageageState extends BasePageState<SchoolMessagePage> {
         appBar: new AppBar(
           title: new Text('校园消息'),
         ),
-        floatingActionButton: UserProvide.isNormalPeople()
+        floatingActionButton: UserHelper.isNormalPeople()
             ? null
             : new FloatingActionButton(
                 onPressed: () {

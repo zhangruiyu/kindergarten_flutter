@@ -92,7 +92,7 @@ class DynamicPageState extends BasePageState<DynamicPage> {
     for (var value in allClassRoomUserInfo) {
       allClassRoomUserMap[value['userId']] = value;
     }
-    return UserProvide.getCacheUser() != null
+    return UserHelper.getCacheUser() != null
         ? new RefreshIndicator(
             key: SK.dynamicRefreshIndicatorKey,
             onRefresh: _handleRefresh,

@@ -30,7 +30,7 @@ class AccountTopState extends BasePropsState<AccountTopUI> {
     bool isContainsAvatar = widget.props.containsKey('accountProfile') &&
         widget.props['accountProfile'] != null &&
         widget.props['accountProfile']['avatar'] != null;
-    return UserProvide.getCacheUser() != null
+    return UserHelper.getCacheUser() != null
         ? new Padding(
             padding: const EdgeInsets.fromLTRB(30.0, 10.0, 10.0, 10.0),
             child: new GestureDetector(

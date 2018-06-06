@@ -40,7 +40,7 @@ class UserInfoPageState extends BasePageState<UserInfoPage> {
   @override
   void initState() {
     super.initState();
-    var cacheUser = UserProvide.getCacheUser();
+    var cacheUser = UserHelper.getCacheUser();
     addressEditingController =
         new TextEditingController(text: cacheUser.address);
     sexRadioValue = int.parse(cacheUser.gender);
@@ -71,7 +71,7 @@ class UserInfoPageState extends BasePageState<UserInfoPage> {
   }
 
   void commitChange() {
-    var cacheUser = UserProvide.getCacheUser();
+    var cacheUser = UserHelper.getCacheUser();
     if (sexRadioValue == int.parse(cacheUser.gender) &&
         radioValue == int.parse(cacheUser.relation) &&
         addressEditingController.text == cacheUser.address &&
@@ -83,7 +83,7 @@ class UserInfoPageState extends BasePageState<UserInfoPage> {
           .reviseProfile(sexRadioValue, radioValue,
               addressEditingController.text, cacheUser.avatar)
           .then((data) {
-        UserProvide.saveAndUpdate(() {
+        UserHelper.saveAndUpdate(() {
           cacheUser.avatar = data['avatarUrl'].toString();
           cacheUser.address = data['address'].toString();
           cacheUser.gender = data['checkGender'].toString();
@@ -97,7 +97,7 @@ class UserInfoPageState extends BasePageState<UserInfoPage> {
 
   @override
   Widget build(BuildContext context) {
-    var cacheUser = UserProvide.getCacheUser();
+    var cacheUser = UserHelper.getCacheUser();
     var accentColor = Theme.of(context).accentColor;
     return new Scaffold(
       key: scaffoldStateKey,
@@ -119,7 +119,7 @@ class UserInfoPageState extends BasePageState<UserInfoPage> {
               child: new CircleAvatar(
                   radius: 30.0,
                   backgroundImage: new CachedNetworkImageProvider(
-                      UserProvide.getCacheUser().avatar)),
+                      UserHelper.getCacheUser().avatar)),
             ),
             new Row(mainAxisSize: MainAxisSize.max, children: <Widget>[
               new Icon(

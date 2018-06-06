@@ -22,6 +22,6 @@ void main() async {
   TencentCos.init("tj","1253631018","kindergartens");
   /*storage = new FirebaseStorage(
       app: app, storageBucket: 'gs://kindergarten-92c04.appspot.com/');*/
-  UserProvide.loadData();
+  UserHelper.loadData();
   runApp(new KindergartenApp());
 }

@@ -47,14 +47,14 @@ class AccountPageState extends BasePageState<AccountPage> {
   var accountProfile;
 
   refreshPage() async {
-    if (UserProvide.haveOnlineUser()) {
+    if (UserHelper.haveOnlineUser()) {
       RequestHelper.getAccountProfile().then((data) {
         setState(() {
           accountProfile = data;
-          UserProvide.saveAndUpdate(() {
-            UserProvide.getCacheUser().roleCode = accountProfile['roleCode'];
-            UserProvide.getCacheUser().avatar = accountProfile['avatar'];
-            UserProvide.getCacheUser().nickName = accountProfile['nickName'];
+          UserHelper.saveAndUpdate(() {
+            UserHelper.getCacheUser().roleCode = accountProfile['roleCode'];
+            UserHelper.getCacheUser().avatar = accountProfile['avatar'];
+            UserHelper.getCacheUser().nickName = accountProfile['nickName'];
             print(accountProfile['roleCode']);
           });
           print('AccountPageState  == ');
