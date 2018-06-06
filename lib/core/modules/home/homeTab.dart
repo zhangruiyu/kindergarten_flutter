@@ -68,7 +68,7 @@ class BottomNavigationDemoState extends State<HomeTab>
       appBar: new AppBar(
         title: const Text('天云山幼儿园'),
       ),
-      drawer: new AccountPage(),
+      endDrawer: new AccountPage(),
       body: IndexedStack(
         children: <Widget>[homePage, dynamicPage],
         index: _currentIndex,
@@ -125,13 +125,16 @@ class _DemoBottomAppBar extends StatelessWidget {
                 Icons.home,
                 color: Colors.white,
               ),
-              new Text(
-                '首页',
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .body2
-                    .merge(new TextStyle(color: Colors.white)),
+              new Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: new Text(
+                  '首页',
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .body2
+                      .merge(new TextStyle(color: Colors.white)),
+                ),
               )
             ],
           ),
@@ -151,13 +154,16 @@ class _DemoBottomAppBar extends StatelessWidget {
                 Icons.notifications,
                 color: Colors.white,
               ),
-              new Text(
-                '校友圈',
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .body2
-                    .merge(new TextStyle(color: Colors.white)),
+              new Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: new Text(
+                  '校友圈',
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .body2
+                      .merge(new TextStyle(color: Colors.white)),
+                ),
               )
             ],
           ),

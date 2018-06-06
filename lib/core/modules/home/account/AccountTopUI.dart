@@ -31,7 +31,18 @@ class AccountTopState extends BasePropsState<AccountTopUI> {
         widget.props['accountProfile'] != null &&
         widget.props['accountProfile']['avatar'] != null;
     return UserHelper.getCacheUser() != null
-        ? new Padding(
+        ? new UserAccountsDrawerHeader(
+            accountName: new Text('nick', style: titleStyle),
+            currentAccountPicture: new CircleImage(
+              isContainsAvatar: isContainsAvatar,
+              text: 'Hi',
+              avatarUrl: isContainsAvatar
+                  ? widget.props['accountProfile']['avatar']
+                  : '',
+            ),
+            accountEmail: new Text('nick2', style: subjectStyle),
+          )
+        /* new Padding(
             padding: const EdgeInsets.fromLTRB(30.0, 10.0, 10.0, 10.0),
             child: new GestureDetector(
                 onTap: () {
@@ -57,7 +68,7 @@ class AccountTopState extends BasePropsState<AccountTopUI> {
                       ),
                     )
                   ],
-                )))
+                )))*/
         : new Column(
             children: [
               new Text(

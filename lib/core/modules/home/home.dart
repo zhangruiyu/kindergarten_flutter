@@ -9,6 +9,8 @@ final ThemeData _kGalleryLightTheme = new ThemeData(
     brightness: Brightness.light,
     platform: TargetPlatform.iOS,
     primarySwatch: Colors.blue,
+    primaryColor: Colors.blue,
+    accentColor: Colors.blue,
     backgroundColor: const Color(0xfff4f4f4));
 
 final ThemeData _kGalleryDarkTheme = new ThemeData(

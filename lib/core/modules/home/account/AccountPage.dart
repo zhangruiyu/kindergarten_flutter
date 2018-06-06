@@ -6,6 +6,7 @@ import 'package:kindergarten/core/modules/home/account/AccountTopUI.dart';
 import 'package:kindergarten/core/modules/home/account/LoginIconItem.dart';
 import 'package:kindergarten/core/modules/home/entity/ItemEntitys.dart';
 import 'package:kindergarten/core/modules/setting/SettingPage.dart';
+import 'package:kindergarten/core/utils/WindowUtils.dart';
 import 'package:kindergarten/net/RequestHelper.dart';
 import 'package:kindergarten/repository/UserModel.dart';
 
@@ -70,58 +71,49 @@ class AccountPageState extends BasePageState<AccountPage> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      body: new SingleChildScrollView(
-          child: new Column(
+    return new Container(
+      color: Colors.white,
+      width: WindowUtils.getScreenWidth() * 0.8,
+      child: new Column(
         children: <Widget>[
           //第一行3个标签
-          new Container(
-            margin: const EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 0.0),
-            child: new Card(
-                child: new Padding(
-              padding: const EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 16.0),
-              child: new Center(
-                  child: new AccountTopUI({
-                'cbk': refreshPage,
-                'accountProfile': accountProfile,
-              })),
-            )),
-            //第二行3个标签
-          ),
+          new AccountTopUI({
+            'cbk': refreshPage,
+            'accountProfile': accountProfile,
+          }),
           //中间卡片
-          new Card(
-            elevation: 1.0,
-            child: new Column(
-                children: accountCenterItemList.map((item) {
-              return new LoginIconItem(
-                icon: item.url,
-                onPressed: () {
-                  /*_scaffoldKey.currentState.showSnackBar(const SnackBar(
-                  content: const Text('Pretend that this opened your SMS application.')
-              ));*/
-                },
-                text: item.title,
-              );
-            }).toList()),
-          ),
+          new Column(
+              children: accountCenterItemList.map((item) {
+            return new ListTile(
+              onTap: (){},
+              leading: new Image.asset(
+                'images/${item.url}',
+                width: 20.0,
+              ),
+              title: new Text(item.title,
+                  style: Theme.of(context).textTheme.subhead),
+            );
+          }).toList()),
           //底部卡片
-          new Card(
-            elevation: 1.0,
-            child: new Column(
-                children: accountBottomItemList.map((item) {
-              return new LoginIconItem(
-                icon: item.url,
-                onPressed: () {
-                  Navigator
-                      .of(context)
-                      .push(new SettingPage({'cbk': refreshPage}).route());
-                },
-                text: item.title,
-              );
-            }).toList()),
-          ),
+          new Column(
+              children: accountBottomItemList.map((item) {
+            return new ListTile(
+              onTap: () {
+                Navigator.pop(context);
+                Navigator
+                    .of(context)
+                    .push(new SettingPage({'cbk': refreshPage}).route());
+              },
+              leading: new Image.asset(
+                'images/${item.url}',
+                width: 20.0,
+              ),
+              title: new Text(item.title,
+                  style: Theme.of(context).textTheme.subhead),
+            );
+          }).toList()),
         ],
-      )),
+      ),
     );
   }
 }
