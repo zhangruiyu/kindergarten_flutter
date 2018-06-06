@@ -5,6 +5,7 @@ import 'package:kindergarten/core/base/BasePageRoute.dart';
 import 'package:kindergarten/core/constant/Constant.dart';
 import 'package:kindergarten/core/modules/SK.dart';
 import 'package:kindergarten/core/modules/editdynamic/EditDynamicPage.dart';
+import 'package:kindergarten/core/modules/home/account/AccountPage.dart';
 import 'package:kindergarten/core/modules/home/dynamic/DynamicPage.dart';
 import 'package:kindergarten/core/modules/home/home/HomePage.dart';
 import 'package:kindergarten/repository/UserModel.dart';
@@ -67,6 +68,7 @@ class BottomNavigationDemoState extends State<HomeTab>
       appBar: new AppBar(
         title: const Text('天云山幼儿园'),
       ),
+      drawer: new AccountPage(),
       body: IndexedStack(
         children: <Widget>[homePage, dynamicPage],
         index: _currentIndex,
@@ -80,7 +82,7 @@ class BottomNavigationDemoState extends State<HomeTab>
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: new FloatingActionButton(
         onPressed: () {
-          UserHelper.loginChecked(context, (){
+          UserHelper.loginChecked(context, () {
             Navigator.of(context).push(new EditDynamicPage().route());
           });
         },
@@ -109,28 +111,69 @@ class _DemoBottomAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Widget> rowContents = <Widget>[
-      new IconButton(
-        icon: const Icon(Icons.home),
-        onPressed: () {
+      new InkResponse(
+        onTap: () {
           onTap(0);
         },
-        color: Colors.white,
+        child: new ConstrainedBox(
+          constraints: const BoxConstraints(minWidth: 48.0, minHeight: 48.0),
+          child: new Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              const Icon(
+                Icons.home,
+                color: Colors.white,
+              ),
+              new Text(
+                '首页',
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .body2
+                    .merge(new TextStyle(color: Colors.white)),
+              )
+            ],
+          ),
+        ),
       ),
-      new IconButton(
-        icon: const Icon(Icons.notifications),
-        color: Colors.white,
-        onPressed: () {
+      new InkResponse(
+        onTap: () {
           onTap(1);
         },
+        child: new ConstrainedBox(
+          constraints: const BoxConstraints(minWidth: 48.0, minHeight: 48.0),
+          child: new Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              const Icon(
+                Icons.notifications,
+                color: Colors.white,
+              ),
+              new Text(
+                '校友圈',
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .body2
+                    .merge(new TextStyle(color: Colors.white)),
+              )
+            ],
+          ),
+        ),
       ),
     ];
 
     return new BottomAppBar(
       color: color,
       hasNotch: showNotch,
-      child: new Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: rowContents),
+      child: new Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+        child: new Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: rowContents),
+      ),
     );
   }
 }
