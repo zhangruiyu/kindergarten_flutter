@@ -50,16 +50,18 @@ class AccountPageState extends BasePageState<AccountPage> {
   refreshPage() async {
     if (UserHelper.haveOnlineUser()) {
       RequestHelper.getAccountProfile().then((data) {
-        setState(() {
-          accountProfile = data;
-          UserHelper.saveAndUpdate(() {
-            UserHelper.getCacheUser().roleCode = accountProfile['roleCode'];
-            UserHelper.getCacheUser().avatar = accountProfile['avatar'];
-            UserHelper.getCacheUser().nickName = accountProfile['nickName'];
-            print(accountProfile['roleCode']);
+        if (mounted) {
+          setState(() {
+            accountProfile = data;
+            UserHelper.saveAndUpdate(() {
+              UserHelper.getCacheUser().roleCode = accountProfile['roleCode'];
+              UserHelper.getCacheUser().avatar = accountProfile['avatar'];
+              UserHelper.getCacheUser().nickName = accountProfile['nickName'];
+              print(accountProfile['roleCode']);
+            });
+            print('AccountPageState  == ');
           });
-          print('AccountPageState  == ');
-        });
+        }
       });
     }
   }
@@ -67,6 +69,7 @@ class AccountPageState extends BasePageState<AccountPage> {
   @override
   void initState() {
     super.initState();
+    refreshPage();
   }
 
   @override
@@ -85,7 +88,7 @@ class AccountPageState extends BasePageState<AccountPage> {
           new Column(
               children: accountCenterItemList.map((item) {
             return new ListTile(
-              onTap: (){},
+              onTap: () {},
               leading: new Image.asset(
                 'images/${item.url}',
                 width: 20.0,

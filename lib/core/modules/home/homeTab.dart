@@ -28,10 +28,10 @@ class HomeTab extends BasePageRoute {
 class BottomNavigationDemoState extends State<HomeTab>
     with TickerProviderStateMixin {
   int _currentIndex = 0;
-  BottomNavigationBarType _type = BottomNavigationBarType.shifting;
 
   HomePage homePage = new HomePage();
   DynamicPage dynamicPage = new DynamicPage({});
+  AccountPage accountPage = new AccountPage();
 
   @override
   void initState() {
@@ -68,7 +68,7 @@ class BottomNavigationDemoState extends State<HomeTab>
       appBar: new AppBar(
         title: const Text('天云山幼儿园'),
       ),
-      endDrawer: new AccountPage(),
+      endDrawer: accountPage,
       body: IndexedStack(
         children: <Widget>[homePage, dynamicPage],
         index: _currentIndex,
@@ -76,7 +76,9 @@ class BottomNavigationDemoState extends State<HomeTab>
       bottomNavigationBar: new _DemoBottomAppBar(
         fabLocation: FloatingActionButtonLocation.centerDocked,
         showNotch: true,
-        color: Theme.of(context).accentColor,
+        color: Theme
+            .of(context)
+            .accentColor,
         onTap: changePageByIndex,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -103,7 +105,7 @@ class _DemoBottomAppBar extends StatelessWidget {
   final bool showNotch;
 
   static final List<FloatingActionButtonLocation> kCenterLocations =
-      <FloatingActionButtonLocation>[
+  <FloatingActionButtonLocation>[
     FloatingActionButtonLocation.centerDocked,
     FloatingActionButtonLocation.centerFloat,
   ];
