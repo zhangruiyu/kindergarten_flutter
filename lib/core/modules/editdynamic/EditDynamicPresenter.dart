@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -17,7 +18,7 @@ class EditDynamicPresenter {
   List<DynamicSelectedPicTask> selectedPics =
       new List<DynamicSelectedPicTask>();
 
-  EditDynamicPresenter(this._view, this.props) {}
+  EditDynamicPresenter(this._view, this.props);
 
   void getImage() async {
     List<dynamic> selectedLocalPics = await MultipleImagePicker
@@ -36,7 +37,13 @@ class EditDynamicPresenter {
     successCount = 0;
     RequestHelper.getOCSPeriodEffectiveSignSign(dynamicType).then((data) {
       selectedPics.forEach((DynamicSelectedPicTask selectedPic) {
-        selectedPic.upload(data['cosPath'], data['sign']);
+        var realData = json.decode(data);
+        var tmpSecretId = realData['tmpSecretId'];
+        var tmpSecretKey = realData['tmpSecretKey'];
+        var sessionToken = realData['sessionToken'];
+        var cosPath = realData['cosPath'];
+        var expiredTime = realData['expiredTime'];
+        selectedPic.upload(tmpSecretId,tmpSecretKey,sessionToken,expiredTime,cosPath);
         TencentCos.setMethodCallHandler(_handleMessages);
       });
     });
