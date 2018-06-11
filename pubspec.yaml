@@ -14,12 +14,13 @@ dependencies:
   firebase_analytics: any
   dio: "^0.0.13"
   shared_preferences: any
-  image_picker_multiple: any
   progress_image: any
   zoomable_image: "^1.2.0"
   fluttertoast: ^2.0.3
   tencent_cos:
     path: ./plugin/tencent_cos
+  image_picker_multiple:
+    path: ./plugin/image_picker_multiple
 #       git:
 #          url: https://github.com/zhangruiyu/tencent_cos.git
   # The following adds the Cupertino Icons font to your application.

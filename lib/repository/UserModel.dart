@@ -249,11 +249,11 @@ class UserHelper {
     return _userCache;
   }
 
-  static loginChecked(context, onSuccessCallback, [props = const {}]) {
+  static loginChecked(context, onSuccessCallback, [props]) {
     if (haveOnlineUser()) {
       onSuccessCallback();
     } else {
-      LoginPage.start(context, props);
+      LoginPage.start(context, props??new Map<String,dynamic>());
     }
   }
 
