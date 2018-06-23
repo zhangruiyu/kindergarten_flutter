@@ -21,7 +21,7 @@ class DynamicItemTop extends StatelessWidget {
         new Row(
           children: <Widget>[
             new CircleImage(
-              text: 'Hi',
+              text: '',
               avatarUrl: containsKey
                   ? allClassRoomUserInfo[singleData['userId'].toString()]
                       ['avatar']

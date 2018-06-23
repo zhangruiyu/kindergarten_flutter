@@ -11,7 +11,7 @@ class RequestClient {
       [Map<String, dynamic> queryParameters]) async {
     Options options = new Options(
         baseUrl: 'http://${Platform.isAndroid
-            ? '192.168.101.9:8080'
+            ? '192.168.43.148:8080'
             : '127.0.0.1:8080'}',
         connectTimeout: 15000,
         receiveTimeout: 13000,

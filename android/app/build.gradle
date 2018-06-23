@@ -33,6 +33,7 @@ android {
         ndk {
             abiFilters "armeabi-v7a"
         }
+        multiDexEnabled = true
     }
 
     buildTypes {
@@ -63,4 +64,5 @@ dependencies {
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.3'
     implementation 'com.hikvision.ezviz:ezuikit:1.4'
     implementation 'com.github.Lauzy:PlayPauseView:1.0.4'
+    implementation 'com.android.support:multidex:1.0.3'
 }
